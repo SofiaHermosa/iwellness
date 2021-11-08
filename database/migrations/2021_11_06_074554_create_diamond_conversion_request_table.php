@@ -17,6 +17,7 @@ class CreateDiamondConversionRequestTable extends Migration
             $table->id();
             $table->string('user_id');
             $table->string('item_id');
+            $table->json('details');
             $table->integer('status')->default(0);
             $table->longText('declining_reason')->nullable();
             $table->timestamps();
