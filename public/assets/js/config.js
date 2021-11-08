@@ -1,0 +1,1 @@
+const baseURL = "//localhost/iwellness/public/";
