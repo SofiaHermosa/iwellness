@@ -1,0 +1,149 @@
+.error{
+    color: #ff4c52 !important;
+    font-size: 0.9rem !important;
+}
+
+.product--cover{
+    object-fit: cover !important;
+}
+
+.discount--price{
+    text-decoration: line-through !important;
+    font-weight: lighter !important;
+}
+
+.price{
+    font-weight: bold;
+}
+
+.discount--percent {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    background: #3e3f3fd1;
+    padding: 0.2rem 0.7rem;
+    border-radius: 100px;
+    color: aliceblue;
+    mix-blend-mode: luminosity;
+}
+.text--lg{
+    font-size: larger !important;
+}
+
+.text--medium{
+    font-size: medium !important;
+}
+.product--description{
+    font-weight: lighter !important;
+}
+
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+/* Track */
+
+::-webkit-scrollbar-track {
+    border-radius: 0;
+    background: #E0E0E0;
+}
+
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 0;
+}
+small.checkout_details-qty {
+    position: relative;
+    top: 2rem;
+}
+
+.table{
+    font-size: 1.1rem !important;
+}
+
+.table td, .table th {
+    padding: 1rem !important;
+}    
+
+.cover{
+    object-fit: cover !important;
+    border: 1px #7080902b solid;
+    border-radius: 5px !important;
+}
+
+.navbar-header{
+    background-color: #1a2226 !important;
+}
+
+.page-login-v2 .page-brand-info {
+    text-align: center !important;
+}
+
+.page-login-v2 .page-brand-info .brand-text {
+    line-height: 30px !important;
+}
+
+.btn-primary.focus, .btn-primary.hover, .btn-primary:focus, .btn-primary:hover {
+    color: #323030;
+    background-color: #d3c314;
+    border-color: #d3c314;
+    box-shadow: none;
+    opacity: 0.9 !important;
+}
+
+.btn-primary{
+    color: #323030;
+    background-color: #d3c314;
+    border-color: #d3c314;
+    box-shadow: none;
+    font-weight: 500;
+}
+
+.site-navbar-small .site-navbar .navbar-brand {
+    width: 100%;
+    text-align: center;
+}
+
+@media (max-width: 767.98px){
+    .site-navbar-small .site-navbar .navbar-brand {
+        width: inherit !important;
+    }    
+}
+
+.page-login-v2 .page-login-main {
+    padding-top: 100px !important;
+}
+
+.hidden{
+    display: none;
+}
+
+p.card-text.price.text--lg {
+    color: #263238;
+}
+
+.example-well {
+    background-color: #a39f13 !important;
+}
+
+.form-control[readonly] {
+    font-weight: normal !important;
+    color: #1b1b1b !important;
+}
+
+.date--cols{
+    min-width: 7rem !important;
+}
+  
+.alertify-logs .error{
+    color: #ffff !important;
+}
+
+.swal2-icon.no-border.swal2-icon-show{
+    border-color: transparent !important;
+}
