@@ -25,6 +25,7 @@ page-profile
 
 @section('content')
 @include('member.conversions.modal.details')
+@include('member.conversions.modal.request')
 <div class="col-lg-12">
     <div class="panel">
         <div class="panel-body container-fluid">

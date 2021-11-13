@@ -91,11 +91,11 @@ class CartClass
         return $this;
     }
 
-    public function placeOrders($data = null, $attachedPaymentIntent){
+    public function placeOrders($data = null, $attachedPaymentIntent = null){
         $checkout_details = Session::get('checkout_details');
         $checkout_details = json_decode(base64_decode($checkout_details));
         $current_cart     = auth()->user()->cart;
-        $dataIntent       = $attachedPaymentIntent->getData() ?? null;
+        $dataIntent       = !empty($attachedPaymentIntent)? $attachedPaymentIntent->getData() : null;
         $amount           = $data['amount'];
         $shipping         = $data['shipping_fee'];
         $addCharge        = $data['service_charge'];
@@ -103,11 +103,12 @@ class CartClass
         $transactionId = "";
         if ($data['paymongo_method'])
         {
-            $transactionId                  = $dataIntent['payments'][0]['id'] ?? null;
-        }
-        else
+            $transactionId                  = $dataIntent['payments'][0]['id'] ?? $data['payment_id'];
+        }else if(!$data['paymongo_method']){
+            $transactionId                  = $data['payment_id'];
+        }else
         {
-            $transactionId                  = $dataIntent->getData()['id'] ?? null;
+            $transactionId                  = $dataIntent->getData()['id'] ?? $data['payment_id'];
         }
 
         foreach($checkout_details->orders as $key => $order){

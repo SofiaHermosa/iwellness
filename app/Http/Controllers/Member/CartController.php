@@ -110,9 +110,9 @@ class CartController extends Controller
     }
 
     public function proceedToCheckout(Request $request)
-    {
+    {   
         $toCheckedOut = $request->checkout;
-        return view('content.checkout-details', compact('toCheckedOut'));
+        return $this->checkOrderTotal($toCheckedOut);
     }
 
     public function checkoutPayment(Request $request){
@@ -120,5 +120,25 @@ class CartController extends Controller
         $checkout_details  = base64_encode(json_encode($request->all()));
         Session::put('checkout_details', $checkout_details);
         return view('payment.pay-checkout', compact('checkout_details'));
+    }
+
+    public function checkOrderTotal($cart){
+        $toCheckedOut = $cart;
+        $amount = [];
+
+        foreach($cart as $checkout){
+            $id         = base64_decode($checkout);
+            $orders     = auth()->user()->cart->$id;
+            $amount[]   = $orders->price * $orders->quantity;
+        }
+
+        $amount = array_sum($amount);
+       
+        if($amount < 700){
+            Session::flash('error', "Orders can't be less than 700"); 
+            return back();
+        }
+
+        return view('content.checkout-details', compact('toCheckedOut'));
     }
 }

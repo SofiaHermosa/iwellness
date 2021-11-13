@@ -41,6 +41,7 @@ class User extends Authenticatable
         'referrer_uname',
         'cart',
         'orders',
+        'wallet_balance'
     ];
 
     /**
@@ -63,7 +64,7 @@ class User extends Authenticatable
     ];
 
     public function hasSubscription() {
-        return $this->hasMany('App\Models\Subscription', 'user_id');
+        return $this->hasMany('App\Models\Subscription', 'id','user_id');
     }
 
     public function subscription(){
@@ -148,5 +149,13 @@ class User extends Authenticatable
     public function getOrdersAttribute()
     {
         return $this->orders()->get() ?? [];
+    }
+
+    public function wallets(){
+        return $this->belongsTo('App\Models\Wallets','id','user_id');
+    }
+
+    public function getWalletBalanceAttribute(){
+        return $this->wallets()->first()->balance ?? 0;
     }
 }

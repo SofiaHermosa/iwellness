@@ -14,8 +14,26 @@ let DiamondConversion = (function () {
         ui.dataTable.on('click', 'tbody td', viewDetails);
         $(document).on('click', '.conversion__delete', deleteConversion);
         $(document).on('click', '.diamond-conversion__card', requestConversion);
+        $('.conversion__edit').on('click', editDetails);
         $('#conversionRequestForm').on('submit', submitRequest);
-    } 
+    }
+    
+    function editDetails(){
+        var data = window.edit_conversion;
+        $('.modal').modal('hide');
+        $('#conversionRequestModal').find('input[name="id"]').val(data.id).addClass('focus');
+        $('#conversionRequestModal').find('input[name="item_id"]').val(data.item_id).addClass('focus');
+        $('#conversionRequestModal').find('input[name="details[receivers_name]"]').val(data.details.receivers_name).addClass('focus');
+        $('#conversionRequestModal').find('input[name="details[contact_no]"]').val(data.details.contact_no).addClass('focus');
+        $('#conversionRequestModal').find('input[name="shipping_details[address]"]').val(data.details.address.address).addClass('focus');
+        $('#conversionRequestModal').find('input[name="shipping_details[apartment]"]').val(data.details.address.apartment).addClass('focus');
+        $('#conversionRequestModal').find('input[name="shipping_details[city]"]').val(data.details.address.city).addClass('focus');
+        $('#conversionRequestModal').find('input[name="shipping_details[region]"]').val(data.details.address.region).addClass('focus');
+        $('#conversionRequestModal').find('input[name="shipping_details[postal_code]"]').val(data.details.address.postal_code).addClass('focus');
+        $('#conversionRequestModal').find('.item--img').attr('src', data.item.attachments != null ? data.item.attachments : `${baseURL}/assets/images/default.png`);
+        $('#conversionRequestModal').find('.item--name').text(data.item.name);
+        $('#conversionRequestModal').modal('show');
+    }
 
     function onLoad() {
         initializeDatatable();
@@ -100,6 +118,8 @@ let DiamondConversion = (function () {
             _token  :  $('meta[name="csrf-token"]').attr('content'),
             _method : 'PUT'
         };
+
+        window.edit_conversion = data;
 
         if(data.status == 2){
             $('#conversionModal').find('.reason--cont').fadeIn();

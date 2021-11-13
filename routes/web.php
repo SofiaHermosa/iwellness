@@ -96,6 +96,7 @@ Route::middleware('auth')->namespace('API')->group(function(){
     // call once to create webhook
     Route::get('/webhook', 'PayMongoController@webhook');
 
+    Route::post('pay-with-wallet', 'WalletController@payWithWallet');
 });
 
 // for cron jobs

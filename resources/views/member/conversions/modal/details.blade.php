@@ -26,7 +26,7 @@
                     </a>
                 </div>
 
-                <div class="col-lg-8 row p-0">
+                <div class="col-lg-8 row p-lg-0">
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="form-group form-material" data-plugin="formMaterial">

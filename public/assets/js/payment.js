@@ -135,7 +135,7 @@ let Payment = (function () {
     }
 
     function showProcessing() {
-        swal({
+        Swal.fire({
             title: "Loading...",
             text:
                 "Please do not refresh or close the page while we are processing your request.",
@@ -147,7 +147,7 @@ let Payment = (function () {
     }
 
     function showSuccess() {
-        swal({
+        Swal.fire({
             title: "Success!",
             text: "Payment Successfully sent!",
             icon: "success",

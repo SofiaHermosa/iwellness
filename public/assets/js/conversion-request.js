@@ -115,7 +115,7 @@ let ConversionRequest = (function () {
 
         $('#conversionModal').find('input[name="user"]').val(data.user.name);
         $('#conversionModal').find('input[name="receivers_name"]').val(data.details.receivers_name);
-        $('#conversionModal').find('textarea[name="address"]').val(data.details.address);
+        $('#conversionModal').find('textarea[name="address"]').val(data.details.full_address);
         $('#conversionModal').find('input[name="phone"]').val(data.details.contact_no);
         $('#conversionModal').find('.item--details').text(data.item.name);
         $('#conversionModal').find('.status--badge').html(data.status_badge);

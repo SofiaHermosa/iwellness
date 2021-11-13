@@ -44,6 +44,8 @@ page-profile
               <span class="badge badge-lg badge-success">Active</span>
 
               <p class="pt-4 mb-2">MEMBER SINCE {{auth()->user()->created_at->format('M d, Y')}}</p>
+
+              <button type="button" class="btn btn-info waves-effect waves-classic" data-toggle="modal" data-target="#activateAccountModal">Add Capital</button>
             @elseif(!empty(auth()->user()->subscription()->first()) && !empty(auth()->user()->subscription()->where('valid', 1)->where('status', 0)->first()))
               <span class="badge badge-lg badge-primary">Pending Activation</span>  
 

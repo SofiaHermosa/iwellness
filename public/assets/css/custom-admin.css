@@ -143,3 +143,7 @@ p.card-text.price.text--lg {
 .alertify-logs .error{
     color: #ffff !important;
 }
+
+.swal2-icon.no-border.swal2-icon-show{
+    border-color: transparent !important;
+}

@@ -129,7 +129,7 @@ Checkout Information
                 <div class="panel-body container-fluid">
                     @php
                         $shipping_fee   = array_sum($total) <= 5000 ? 120 : 200;
-                        $payment_charge = (array_sum($total) + $shipping_fee) * 0.06;
+                        $payment_charge = (array_sum($total) + $shipping_fee) * 0.03;
                     @endphp
                     <table class="mt-4" width="100%">
                         <tr>

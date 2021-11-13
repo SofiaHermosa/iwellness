@@ -2,6 +2,15 @@
     <h1 class="page-title my-4">Cart</h1>
 </div>
 <div class="col-lg-8 offset-2" id="cart">
+    @if(Session::has('error'))
+    <div class="alert dark alert-icon alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        <i class="icon fa-warning" aria-hidden="true"></i> {{ Session::get('error') }}
+    </div>
+    @endif
+
     <div id="cartCont">
         <form action="{{url('res/checkout/cart')}}" method="GET"> 
         <div class="panel">

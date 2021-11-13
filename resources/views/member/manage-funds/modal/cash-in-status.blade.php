@@ -22,7 +22,7 @@
                         <img src="" width="150" height="150" class="img rounded cover" alt="">
                     </a>
                 </div>
-                <div class="col-lg-8 p-0 row">
+                <div class="col-lg-8 p-lg-0 row">
                     <div class="col-md-6 pr-0">
                         <div class="form-group form-material" data-plugin="formMaterial">
                             <label class="form-control-label">Sender Name</label>

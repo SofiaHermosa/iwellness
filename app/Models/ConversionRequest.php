@@ -23,6 +23,7 @@ class ConversionRequest extends Model
     protected $appends = [
         'status_badge',
         'date_sent',
+        'full_address'
     ];
 
     public function setDecliningReasonAttribute($value){
@@ -63,5 +64,11 @@ class ConversionRequest extends Model
 
     public function getDateSentAttribute(){
         return $this->created_at->format('M d, Y g:ia');
+    }
+
+    public function getFullAddressAttribute(){
+        $details    = $this->details->address;
+        $suite      = !empty($details->apartment) ? ' ,'.$details->apartment : ''; 
+        return $details->address.$suite.', '.$details->city.', '.$details->region.'. '.$details->postal_code;
     }
 }

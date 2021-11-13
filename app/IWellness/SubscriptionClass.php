@@ -61,6 +61,23 @@ class SubscriptionClass
 
         return $this;
     }
+
+    public function addCapital($amount){
+        $subscription = Subscription::where('user_id', auth()->user()->id)
+        ->where('status', 1)
+        ->where('valid', 1)
+        ->orderBy('created_at', 'DESC')
+        ->first();
+
+        $capital_data = [
+            'user_id'           => auth()->user()->id,
+            'subscription_id'   => $subscription->id,
+            'amount'            => $amount,
+            'status'            => (int)1
+        ];
+
+        Capital::create($capital_data);
+    }
 }
 
 ?>

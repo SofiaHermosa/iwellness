@@ -39,7 +39,7 @@ $balance = dashboardcontent(auth()->user()->id);
                     </div>
                 </div>
 
-                <div class="col-md-6 row p-0">
+                <div class="col-md-6 row p-lg-0">
                     <div class="col-md-12 pr-0">
                         <div class="form-group form-material floating" data-plugin="formMaterial">
                             <input type="text" class="form-control" name="details[receivers_name]">
