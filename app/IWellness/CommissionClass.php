@@ -87,7 +87,7 @@ class CommissionClass
             'downline_id'   => auth()->user()->id,
             'from'          => $source,
             'amount'        => 5,
-            'user'          => $user,
+            'user'          => auth()->user(),
         ];
 
         foreach($commissions as $commission){      
