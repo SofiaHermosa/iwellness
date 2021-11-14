@@ -64,7 +64,7 @@ class User extends Authenticatable
     ];
 
     public function hasSubscription() {
-        return $this->hasMany('App\Models\Subscription', 'id','user_id');
+        return $this->hasMany('App\Models\Subscription', 'user_id');
     }
 
     public function subscription(){
