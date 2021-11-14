@@ -110,8 +110,12 @@ class User extends Authenticatable
 
     public function getSecretQuestionStringAttribute(){
         $question = $this->secret_question;
-    
-        return config('constants.questions.'.$question->question)."<br> Answer: ".$question->answer;
+        
+        if(!empty($question)){
+            return config('constants.questions.'.$question->question)."<br> Answer: ".$question->answer;
+        }
+
+        return '';
     }
 
     public function getSubscripStatusAttribute(){
