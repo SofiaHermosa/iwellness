@@ -101,6 +101,7 @@ class CartClass
         $addCharge        = $data['service_charge'];
         $cart = [];
         $transactionId = "";
+    
         if ($data['paymongo_method'])
         {
             $transactionId                  = $dataIntent['payments'][0]['id'] ?? $data['payment_id'];

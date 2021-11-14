@@ -30,6 +30,7 @@ class WalletClass
     }
 
     public function payWithWallet($amount){
+        $amount          = ($amount * 0.01) + $amount;
         $current_balance = auth()->user()->wallet_balance;
         $new_balance     = $current_balance - $amount;
         $new_balance     = $new_balance < 0 ? 0 : $new_balance;

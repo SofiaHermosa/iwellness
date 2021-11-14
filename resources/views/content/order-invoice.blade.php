@@ -76,7 +76,7 @@ Order Invoice
               </div>
               
               @php
-                  $payment_charge = ($order->total + $order->shipping_fee) * 0.06;
+                  $payment_charge = ($order->total + $order->shipping_fee) * 0.03;
               @endphp
               <div class="text-right clearfix mt-4">
                 <div class="float-right">

@@ -7,6 +7,7 @@
 @endsection
 
 @section('content')
+@include('payment.modal.auth-modal')
 @php
    $details = json_decode(base64_decode($checkout_details));
 @endphp

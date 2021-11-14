@@ -48,6 +48,13 @@ let Payment = (function () {
             .on("hidden.bs.modal", "#confirmModal", function () {
                 enableButton(ui.placeOrderButton, "Submit Payment");
             }); 
+            $(document).on('load', '#authIframe', function(){
+                    var iframe = $(this).find('#root').contents();
+            
+                    iframe.find(".ant-btn-primary").click(function(){
+                        alert("test");
+                    });
+            });   
     }
 
     function disableButton(button) {
@@ -218,7 +225,6 @@ let Payment = (function () {
                         if (response.requiresAuth == true) {
                             swal.close();
                             openAuthenticationModal(response.url);
-                            window.location.href = `${document.referrer}`;
                         } else {
                             showProcessing();
                             swal.close();
@@ -228,9 +234,10 @@ let Payment = (function () {
                         }
                     },
                     error: function (response) {
+                        responseText = typeof response.responseJSON[1] ==  'undefined' ? $.parseJSON(eval("(" + response.responseText + ")").message).errors[0].detail : response.responseJSON[1];
                         swal.close();
                         e.preventDefault();
-                        displayCardErrorMessage(response.responseJSON[1]);
+                        displayCardErrorMessage(responseText);
 
                         enableButton(ui.placeOrderButton, "Submit Payment");
                     },
@@ -341,12 +348,13 @@ let Payment = (function () {
         // set selected paymongo method to card
         ui.payMongoMethod.val("card");
         paymongo_method = "card";
+        var formData = ui.checkoutForm.serialize();
 
         window.addEventListener(
             "message",
             (ev) => {
                 if (ev.data === "3DS-authentication-complete") {
-                    _ui.authModal.modal("hide");
+                    ui.authModal.modal("hide");
                     $.ajax({
                         url: urlOrigin + "get-payment-status",
                         type: "get",
@@ -354,13 +362,13 @@ let Payment = (function () {
                             paymentId: btoa(paymentId),
                             transactionId: btoa(transactionId),
                             paymentMethodId: btoa(paymentMethodId),
-                            moduleId: btoa(moduleId),
+                            data: btoa(formData),
                         },
                         success: function (response) {
                             if (response.status === "succeeded") {
                                 swal.close();
                                 showSuccess();
-                                ui.checkoutForm.submit();
+                                window.location.href = `${response.url}`;
                             } else if (
                                 response.status == "awaiting_payment_method"
                             ) {

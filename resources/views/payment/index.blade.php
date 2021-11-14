@@ -7,8 +7,9 @@
 @endsection
 
 @section('content')
+@include('payment.modal.auth-modal')
 @php
-   $bat = 0.06 * request()->amount;
+   $bat = 0.03 * request()->amount;
 @endphp
 {{-- <div class="col-lg-8">
     <div class="panel">
@@ -114,50 +115,55 @@
         <div class="panel-body container-fluid">
             <h3 class="mb-4 text-center">Details</h3>
             <div class="row mt-4">
-                <div class="col-lg-4">
-                    Amount:
-                </div>
+                @php 
+                    $payment_charge = request()->amount * 0.03;
+                @endphp
+                <table class="mt-4" width="100%">
+                    <tr>
+                        <td colspan="2" class="text-left">
+                            <h5>Amount:</h5>
+                        </td>
+                        <td colspan="2" class="text-right">
+                            <h5>₱ {{number_format(request()->amount)}}</h5>
+                        </td>
+                    </tr>  
+                    <tr class="paymongo--cont pay__cont">
+                        <td colspan="2" class="text-left">
+                            <h5>Payment Charge:</h5>
+                        </td>
+                        <td colspan="2" class="text-right">
+                            <h5>₱ {{number_format($payment_charge, 2, '.', ',')}}</h5>
+                        </td>
+                    </tr>
+                    <tr class="paymongo--cont pay__cont">
+                        <td colspan="2" class="text-left">
+                            <h3>Total:</h3>
+                        </td>
+                        <td colspan="2" class="text-right">
+                            <h3>₱ {{number_format(request()->amount + $payment_charge, 2, '.', ',')}}</h3>
+                        </td>
+                    </tr>    
 
-                <div class="col-lg-8 text-right">
-                    {{number_format(request()->amount)}}
-                </div>
-
-                <tr class="paymongo--cont pay__cont">
-                    <td colspan="2" class="text-left">
-                        <h5>Payment Charge:</h5>
-                    </td>
-                    <td colspan="2" class="text-right">
-                        <h5>₱ {{number_format($payment_charge, 2, '.', ',')}}</h5>
-                    </td>
-                </tr>
-                <tr class="paymongo--cont pay__cont">
-                    <td colspan="2" class="text-left">
-                        <h3>Total:</h3>
-                    </td>
-                    <td colspan="2" class="text-right">
-                        <h3>₱ {{number_format(array_sum($total) + $payment_charge + $shipping_fee, 2, '.', ',')}}</h3>
-                    </td>
-                </tr>    
-
-                <tr class="wallet--cont hidden pay__cont">
-                    <td colspan="2" class="text-left">
-                        <h5>Payment Charge:</h5>
-                    </td>
-                    <td colspan="2" class="text-right">
-                        @php 
-                            $wallet_charge = (array_sum($total_amount) + $shipping_fee) * 0.01
-                        @endphp
-                        <h5>₱ {{number_format($wallet_charge, 2, '.', ',')}}</h5>
-                    </td>
-                </tr>
-                <tr class="wallet--cont hidden pay__cont">
-                    <td colspan="2" class="text-left">
-                        <h3>Total:</h3>
-                    </td>
-                    <td colspan="2" class="text-right">
-                        <h3>₱ {{number_format(array_sum($total) + $wallet_charge + $shipping_fee, 2, '.', ',')}}</h3>
-                    </td>
-                </tr>
+                    <tr class="wallet--cont hidden pay__cont">
+                        <td colspan="2" class="text-left">
+                            <h5>Payment Charge:</h5>
+                        </td>
+                        <td colspan="2" class="text-right">
+                            @php 
+                                $wallet_charge = request()->amount * 0.01
+                            @endphp
+                            <h5>₱ {{number_format($wallet_charge, 2, '.', ',')}}</h5>
+                        </td>
+                    </tr>
+                    <tr class="wallet--cont hidden pay__cont">
+                        <td colspan="2" class="text-left">
+                            <h3>Total:</h3>
+                        </td>
+                        <td colspan="2" class="text-right">
+                            <h3>₱ {{number_format(request()->amount + $wallet_charge, 2, '.', ',')}}</h3>
+                        </td>
+                    </tr>
+                </table>    
             </div>
         </div>
     </div>

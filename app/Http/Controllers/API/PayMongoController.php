@@ -90,7 +90,7 @@ class PayMongoController extends Controller
 
             if ($this->checkPaymentIntent($attachedPaymentIntent)[0]) {
                 $nextAction   = $attachedPaymentIntent->getNextAction();
-                $redirect_url = $nextAction['redirect']['url'] ?? null;
+                $this->url    = $nextAction['redirect']['url'] ?? null;
                 $requiresAuth = true;
             } else {
                 $message = $this->checkPaymentIntent($attachedPaymentIntent)[1];
@@ -102,9 +102,8 @@ class PayMongoController extends Controller
 
             if($paymentStatus == 'succeeded') {
                 $this->savePayments($attachedPaymentIntent, 'card', $formData['transaction_type']);
+                $this->eventPerTransacType($formData, $attachedPaymentIntent);
             }
-
-            $this->eventPerTransacType($formData, $attachedPaymentIntent);
 
             $parameters = [
                 'paymentIntendId' => $paymentIntendId,
@@ -135,18 +134,26 @@ class PayMongoController extends Controller
     public function getPaymentStatus()
     {
         try {
-            $module                 = Module::where('id', base64_decode(request()->get('moduleId')))->first();
-            $module->payment_source = 'card';
+            $details = base64_decode(request()->get('data'));
+            $user    = auth()->user();
+            parse_str($details, $formData);
+
             $paymentIntentId        = base64_decode(request()->get('paymentId'));
             $retrievedPaymentIntent = Paymongo::paymentIntent()->find($paymentIntentId);
             $paymentStatus          = $retrievedPaymentIntent->getStatus() ?? null;
             $transactionId          = base64_decode(request()->get('transactionId')) ?? null;
 
             if($paymentStatus == 'succeeded') {
-                $this->savePayments($retrievedPaymentIntent, $module);
+                $this->savePayments($retrievedPaymentIntent, 'card', $formData['transaction_type']);
+                $this->eventPerTransacType($formData, $retrievedPaymentIntent);
             }
 
-            return response()->json(['paymentIntendId' => $paymentIntentId, 'status' => $paymentStatus], 200);
+            return response()->json([
+                'paymentIntendId' => $paymentIntentId, 
+                'status' => $paymentStatus,
+                'url' => $this->url
+            ], 200);
+            
         } catch (\Exception $e) {
             if(isset($retrievedPaymentIntent)){
                 $errorData = $this->getErrorDetails($e, null, $retrievedPaymentIntent, null);
