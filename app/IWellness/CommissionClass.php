@@ -98,7 +98,7 @@ class CommissionClass
 
 
         foreach($diamonds as $diamond){
-            unset($commission['user']);
+            unset($diamond['user']);
             Diamonds::create($diamond);
         }
 
