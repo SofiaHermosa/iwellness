@@ -147,3 +147,31 @@ p.card-text.price.text--lg {
 .swal2-icon.no-border.swal2-icon-show{
     border-color: transparent !important;
 }
+
+.profile--avatar img {
+    width: 10rem !important;
+    height: 10rem !important;
+    border: 0 none;
+    border-radius: 1000px;
+    object-fit: cover !important;
+    transform: translateY(-6rem);
+    position: absolute;
+    border: 0.2rem solid #80808029 !important;
+}
+.modal-adjust_top{
+    margin: 100px auto !important;
+}
+
+.avatar-small img {
+    width: 2rem !important;
+    max-width: 2rem !important;
+    height: 2rem !important;
+    object-fit: cover !important;
+}
+
+a.avatar.avatar-lg.bg-gray img {
+    width: 10rem !important;
+    max-width: 10rem !important;
+    height: 10rem !important;
+    object-fit: cover;
+}

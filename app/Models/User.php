@@ -32,6 +32,7 @@ class User extends Authenticatable
         'secret_question',
         'email',
         'password',
+        'prof_img'
     ];
 
     protected $appends = [
@@ -161,5 +162,9 @@ class User extends Authenticatable
 
     public function getWalletBalanceAttribute(){
         return $this->wallets()->first()->balance ?? 0;
+    }
+
+    public function getProfImgAttribute($value){
+        return !empty($value) ? asset('storage/'.$value) : asset('assets/images/default-profile.jpg');
     }
 }

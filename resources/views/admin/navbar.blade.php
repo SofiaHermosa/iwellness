@@ -52,13 +52,13 @@
           <li class="nav-item dropdown">
             <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
               data-animation="scale-up" role="button">
-              <span class="avatar avatar-online">
-                <img src="{{asset('assets/images/default-profile.jpg')}}" alt="...">
+              <span class="avatar avatar-small avatar-online">
+                <img src="{{auth()->user()->prof_img}}" alt="...">
                 <i></i>
               </span>
             </a>
             <div class="dropdown-menu" role="menu">
-              <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Profile</a>
+              <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#profileModal" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Profile</a>
               {{-- <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-card" aria-hidden="true"></i> Billing</a>
               <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-settings" aria-hidden="true"></i> Settings</a> --}}
               <div class="dropdown-divider" role="presentation"></div>

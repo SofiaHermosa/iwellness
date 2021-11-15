@@ -14,7 +14,7 @@ Network
 <div class="col-lg-12">
     <div class="panel">
         <div class="panel-body container-fluid">
-            <div class="table-reponsive">
+            <div class="table-responsive">
                 <table id="dataTable" class="table table-hover dataTable table-striped w-full" style="width:100%">
                     <thead>
                         <tr>

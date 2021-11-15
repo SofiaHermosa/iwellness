@@ -45,6 +45,7 @@ Route::middleware('auth')
     });
 
     Route::get('my-orders', 'Admin\OrdersController@userOrders');
+    Route::resource('user/profile', 'User\ProfileController');
 
     Route::namespace('Member')
     ->group(function(){

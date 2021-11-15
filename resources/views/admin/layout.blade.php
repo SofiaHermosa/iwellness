@@ -78,6 +78,7 @@
         <div class="page-content container-fluid">
           <div class="row" data-plugin="matchHeight" data-by-row="true">
             @yield('content')
+            @include('content.modal.profile')
           </div>
         </div>
       </div>     
@@ -160,6 +161,7 @@
     <script async src="https://static.addtoany.com/menu/page.js"></script>
     <script>window.referral_link = '{!! url('/register?referral='.base64_encode(auth()->user()->username)) !!}';</script>
     <script src="{{asset('assets/js/share.js')}}"></script>
+    <script src="{{asset('assets/js/edit-profile.js')}}"></script>
   
     @stack('scripts')
 </html>    

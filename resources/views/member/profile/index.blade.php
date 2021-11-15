@@ -36,7 +36,7 @@ page-profile
         <div class="card card-shadow text-center">
           <div class="card-block pb-4 pt-4">
             <a class="avatar avatar-lg bg-gray" href="javascript:void(0)">
-              <img src="{{asset('assets/images/default-profile.jpg')}}" alt="...">
+              <img src="{{auth()->user()->prof_img}}" alt="...">
             </a>
           
             <h4 class="profile-user">{{auth()->user()->name}}</h4>

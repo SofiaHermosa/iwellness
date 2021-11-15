@@ -64,7 +64,7 @@ class Products extends Model
         $percent  = null;
 
         if(auth()->user()->hasanyrole('member') && auth()->user()->activated){
-            $discount = number_format(($this->price * 0.30), 2, '.', ',');
+            $discount = number_format(($this->price * 0.3), 2, '.', ',');
             $percent  = 30;
         }
 
@@ -74,7 +74,7 @@ class Products extends Model
         }
 
         if(auth()->user()->hasanyrole('manager') && auth()->user()->activated){
-            $discount = number_format(($this->price * 0.60), 2, '.', ',');
+            $discount = number_format(($this->price * 0.6), 2, '.', ',');
             $percent  = 60;
         }
 
