@@ -105,4 +105,5 @@ Route::middleware('auth')->namespace('API')->group(function(){
 Route::namespace('Cron')
 ->group(function(){
     Route::get('end/subscriptions', 'JobsController@endSubscription');
+    Route::get('recurring/earnings', 'JobsController@recurringEarnings');
 });

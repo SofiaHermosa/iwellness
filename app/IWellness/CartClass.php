@@ -3,6 +3,8 @@
 namespace App\IWellness;
 use Luigel\Paymongo\Facades\Paymongo;
 use Luigel\Paymongo\Models\Webhook;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderConfirmation;
 use Illuminate\Http\Request;
 use App\IWellness\ProductClass;
 use App\IWellness\OrderingClass;
@@ -140,6 +142,8 @@ class CartClass
 
         $orderPlaced = Orders::create($data);
         $this->commissionClass->disseminate($amount, 2);
+
+        Mail::to($orderPlaced->user->email)->send(new OrderConfirmation($orderPlaced));
 
         return $orderPlaced;
     }

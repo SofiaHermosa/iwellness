@@ -42,7 +42,9 @@ class User extends Authenticatable
         'referrer_uname',
         'cart',
         'orders',
-        'wallet_balance'
+        'wallet_balance',
+        'earning_dates',
+        'capital'
     ];
 
     /**
@@ -73,6 +75,12 @@ class User extends Authenticatable
         ->orderBy('created_at', 'DESC')
         ->with('capital')
         ->get();
+    }
+
+    public function getCapitalAttribute(){
+        return Capital::where('user_id', $this->id)
+        ->get()
+        ->sum('amount');
     }
 
     public function setSecretQuestionAttribute($value)
@@ -166,5 +174,17 @@ class User extends Authenticatable
 
     public function getProfImgAttribute($value){
         return !empty($value) ? asset('storage/'.$value) : asset('assets/images/default-profile.jpg');
+    }
+
+    public function getEarningDatesAttribute(){
+        $subscription = Subscription::where('user_id', $this->id)
+        ->orderBy('created_at', 'DESC')
+        ->first() ?? '';
+
+        return !empty($subscription) ? [
+            $subscription->created_at->addDays(8)->format('Y-m-d'),
+            $subscription->created_at->addDays(16)->format('Y-m-d'),
+            $subscription->created_at->addDays(24)->format('Y-m-d'),
+        ] : [];
     }
 }

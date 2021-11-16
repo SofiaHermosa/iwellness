@@ -3,6 +3,8 @@
 namespace App\IWellness;
 use Illuminate\Http\Request;
 use App\IWellness\WalletClass;
+use App\Mail\FundRequest;
+use Illuminate\Support\Facades\Mail;
 use App\Models\CashIn;
 use App\Models\CashOut;
 use App\Models\Earnings;
@@ -74,7 +76,7 @@ class ManageFundsClass
     }
 
     public function approveCashIn($id, $user_id,$amount){
-        $cashinRequest = CashIn::findOrFail($id);
+        $cashinRequest = CashIn::with('user')->findOrFail($id);
         if ($cashinRequest->status != 1) {
             $cashinRequest->status = 1;
             $cashinRequest->save();
@@ -85,19 +87,16 @@ class ManageFundsClass
             ];
     
             $this->wallet->update($data); 
+
+            Mail::to($cashinRequest->user->email)->send(new FundRequest($cashinRequest, 'cash-in'));
         }
     }
 
     public function approveCashOut($id, $user_id,$amount){
-        $cashoutRequest = CashOut::findOrFail($id);
+        $cashoutRequest = CashOut::with('user')->findOrFail($id);
         $earnings = Earnings::where('user_id', $user_id)->get();
 
         if ($earnings->sum('amount') >= $amount) {
-            if ($cashoutRequest->status != 1) {
-                $cashoutRequest->status = 1;
-                $cashoutRequest->save();
-            }
-    
             if ($cashoutRequest->status == 0) {
                 $new_balance = $earnings->sum('amount') - $amount;
                 foreach($earnings as $earning){
@@ -112,6 +111,13 @@ class ManageFundsClass
                         'amount'       => $new_balance
                     ]);
                 }
+
+                if ($cashoutRequest->status != 1) {
+                    $cashoutRequest->status = 1;
+                    $cashoutRequest->save();
+                }
+
+                Mail::to($cashoutRequest->user->email)->send(new FundRequest($cashoutRequest, 'cash-out'));
             }
         }else{
             abort(403, 'Not enough earning balance');
@@ -123,11 +129,13 @@ class ManageFundsClass
         if ($cashoutRequest->status != 2) {
             $cashoutRequest->status = 2;
             $cashoutRequest->save();
+
+            Mail::to($cashoutRequest->user->email)->send(new FundRequest($cashoutRequest, 'cash-out'));
         }
     }
 
     public function declineCashIn($id, $user_id,$amount){
-        $cashinRequest = CashIn::findOrFail($id);
+        $cashinRequest = CashIn::with('user')->findOrFail($id);
         if ($cashinRequest->status != 2) {
             $cashinRequest->status              = 2;
             $cashinRequest->declining_reason    = request()->has('reason') ? base64_encode(request()->reason) : '';
@@ -137,6 +145,8 @@ class ManageFundsClass
                 'user_id' => $user_id,
                 'balance' => $amount
             ];
+
+            Mail::to($cashinRequest->user->email)->send(new FundRequest($cashinRequest, 'cash-in'));
         }
     }
 }

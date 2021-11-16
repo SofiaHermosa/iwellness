@@ -3,6 +3,8 @@
 namespace App\IWellness;
 use Illuminate\Http\Request;
 use App\Models\DiamondConversionItems;
+use App\Mail\DiamondConversion;
+use Illuminate\Support\Facades\Mail;
 use App\Models\ConversionRequest;
 use App\Models\Diamonds;
 use Storage;
@@ -88,20 +90,26 @@ class DiamondConversionClass
     }
 
     public function approveConversion($id){
-        $conversionRequest = ConversionRequest::findOrFail($id);
+        $conversionRequest = ConversionRequest::with(['user', 'item'])->findOrFail($id);
         if ($conversionRequest->status != 1) {
             $conversionRequest->status = 1;
             $conversionRequest->save();
+
+            Mail::to($conversionRequest->user->email)->send(new DiamondConversion($conversionRequest));
         }
+
     }
 
     public function declineConversion($id){
-        $conversionRequest = ConversionRequest::findOrFail($id);
+        $conversionRequest = ConversionRequest::with(['user', 'item'])->findOrFail($id);
         if ($conversionRequest->status != 2) {
             $conversionRequest->status              = 2;
             $conversionRequest->declining_reason    = request()->reason;
             $conversionRequest->save();
+
+            Mail::to($conversionRequest->user->email)->send(new DiamondConversion($conversionRequest));
         }
+
     }
 
     public function updateCreateRequest(){
