@@ -28,7 +28,7 @@ class JobsController extends Controller
                 //Delete Capital
                 $capitals = $subscription->capital;
                 foreach($capitals as $capital){
-                    $capital->update(['status' => 0,]);
+                    $capital->update(['status' => 0]);
                     $capital->delete();
                 }
     
