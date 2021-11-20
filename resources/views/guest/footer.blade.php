@@ -7,7 +7,7 @@
         </div>
 
         <div>
-            <div class="text-center p-2 flex flex-col space-y-2 w-32 m-auto">
+            <div class="text-center p-2 flex flex-col space-y-2 w-full md:w-32 m-auto">
                 <p class="text-gray-700 block px-3 py-2 rounded-md text-md font-extrabold">Shop Now</p>
                 <a href="#productSection" class="nav--link text-gray-700 hover:bg-white hover:text-gray-800 block px-3 py-2 rounded-md text-base font-semibold">Products</a>
                 <a href="javascript:void(0)" class="text-gray-700 hover:bg-white hover:text-gray-800 block px-3 py-2 rounded-md text-base font-semibold toggle-menu" data-toggle="#viewCart">Cart</a>
@@ -16,7 +16,7 @@
         </div>
 
         <div>
-            <div class="text-center p-2 flex flex-col space-y-2 w-44 m-auto">
+            <div class="text-center p-2 flex flex-col space-y-2 w-full md:w-44 m-auto">
                 <p class="text-gray-700 block px-3 py-2 rounded-md text-md font-extrabold">About Us</p>
                 <a href="" class="text-gray-700 hover:bg-white hover:text-gray-800 block px-3 py-2 rounded-md text-base font-semibold">History</a>
                 <a href="{{url('storage/certifications/Business-Permit.jpg')}}" target="_blank" class="text-gray-700 hover:bg-white hover:text-gray-800 block px-3 py-2 rounded-md text-base font-semibold">Bussiness Permit</a>
@@ -25,7 +25,7 @@
         </div>
 
         <div>
-            <div class="text-center p-2 flex flex-col space-y-2 m-auto">
+            <div class="text-center p-2 flex flex-col space-y-2 w-full m-auto">
                 <p class="text-gray-700 block px-3 py-2 rounded-md text-md font-extrabold">Contact Details</p>
                 <p class="text-gray-700 block px-3 py-2 rounded-md text-base font-semibold">+123 456</p>
                 <p class="text-gray-700 block px-3 py-2 rounded-md text-base font-semibold">rahimajanep785@gmail.com</p>
