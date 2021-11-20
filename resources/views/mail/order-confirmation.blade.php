@@ -411,7 +411,7 @@
 
         <!-- Visually Hidden Preheader Text : BEGIN -->
         <div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
-            Hello {{ $order->user->name }}, This is your order confimation.
+            Hello {{ !empty($order->user) ? $order->user->name : $order->details->email }}, This is your order confimation.
         </div>
         <div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
             &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
@@ -493,11 +493,11 @@
                                             <tr>
                                                 <td valign="top" style="">
                                                     <p class="text--black">
-                                                       Hi {{$order->user->name}},
+                                                       Hi {{ !empty($order->user) ? $order->user->name : $order->details->name }},
                                                     </p>
                                                     <br/>
                                                     <p class="text--black">
-                                                        We received your order with transaction no: <strong>{{$order->order_id}}</strong> in total amount of <strong>₱{{number_format(($order->total + $order->shipping_fee + $order->payment), 2, '.', ',')}}</strong>.
+                                                        We received your order with transaction no: <a href="{{url('res/order/invoice/'.$order->id)}}"><strong>{{$order->order_id}}</strong></a> in total amount of <strong>₱{{number_format(($order->total + $order->shipping_fee + $order->payment), 2, '.', ',')}}</strong>.
                                                     </p>
                                                 </td>
                                             </tr>
@@ -509,44 +509,6 @@
                     </td>
                 </tr>
                 <!-- Message : END -->
-
-                <tr>
-                    <td align="left" valign="top" style="font-size:0; background-color: #ffffff; padding: 10px 60px;">
-                        <div style="display:inline-block;" class="">
-                            <h3>Order Details</h3>
-                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                                <tr>
-                                    <th>#</th>
-                                    <th class="text-left">Item</th>
-                                    <th class="text-left">Quantity</th>
-                                    <th class="text-right">Unit Cost</th>
-                                    <th class="text-right">Total</th>
-                                </tr>
-
-                                @foreach($order->cart as $key => $item)
-                                    <tr>
-                                        <td class="text-left">
-                                        {{$key + 1}}
-                                        </td>
-                                        <td class="text-left">
-                                        {{$item->details->name}}
-                                        </td>
-                                        <td class="text-left">
-                                        {{$item->quantity}}
-                                        </td>
-                                        <td class="text-right">
-                                        ₱ {{$item->price}}
-                                        </td>
-                                        <td class="text-right">
-                                        ₱ {{$item->price * $item->quantity}}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </table>
-                        </div>
-                    </td>
-                </tr>
-
 
                 <!-- CLOSING MESSAGE : BEGIN -->
                 <tr>

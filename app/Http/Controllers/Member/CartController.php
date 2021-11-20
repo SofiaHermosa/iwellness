@@ -49,7 +49,7 @@ class CartController extends Controller
 
         return response()->json([
             'message' => 'products successfully added to cart',
-            'cart'    => auth()->user()->cart
+            'cart'    => auth()->check() ? auth()->user()->cart : Session::get('my-cart') 
         ], 200);
     }
 
@@ -89,7 +89,7 @@ class CartController extends Controller
 
         return response()->json([
             'message' => 'Cart successfully updated',
-            'cart'    => auth()->user()->cart
+            'cart'    => auth()->user()->cart ?? json_decode(Session::get('my-cart'))
         ], 200);
     }
 
@@ -105,7 +105,7 @@ class CartController extends Controller
 
         return response()->json([
             'message' => 'Product Successfully removed to cart',
-            'cart'    => auth()->user()->cart
+            'cart'    => auth()->user()->cart ?? json_decode(Session::get('my-cart'))
         ], 200);
     }
 
@@ -125,10 +125,10 @@ class CartController extends Controller
     public function checkOrderTotal($cart){
         $toCheckedOut = $cart;
         $amount = [];
-
-        foreach($cart as $checkout){
+    
+        foreach($cart ?? [] as $checkout){
             $id         = base64_decode($checkout);
-            $orders     = auth()->user()->cart->$id;
+            $orders     = auth()->check() ? auth()->user()->cart->$id : json_decode(Session::get('my-cart'))->$id;
             $amount[]   = $orders->price * $orders->quantity;
         }
 

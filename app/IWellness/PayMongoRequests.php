@@ -10,6 +10,7 @@ use App\Events\SendPaymentMailToAdmin;
 use App\Events\SendPaymentMailToUser;
 use Mail;
 use App\Mail\SendMail;
+use Session;
 
 trait PayMongoRequests
 {
@@ -113,7 +114,7 @@ trait PayMongoRequests
 
     public function savePayments($payment, $source, $transac_type = 1)
     {
-        $user           = auth()->user();
+        $user           = auth()->check() ? auth()->user() : json_decode(base64_decode(Session::get('checkout_details')))->shipping_details;
         $module_payment = new Payment();
         $data           = $payment->getData() ?? null;
         
@@ -128,13 +129,13 @@ trait PayMongoRequests
             $module_payment->payment_source = $payment->getSource()['type'];
             $transactionId                  = $payment->getData()['id'] ?? null;
         }
-        $module_payment->user_id             = $user->id;
+        $module_payment->user_id             = $user->id ?? 0;
         $module_payment->amount_paid         = $payment->getAmount();
         $module_payment->pg_transaction_id   = $transactionId;
         $module_payment->transaction_type    = $transac_type;
         $module_payment->save();
 
-        $payment_data   = $details = Payment::where('user_id', $user->id)->where('pg_transaction_id', $transactionId)->first();
+        $payment_data   = $details = Payment::where('user_id', $user->id ?? 0)->where('pg_transaction_id', $transactionId)->first();
         
     }
 

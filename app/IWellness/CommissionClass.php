@@ -19,12 +19,12 @@ class CommissionClass
     }
 
     public function getParents($id=null){
-        return $id != auth()->user()->id ? User::where('id', $id)->get() : [];
+        return auth()->check() ? ($id != auth()->user()->id ? User::where('id', $id)->get() : []) : [];
     }
 
     public function disseminate($amount, $source)
     {
-        $parents = $this->getParents(auth()->user()->referer);
+        $parents = $this->getParents(auth()->check() ? auth()->user()->referer : '');
         $percentage  = ['0.05', '0.02', '0.02', '0.01'];
         $commissions = [];
         $diamonds    = [];
@@ -82,13 +82,15 @@ class CommissionClass
             $parents = $nextParent;
         }
 
-        $diamonds[] = [
-            'user_id'       => auth()->user()->id,
-            'downline_id'   => auth()->user()->id,
-            'from'          => $source,
-            'amount'        => 5,
-            'user'          => auth()->user(),
-        ];
+        if(auth()->check()){
+            $diamonds[] = [
+                'user_id'       => auth()->user()->id,
+                'downline_id'   => auth()->user()->id,
+                'from'          => $source,
+                'amount'        => 5,
+                'user'          => auth()->user(),
+            ];
+        }
 
         foreach($commissions as $commission){      
             unset($commission['user']);

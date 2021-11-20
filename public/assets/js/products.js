@@ -86,8 +86,8 @@ let Products = (function () {
 
     function addToCart(){
         var data = {
-            id        : ui.prodId.val(),
-            quantity  : ui.prodQty.val(),
+            id        : $(this).data('id') ?? ui.prodId.val(),
+            quantity  : $(this).data('qty') ?? ui.prodQty.val(),
             _token    : $('meta[name="csrf-token"]').attr('content')
         };
 
@@ -103,6 +103,7 @@ let Products = (function () {
             success: function (response, status) {
                 $("#cartNav").load(location.href + " #cartNavCont");
                 alertify.success("Product Successfully added to cart!");
+                $("#cart").load(location.href + " #cartCont");
             },
             error: function (response) {
                 alertify.error("Something went wrong");

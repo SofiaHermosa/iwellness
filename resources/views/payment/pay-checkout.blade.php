@@ -17,7 +17,7 @@ $total_amount = [];
 @forelse ($details->orders as $key => $checkout)
 @php
     $id   = base64_decode($checkout);
-    $cart = auth()->user()->cart->$id;
+    $cart = auth()->check() ? auth()->user()->cart->$id : json_decode(Session::get('my-cart'))->$id;
 @endphp
 
 @if ($cart->details->discounted_price->price)
@@ -33,59 +33,8 @@ $total_amount = [];
 @empty    
 @endforelse
 <div class="col-lg-8">
-
-    {{-- <div class="panel">
-        <div class="panel-body container-fluid">
-            <div class="row">
-                <div class="payment-error-message col-lg-12"></div>
-            </div>
-
-            <div class="row">
-                <div class="error-message col-lg-12"></div>
-            </div>
-            <form action="" class="checkout-payment-form row" method="POST">
-                @csrf
-                
-                <div class="col-lg-12">
-                    <div class="form-group form-material floating" data-plugin="formMaterial">
-                        <input type="text" class="form-control pay__with__card card_number_reqs empty" name="details[card_number]" data-mask="0000-0000-0000-0000" required autocomplete="current-password" id="inputCardNo">
-                        <label class="floating-label" for="inputCardNo">Credit / Debit Number</label>
-                    </div>
-                </div>
-
-                <div class="col-lg-4">
-                    <div class="form-group form-material floating" data-plugin="formMaterial">
-                        <input type="text" class="form-control pay__with__card month_reqs empty" name="details[exp_month]" data-mask="00" required autocomplete="current-password" id="inputMM">
-                        <label class="floating-label" for="inputMM">MM</label>
-                    </div>
-                </div>
-
-                <div class="col-lg-4">
-                    <div class="form-group form-material floating" data-plugin="formMaterial">
-                        <input type="text" class="form-control pay__with__card year_reqs empty" name="details[exp_year]" data-mask="00" required autocomplete="current-password" id="inputYY">
-                        <label class="floating-label" for="inputYY">YY</label>
-                    </div>
-                </div>
-
-                <div class="col-lg-4">
-                    <div class="form-group form-material floating" data-plugin="formMaterial">
-                        <input type="text" class="form-control pay__with__card cvc_reqs empty" name="details[cvc]" data-mask="000" required autocomplete="current-password" id="inputCVC">
-                        <label class="floating-label" for="inputCVC">CVC</label>
-                    </div>
-                </div>
-                @php
-                    $shipping_fee   = array_sum($total_amount) <= 5000 ? 120 : 200;
-                    $payment_charge = (array_sum($total_amount) + $shipping_fee) * 0.03;
-                @endphp
-                <input type="hidden" id="paymongo_method" name="paymongo_method" value="card">
-                <input type="hidden" name="amount" value="{{array_sum($total_amount)}}">
-                <input type="hidden" name="service_charge" value="{{$payment_charge}}">
-                <input type="hidden" name="shipping_fee" value="{{$shipping_fee}}">
-                <input type="hidden" name="transaction_type" value="2">
-            </form>    
-        </div>
-    </div> --}}
     <div class="panel nav-tabs-horizontal" data-plugin="tabs">
+        @if(auth()->check())
         <ul class="nav nav-tabs nav-tabs-line" role="tablist">
             <li class="nav-item tab--payment" data-target=".paymongo--cont"><a class="nav-link active show" data-toggle="tab" href="#exampleTopHome" aria-controls="exampleTopHome" role="tab" aria-expanded="true" aria-selected="true"><i class="icon fa-credit-card" aria-hidden="true"></i>Online Payment</a></li>
             <li class="nav-item tab--payment" data-target=".wallet--cont"><a class="nav-link" data-toggle="tab" href="#exampleTopComponents" aria-controls="exampleTopComponents" role="tab" aria-selected="false"><i class="icon md-balance-wallet" aria-hidden="true"></i>Wallet</a></li>
@@ -97,6 +46,7 @@ $total_amount = [];
             </div>
             </li>
         </ul>
+        @endif
         <div class="panel-body">
             <div class="tab-content">
                 <div class="tab-pane active show" id="exampleTopHome" role="tabpanel">
@@ -137,6 +87,7 @@ $total_amount = [];
                                 <label class="floating-label" for="inputCVC">CVC</label>
                             </div>
                         </div>
+                       
                         @php
                             $shipping_fee   = array_sum($total_amount) <= 5000 ? 120 : 200;
                             $payment_charge = (array_sum($total_amount) + $shipping_fee) * 0.03;
@@ -154,6 +105,7 @@ $total_amount = [];
                         </div>
                     </form>
                 </div>
+                @if(auth()->check())
                 <div class="tab-pane" id="exampleTopComponents" role="tabpanel">
                     <div class="row">
                         <div class="col-lg-12 px-4 text-center">
@@ -177,6 +129,7 @@ $total_amount = [];
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>    
@@ -192,7 +145,7 @@ $total_amount = [];
                     @forelse ($details->orders as $key => $checkout)
                         @php
                             $id   = base64_decode($checkout);
-                            $cart = auth()->user()->cart->$id;
+                            $cart = auth()->check() ? auth()->user()->cart->$id : json_decode(Session::get('my-cart'))->$id;
                         @endphp
                         <tr>
                             <td width="15%">{!! $cart->details->cover !!}</td>
@@ -287,7 +240,7 @@ $total_amount = [];
 
 @push('scripts')
 <script>
-    window.balance = '{!! base64_encode(str_replace('0','$',auth()->user()->wallet_balance)) !!}';
+    window.balance = '{!! base64_encode(str_replace('0','$',auth()->check() ? auth()->user()->wallet_balance : 0)) !!}';
     window.amount  = '{!! base64_encode(str_replace('0','$',array_sum($total_amount) + $payment_charge + $shipping_fee)) !!}';
     window.type    = 2;
 </script>

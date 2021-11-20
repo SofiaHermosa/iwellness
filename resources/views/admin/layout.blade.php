@@ -7,7 +7,7 @@
     <meta name="description" content="bootstrap material admin template">
     <meta name="author" content="">
     
-    <title>@yield('page_header') | IWellness</title>
+    <title>@yield('page_header') | iWellness</title>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @if(auth()->check())
@@ -68,21 +68,32 @@
       Breakpoints();
     </script>
   </head>
-  <body class="animsition @yield('body-class') site-navbar-small">
-      @include('admin.navbar')
-      @include('admin.sidebar')
+  <body class="animsition @yield('body-class') site-navbar-small {{!auth()->check() ? 'pt-0' : ''}}">
+      
+      @if(auth()->check())
+        @include('admin.sidebar')  
+        @include('admin.navbar')
+      @else
+        <a href="{{url('/')}}" class="btn btn-primary m-10">Close</a>
+      @endif
 
       <div class="page">
-        
+    
         @yield('page_title')
+        
         <div class="page-content container-fluid">
           <div class="row" data-plugin="matchHeight" data-by-row="true">
             @yield('content')
-            @include('content.modal.profile')
+            
+            @if(auth()->check())
+              @include('content.modal.profile')
+            @endif  
           </div>
         </div>
-      </div>     
-      @include('content.share-modal')
+      </div>  
+      @if(auth()->check())   
+        @include('content.share-modal')
+      @endif  
       
       <footer class="site-footer">
         <div class="site-footer-right">© {{date('Y')}} IWellness</div>
@@ -159,9 +170,12 @@
     <script src="{{asset('app/classic/global/vendor/datatables.net-buttons-bs4/buttons.bootstrap4.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
     <script async src="https://static.addtoany.com/menu/page.js"></script>
-    <script>window.referral_link = '{!! url('/register?referral='.base64_encode(auth()->user()->username)) !!}';</script>
-    <script src="{{asset('assets/js/share.js')}}"></script>
-    <script src="{{asset('assets/js/edit-profile.js')}}"></script>
+
+    @if(auth()->check())
+      <script>window.referral_link = '{!! url('/register?referral='.base64_encode(auth()->user()->username)) !!}';</script>
+      <script src="{{asset('assets/js/share.js')}}"></script>
+      <script src="{{asset('assets/js/edit-profile.js')}}"></script>
+    @endif  
   
     @stack('scripts')
 </html>    

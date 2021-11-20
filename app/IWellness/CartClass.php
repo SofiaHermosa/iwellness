@@ -36,7 +36,7 @@ class CartClass
 
     public function updateCart(){
         $id = $this->products->id;
-        $cart = auth()->user()->cart;
+        $cart = auth()->check() ? auth()->user()->cart : json_decode(Session::get('my-cart'));
         if(!empty($cart->$id)){
             $quantity = $cart->$id->quantity + $this->request->quantity;
             $cart->$id = array(
@@ -61,42 +61,55 @@ class CartClass
             }
         }
 
-        Cart::updateOrCreate(
-            ['user_id' => auth()->user()->id],
-            [
-                'user_id' => auth()->user()->id,
-                'cart'    => $cart
-            ]
-        );
+        if(auth()->check()){
+            Cart::updateOrCreate(
+                ['user_id' => auth()->user()->id],
+                [
+                    'user_id' => auth()->user()->id,
+                    'cart'    => $cart
+                ]
+            );
+        }else{
+            Session::put('my-cart', json_encode($cart));
+        }
+        
         return $this;
     }
     public function deleteProd($id=null){
-        $cart                = auth()->user()->cart;
+        $cart                = auth()->check() ? auth()->user()->cart : json_decode(Session::get('my-cart'));
         unset($cart->$id);
 
-        $this->cart          = Cart::where('user_id', auth()->user()->id)->first();
-        $this->cart->cart    = $cart; 
-        $this->cart->save();
+        if(auth()->check()){
+            $this->cart          = Cart::where('user_id', auth()->user()->id)->first();
+            $this->cart->cart    = $cart; 
+            $this->cart->save();
+        }else{
+            Session::put('my-cart', json_encode($cart));
+        }    
 
         return $this;
     }
 
     public function updateOrderQty(){
-        $cart                = auth()->user()->cart;
+        $cart                = auth()->check() ? auth()->user()->cart : json_decode(Session::get('my-cart'));
         $id                  = $this->request->id; 
         $cart->$id->quantity = $this->request->quantity;
 
-        $this->cart          = Cart::where('user_id', auth()->user()->id)->first();
-        $this->cart->cart    = $cart; 
-        $this->cart->save();
-
+        if(auth()->check()){
+            $this->cart          = Cart::where('user_id', auth()->user()->id)->first();
+            $this->cart->cart    = $cart; 
+            $this->cart->save();    
+        }else{
+            Session::put('my-cart', json_encode($cart));
+        }
+      
         return $this;
     }
 
     public function placeOrders($data = null, $attachedPaymentIntent = null){
         $checkout_details = Session::get('checkout_details');
         $checkout_details = json_decode(base64_decode($checkout_details));
-        $current_cart     = auth()->user()->cart;
+        $current_cart     = auth()->check() ? auth()->user()->cart : json_decode(Session::get('my-cart'));
         $dataIntent       = !empty($attachedPaymentIntent)? $attachedPaymentIntent->getData() : null;
         $amount           = $data['amount'];
         $shipping         = $data['shipping_fee'];
@@ -116,22 +129,28 @@ class CartClass
 
         foreach($checkout_details->orders as $key => $order){
             $id = base64_decode($order); 
-            $cart[] = auth()->user()->cart->$id;
+            $cart[] = auth()->check() ? auth()->user()->cart->$id : json_decode(Session::get('my-cart'))->$id;
+        
             unset($current_cart->$id);
         }
 
-        Cart::updateOrCreate(
-            ['user_id' => auth()->user()->id],
-            [
-                'user_id' => auth()->user()->id,
-                'cart'    => $current_cart
-            ]
-        );
+        if(auth()->check()){
+            Cart::updateOrCreate(
+                ['user_id' => auth()->check() ? auth()->user()->id : ''],
+                [
+                    'user_id' => auth()->check() ? auth()->user()->id : 0,
+                    'cart'    => $current_cart
+                ]
+            );
+        }else{
+            Session::put('my-cart', json_encode($current_cart));
+        }
 
         $latestOrder = $this->orderClass->get()->orders->first();
+       
         $data = [
             'order_id'          => '#'.str_pad(($latestOrder->id ?? 0) + 1, 8, "0", STR_PAD_LEFT),
-            'user_id'           => auth()->user()->id,
+            'user_id'           => auth()->check() ? auth()->user()->id : 0,
             'transaction_id'    => $transactionId,
             'cart'              => $cart,
             'details'           => $checkout_details->shipping_details,
@@ -142,8 +161,8 @@ class CartClass
 
         $orderPlaced = Orders::create($data);
         $this->commissionClass->disseminate($amount, 2);
-
-        Mail::to($orderPlaced->user->email)->send(new OrderConfirmation($orderPlaced));
+      
+        Mail::to($orderPlaced->details->email)->send(new OrderConfirmation($orderPlaced));
 
         return $orderPlaced;
     }

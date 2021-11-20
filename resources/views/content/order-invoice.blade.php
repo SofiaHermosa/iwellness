@@ -97,7 +97,7 @@ Order Invoice
             </div>
         </div>
 
-        @if (auth()->user()->hasanyrole('system administrator'))
+        @if (auth()->check() && auth()->user()->hasanyrole('system administrator'))
           <form action="{{url('res/orders/'.$order->id)}}" method="POST" id="orderInvoiceForm">
             @csrf
             @method('PUT')

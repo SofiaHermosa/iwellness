@@ -8,7 +8,7 @@
     <meta name="description" content="bootstrap material admin template">
     <meta name="author" content="">
     
-    <title>@yield('page_title') | IWellness</title>
+    <title>@yield('page_title') | iWellness</title>
     
     <link rel="apple-touch-icon" href="{{asset('assets/images/iwellness_logo.png')}}">
     <link rel="shortcut icon" href="{{asset('assets/images/iwellness_logo.png')}}">
@@ -61,7 +61,7 @@
         <div class="page-brand-info">
           <div class="brand">
             <img class="brand-img" width="150" height="150" src="{{asset('assets/images/iwellness_logo.png')}}" alt="...">
-            <h2 class="brand-text font-size-60 text-warning">IWellness<br> 
+            <h2 class="brand-text font-size-60 text-warning">iWellness<br> 
               <small class="font-size-18 p-0">Experience the Difference.</small>
             </h2>
             
@@ -71,7 +71,7 @@
         <div class="page-login-main">
           <div class="brand hidden-md-up">
             <img class="brand-img" width="100" height="100" src="{{asset('assets/images/iwellness_logo.png')}}" alt="...">
-            <h3 class="brand-text font-size-40 text-warning">IWellness</h3>
+            <h3 class="brand-text font-size-40 text-warning">iWellness</h3>
           </div>
           <h3 class="font-size-24">@yield('page_title')</h3>
           <p></p>
@@ -79,7 +79,7 @@
           @yield('content')
 
           <footer class="page-copyright">
-            <p>IWellness</p>
+            <p>iWellness</p>
             <p>© {{date('Y')}}. All RIGHT RESERVED.</p>
             {{-- <div class="social">
               <a class="btn btn-icon btn-round social-twitter mx-5" href="javascript:void(0)">

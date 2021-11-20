@@ -38,7 +38,9 @@
         <!-- End Navbar Toolbar -->
   
         <!-- Navbar Toolbar Right -->
+       
         <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
+        @if(auth()->check())
           @if (!auth()->user()->hasanyrole('system administrator'))
           <li class="nav-item dropdown" id="cartNav">
             <a class="nav-link" href="{{url('res/cart')}}" id="cartNavCont" title="Cart"
@@ -69,6 +71,7 @@
             </div>
           </li>
         </ul>
+        @endif
         <!-- End Navbar Toolbar Right -->
       </div>
       <!-- End Navbar Collapse -->

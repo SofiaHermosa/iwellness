@@ -38,8 +38,9 @@ class PayMongoController extends Controller
     {
         try {
             $details = base64_decode(request()->get('data'));
-            $user    = auth()->user();
+            $user    = auth()->check() ? auth()->user() : json_decode(base64_decode(Session::get('checkout_details')))->shipping_details;
             parse_str($details, $formData);
+         
             $cardDetails            = $formData['details'] ?? null;
             $amount                 = $formData['amount']+$formData['service_charge']+($formData['shipping_fee'] ?? 0);
             // Payment intent
@@ -117,8 +118,7 @@ class PayMongoController extends Controller
             return response()->json($parameters, 200);
         } catch (\Exception $e) {
             throw $e;
-            // dd(ltrim($cardDetails['card_number'], '-'));
-
+            
             if(isset($paymentMethodCreated) AND isset($paymentIntent)){
                 $errorData = $this->getErrorDetails($e, $paymentMethodCreated, $paymentIntent, null);
             } else {
@@ -135,7 +135,7 @@ class PayMongoController extends Controller
     {
         try {
             $details = base64_decode(request()->get('data'));
-            $user    = auth()->user();
+            $user    = auth()->check() ? auth()->user() : [];
             parse_str($details, $formData);
 
             $paymentIntentId        = base64_decode(request()->get('paymentId'));

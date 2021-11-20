@@ -96,7 +96,7 @@ Checkout Information
                         @forelse ($toCheckedOut as $key => $checkout)
                             @php
                                 $id   = base64_decode($checkout);
-                                $cart = auth()->user()->cart->$id;
+                                $cart = auth()->check() ? auth()->user()->cart->$id : json_decode(Session::get('my-cart'))->$id;
                             @endphp
                             <tr>
                                 <td width="15%">{!! $cart->details->cover !!}</td>

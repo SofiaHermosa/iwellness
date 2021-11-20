@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('res');
+    return view('guest/index');
 });
 
 Auth::routes();
@@ -50,18 +50,19 @@ Route::middleware('auth')
     Route::namespace('Member')
     ->group(function(){
         Route::resource('profile', 'DashboardController');
-        Route::resource('cart', 'CartController');
         Route::resource('manage-funds', 'ManageFundsController')->middleware('account.activated');
         Route::resource('network', 'NetworkController');
         Route::post('activate/account', 'SubscriptionController@activateAccount');
-        Route::get('checkout/cart', 'CartController@proceedToCheckout');
-        Route::get('order/invoice/{id}', 'CartController@show');
-        Route::post('checkout/payment', 'CartController@checkoutPayment');
+        // Route::get('checkout/cart', 'CartController@proceedToCheckout');
+        // Route::post('checkout/payment', 'CartController@checkoutPayment');
         Route::resource('diamond/conversion', 'DiamondConversionController');
     });
-
-    //Subscriber Routes
 });
+
+Route::resource('res/cart', 'Member\CartController');
+Route::get('res/checkout/cart', 'Member\CartController@proceedToCheckout');
+Route::post('res/checkout/payment', 'Member\CartController@checkoutPayment');
+Route::get('res/order/invoice/{id}', 'Member\CartController@show');
 
 Route::namespace('Auth')
 ->group(function(){
@@ -76,7 +77,7 @@ Route::middleware('auth')->namespace('Payment')->group(function(){
     Route::resource('payment', 'PaymentController');
 });
 
-Route::middleware('auth')->namespace('API')->group(function(){
+Route::namespace('API')->group(function(){
     // paymongo
     // pay using card
     Route::post('pay-with-card', 'PayMongoController@payWithCard');

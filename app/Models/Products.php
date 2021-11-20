@@ -63,17 +63,17 @@ class Products extends Model
         $discount = null;
         $percent  = null;
 
-        if(auth()->user()->hasanyrole('member') && auth()->user()->activated){
+        if(auth()->check() && auth()->user()->hasanyrole('member') && auth()->user()->activated){
             $discount = number_format(($this->price - ($this->price * 0.3)), 2, '.', ',');
             $percent  = 30;
         }
 
-        if(auth()->user()->hasanyrole('team leader') && auth()->user()->activated){
+        if(auth()->check() && auth()->user()->hasanyrole('team leader') && auth()->user()->activated){
             $discount = number_format(($this->price - ($this->price * 0.45)), 2, '.', ',');
             $percent  = 45;
         }
 
-        if(auth()->user()->hasanyrole('manager') && auth()->user()->activated){
+        if(auth()->check() && auth()->user()->hasanyrole('manager') && auth()->user()->activated){
             $discount = number_format(($this->price - ($this->price * 0.6)) , 2, '.', ',');
             $percent  = 60;
         }

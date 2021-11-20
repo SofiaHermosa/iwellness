@@ -55,7 +55,7 @@ Product
                         <h2 class="discount--price" style="text-decoration: none !important;">₱ {{ $product->price }}</h2>
                         @endif
                     </div>
-                    <input type="hidden" name="prod_id" id="prodId" value="{{request()->id}}">
+                    <input type="hidden" name="prod_id" id="prodId" value="{{$product->id}}">
                     <input type="hidden" id="price" value="{{ $product->discounted_price['price'] ?? 0 }}">
                     <input type="hidden" id="discounted" value="{{ $product->price ?? 0 }}">
 
