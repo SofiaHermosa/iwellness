@@ -27,7 +27,7 @@
                                 <input type="checkbox" class="icheckbox-orange mt-4" id="checkOrders" name="checkout[]" data-plugin="iCheck" data-checkbox-class="icheckbox_flat-blue" checked value="{{base64_encode($key)}}"/>
                             </td>
                             <td>{!! $cart->details->cover !!}</td>
-                            <td><p class="my-2 w-24 md:w-80" for="checkOrders">{{ $cart->details->name }}</p>
+                            <td><p class="my-2 w-16 md:w-80" for="checkOrders">{{ $cart->details->name }}</p>
                                 @if ($cart->details->discounted_price->price)
                                 @php
                                     $total[] = $cart->price * $cart->quantity;
