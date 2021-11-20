@@ -20,7 +20,7 @@
                 <p class="text-gray-700 block px-3 py-2 rounded-md text-md font-extrabold">About Us</p>
                 <a href="" class="text-gray-700 hover:bg-white hover:text-gray-800 block px-3 py-2 rounded-md text-base font-semibold">History</a>
                 <a href="{{url('storage/certifications/Business-Permit.jpg')}}" target="_blank" class="text-gray-700 hover:bg-white hover:text-gray-800 block px-3 py-2 rounded-md text-base font-semibold">Bussiness Permit</a>
-                <a href="{{url('storage/certifications/DTI-Certification.pdf')}}"  target="_blank" class="text-gray-700 hover:bg-white hover:text-gray-800 block px-3 py-2 rounded-md text-base font-semibold">DTI Lisence</a>
+                <a href="{{url('storage/certifications/DTI-Certification.pdf')}}"  target="_blank" class="text-gray-700 hover:bg-white hover:text-gray-800 block px-3 py-2 rounded-md text-base font-semibold">DTI License</a>
             </div>
         </div>
 
