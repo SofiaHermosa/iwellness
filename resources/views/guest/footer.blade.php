@@ -1,8 +1,14 @@
-<div class="block bg-yellow-400 py-14 px-32">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div>
+<div class="block bg-yellow-400 py-14 px-10 md:px-32">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="hidden md:block">
             <a href="#bannerSection" class="nav--link">
                 <img src="{{asset('assets/images/logo-dti-approved-white.png')}}" class="w-48 sm:m-auto float-none sm:float-left relative top-1/2 transform -translate-y-1/2" alt=""> 
+            </a>
+        </div>
+
+        <div class="col-span-2 block md:hidden">
+            <a href="#bannerSection" class="nav--link">
+                <img src="{{asset('assets/images/logo-dti-approved-white.png')}}" class="w-48 m-auto md:m-0 float-none sm:float-left relative top-1/2 transform -translate-y-1/2" alt=""> 
             </a>
         </div>
 
@@ -24,7 +30,7 @@
             </div>
         </div>
 
-        <div>
+        <div class="col-span-2 md:col-span-1">
             <div class="text-center p-2 flex flex-col space-y-2 w-full m-auto">
                 <p class="w-full text-gray-700 block px-3 py-2 rounded-md text-md font-extrabold">Contact Details</p>
                 <p class="w-full text-gray-700 block px-3 py-2 rounded-md text-base font-semibold">+123 456</p>
