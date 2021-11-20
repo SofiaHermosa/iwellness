@@ -26,10 +26,10 @@
 
         <div>
             <div class="text-center p-2 flex flex-col space-y-2 w-full m-auto">
-                <p class="text-gray-700 block px-3 py-2 rounded-md text-md font-extrabold">Contact Details</p>
-                <p class="text-gray-700 block px-3 py-2 rounded-md text-base font-semibold">+123 456</p>
-                <p class="text-gray-700 block px-3 py-2 rounded-md text-base font-semibold">rahimajanep785@gmail.com</p>
-                <p class="text-gray-700 block px-3 py-2 rounded-md text-base font-semibold">2nd Flr. 200 Pilar Road, Almanza Uno, Las Pinas City</p>
+                <p class="w-full text-gray-700 block px-3 py-2 rounded-md text-md font-extrabold">Contact Details</p>
+                <p class="w-full text-gray-700 block px-3 py-2 rounded-md text-base font-semibold">+123 456</p>
+                <p class="w-full text-gray-700 block px-3 py-2 rounded-md text-base font-semibold">rahimajanep785@gmail.com</p>
+                <p class="w-full text-gray-700 block px-3 py-2 rounded-md text-base font-semibold">2nd Flr. 200 Pilar Road, Almanza Uno, Las Pinas City</p>
             </div>
         </div>
     </div>
