@@ -1,8 +1,8 @@
-<div class="block bg-yellow-400 py-14 px-4 md:px-32">
+<div class="block bg-yellow-400 py-6 md:py-14 px-4 md:px-32">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
         <div class="hidden md:block">
             <a href="#bannerSection" class="nav--link">
-                <img data-aos="fade-up" data-aos-duration="700" src="{{asset('assets/images/logo-dti-approved-white.png')}}" class="w-48 sm:m-auto float-none sm:float-left relative top-1/2 transform -translate-y-1/2" alt=""> 
+                <img data-aos="fade-up" data-aos-duration="700" src="{{asset('assets/images/logo-dti-approved-white.png')}}" class="w-48 sm:m-auto float-none sm:float-left relative top-1/4 transform -translate-y-1/4" alt=""> 
             </a>
         </div>
 
