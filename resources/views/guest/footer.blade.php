@@ -1,4 +1,4 @@
-<div class="block bg-yellow-400 py-6 md:py-14 px-1 md:px-32">
+<div class="block bg-yellow-400 py-6 md:py-14 px-6 md:px-32">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-6">
         <div class="hidden md:block">
             <a href="#bannerSection" class="nav--link">
