@@ -5,10 +5,10 @@
         <div class="text-center font-sans col-span-1">
             <div data-aos="zoom-in" data-aos-duration="1000" class="h-96 md:h-screen px-10 md:px-32 inline-block">
                 <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-widest mt-44">EXPERIENCE</h1>
-                <h1 class="text-2xl md:text-4xl font-extrabold text-gray-900 tracking-widest bg-transparent">THE<span class="text-yellow-600">DIFFERENCE</span></h1>
+                <h1 class="text-2xl md:text-4xl font-extrabold text-gray-900 tracking-widest bg-transparent">THE<span class="text-yellow-400">DIFFERENCE</span></h1>
                 <br>
                 <div class="py-6 text-center md:text-left">
-                    <a href="{{url('register')}}" class="text-md font-bold text-white px-4 py-2 rounded bg-yellow-400 mix-blend-luminosity">Be a Part of Us</a>
+                    <a href="{{url('register')}}" class="text-md font-bold text-white px-4 py-2 rounded bg-yellow-300 mix-blend-luminosity">Be a Part of Us</a>
                 </div>
             </div>
 

@@ -28,7 +28,7 @@
                             </div>
 
                             <div class=" col-span-2 text-right">
-                                <a href="javascript:void(0)" class="rounded-md py-2 px-4 bg-yellow-400 text-white text-xs font-extrabold add--to_cart" data-qty="1" data-id="{{$product->id}}">ADD TO CART</a>
+                                <a href="javascript:void(0)" class="rounded-md py-2 px-4 bg-yellow-300 text-white text-xs font-extrabold add--to_cart" data-qty="1" data-id="{{$product->id}}">ADD TO CART</a>
                             </div>
                         </div>
                     </div>

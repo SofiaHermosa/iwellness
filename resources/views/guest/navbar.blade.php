@@ -41,8 +41,8 @@
 
         <div class="flex-shrink-0 flex items-center">
           <a href="#bannerSection" class="nav--link">
-            <img class="block lg:hidden h-14 w-auto" src="{{asset('assets/images/logo-foreground.png')}}" alt="Workflow">
-            <img class="hidden lg:block h-10 w-auto" src="{{asset('assets/images/logo-foreground.png')}}" alt="Workflow">
+            <img class="block lg:hidden h-14 w-auto" src="{{asset('assets/images/iwellness_logo.png')}}" alt="Workflow">
+            <img class="hidden lg:block h-10 w-auto" src="{{asset('assets/images/iwellness_logo.png')}}" alt="Workflow">
           </a>
         </div>
 
