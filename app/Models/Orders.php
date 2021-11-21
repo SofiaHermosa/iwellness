@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Orders extends Model
 {
-    use HasFactory,SoftDeletes, LogsActivity;
+    use HasFactory,SoftDeletes;
 
     protected $table = "orders";
 
