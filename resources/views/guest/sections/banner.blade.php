@@ -8,7 +8,7 @@
                 <h1 class="text-2xl md:text-4xl font-extrabold text-gray-900 tracking-widest bg-transparent">THE<span class="text-yellow-400">DIFFERENCE</span></h1>
                 <br>
                 <div class="py-6 text-center md:text-left">
-                    <a href="{{url('register')}}" class="text-md font-bold text-white px-4 py-2 rounded bg-yellow-300 mix-blend-luminosity">Be a Part of Us</a>
+                    <a href="{{url('register')}}" class="text-md font-bold text-white px-4 py-2 rounded bg-yellow-300 hover:bg-yellow-400">Be a Part of Us</a>
                 </div>
             </div>
 

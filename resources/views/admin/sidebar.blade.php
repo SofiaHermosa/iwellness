@@ -111,12 +111,12 @@
               </li>
               @endif
 
-              {{-- <li class="site-menu-item">
-                <a class="animsition-link waves-effect waves-classic" href="{{url('res/activity/logs')}}">
+              <li class="site-menu-item">
+                <a class="animsition-link waves-effect waves-classic" href="{{url('res/logs/history')}}">
                       <i class="site-menu-icon md-dns" aria-hidden="true"></i>
-                      <span class="site-menu-title">Activity Logs</span>
+                      <span class="site-menu-title">Transaction History</span>
                 </a>
-              </li> --}}
+              </li>
             </ul>
         </div>
     </div>
@@ -140,7 +140,7 @@
     </div>
 
     <div class="site-gridmenu scrollable scrollable-inverse scrollable-vertical is-disabled">
-      <div class="scrollable-container" style="">
+      <!-- <div class="scrollable-container" style="">
         <div class="scrollable-content" style="">
           <ul>
             @if(auth()->user()->hasrole('system administrator'))
@@ -220,5 +220,7 @@
             </li>
           </ul>
         </div>
-      </div>
-    <div class="scrollable-bar scrollable-bar-vertical scrollable-bar-hide is-disabled" draggable="false"><div class="scrollable-bar-handle"></div></div></div>
+      </div> -->
+    <div class="scrollable-bar scrollable-bar-vertical scrollable-bar-hide is-disabled" draggable="false">
+    <div class="scrollable-bar-handle">
+</div></div></div>

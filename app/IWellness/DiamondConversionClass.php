@@ -129,8 +129,9 @@ class DiamondConversionClass
                 $this->request->except(['_token', 'shipping_details'])
             );
 
-            
-            $this->updateDiamond($new_balance);
+            if($this->data->wasRecentlyCreated){
+                $this->updateDiamond($new_balance);
+            }
 
             return response()->json([
                 'message' => 'Diamond conversion request has been successfully sent'

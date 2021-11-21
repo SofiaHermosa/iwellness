@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\Contracts\Activity;
 
 class ConversionRequest extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, LogsActivity;
 
     protected $table = 'diamond_conversion';
+
+    protected static $logName = 'diamond conversion';
 
     protected $fillable = [
         'user_id',
@@ -20,11 +24,26 @@ class ConversionRequest extends Model
         'details'
     ];
 
+    protected static $logFillable = true;
+
     protected $appends = [
         'status_badge',
         'date_sent',
-        'full_address'
+        'full_address',
+        'transac_id'
     ];
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $data = json_decode($activity->properties)->attributes;
+
+        $description = ucfirst($eventName)." diamond conversion request with transaction # ".$activity->subject->transac_id;
+        $activity->description = $description;
+    }
+
+    public function getTransacIdAttribute(){
+        return generateIDs('DC', $this->id);
+    }
 
     public function setDecliningReasonAttribute($value){
         $this->attributes['declining_reason'] = base64_encode($value);

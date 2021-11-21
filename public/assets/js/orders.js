@@ -45,7 +45,8 @@ let Orders = (function () {
                 { "data": "full_address" },
                 { "data": "status_badge" },
                 { "data": "order_date" }
-            ]
+            ],
+            'order' : [[5, 'desc']]
         } );
     }
 

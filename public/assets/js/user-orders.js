@@ -27,7 +27,8 @@ let UserOrders = (function () {
                 { "data": "order_contact" },
                 { "data": "full_address" },
                 { "data": "order_date" }
-            ]
+            ],
+            'order' : [[4, 'desc']]
         } );
     }
 

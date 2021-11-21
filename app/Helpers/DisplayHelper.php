@@ -77,4 +77,11 @@
 
         return substr($name,0, $len) . str_repeat('*', $len) . "@" . end($em);
     }
+
+    function generateIDs($prefix, $id){
+        for($counter = 0; $counter < (5 - strlen($id)); $counter++){
+            $prefix .= "0";
+        }
+        return $prefix .= $id;
+    }
 ?>

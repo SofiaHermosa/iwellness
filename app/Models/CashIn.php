@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\Contracts\Activity;
 
 class CashIn extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, LogsActivity;
 
     protected $table = 'cash_in';
+
+    protected static $logName = 'cash in';
 
     protected $fillable = [
         'user_id',
@@ -20,13 +24,28 @@ class CashIn extends Model
         'declining_reason'
     ];
 
+    protected static $logFillable = true;
+
     protected $appends = [
         'status_badge',
         'attachments',
         'date_sent',
         'amount_number_format',
-        'prop'
+        'prop',
+        'transac_id'
     ];
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $data = json_decode($activity->properties)->attributes;
+
+        $description = ucfirst($eventName)." cash-in request amounting ₱ ".number_format($data->amount, 2, '.', ',').' with transaction # '.$activity->subject->transac_id;
+        $activity->description = $description;
+    }
+
+    public function getTransacIdAttribute(){
+        return generateIDs('CI', $this->id);
+    }
 
     public function getDetailsAttribute($value)
     {

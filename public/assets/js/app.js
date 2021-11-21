@@ -35,9 +35,6 @@
         }
 
         menuTarget.addClass('toggle-cont');      
-        $(this).toggleClass('ring-2');
-        $(this).toggleClass('ring-offset-0');
-        $(this).toggleClass('ring-yellow-400');
 
         if (typeof ifModal != 'undefined') {
             if (ifModal == true) {

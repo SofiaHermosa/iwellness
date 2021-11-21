@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\Contracts\Activity;
 
 class Orders extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory,SoftDeletes, LogsActivity;
 
     protected $table = "orders";
+
+    protected static $logName = 'order';
 
     protected $fillable = [
         'user_id',
@@ -23,6 +27,8 @@ class Orders extends Model
         'shipping_fee',
         'payment_charge'
     ];
+
+    protected static $logFillable = true;
     
     protected $appends = [
         'full_address',
@@ -31,6 +37,14 @@ class Orders extends Model
         'order_date',
         'status_badge'
     ];
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $data = json_decode($activity->properties)->attributes;
+
+        $description = ucfirst($eventName)." order amounting ₱ ".number_format($data->total, 2, '.', ',').' with transaction '.$activity->subject->order_id;
+        $activity->description = $description;
+    }
 
     public function setCartAttribute($value){
         $this->attributes['cart'] = json_encode($value);

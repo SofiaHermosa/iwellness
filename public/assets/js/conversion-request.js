@@ -28,7 +28,8 @@ let ConversionRequest = (function () {
                 { "data": "item.name" },
                 { "data": "status_badge" },
                 { "data": "date_sent" },
-            ] 
+            ],
+            'order' : [[3, 'desc']]
         } );
     }
 

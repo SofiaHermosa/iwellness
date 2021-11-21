@@ -161,7 +161,8 @@ let ManageFunds = (function () {
                         return `<center><button data-cashin="${btoa(JSON.stringify(full))}" class="btn btn-dark btn-xs upload--attachments">Upload Receipt</button></center>`;
                     }
                 }
-            ]
+            ],
+            'order' : [[5, 'desc']]
         });
     }
 
@@ -174,7 +175,8 @@ let ManageFunds = (function () {
                 { "data": "amount_number_format" },
                 { "data": "status_badge" },
                 { "data": "date_sent" }
-            ]
+            ],
+            'order' : [[4, 'desc']]
         });
     }
 

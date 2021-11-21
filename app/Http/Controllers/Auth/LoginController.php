@@ -60,7 +60,7 @@ class LoginController extends Controller
             }else{
                 Auth::logout();
                 $error = new MessageBag(['username' => 'Account not yet confirmed, check your email for confirmation link.']);
-                return Redirect::back()->withErrors($error);
+                return '/res';
             }
         }
 

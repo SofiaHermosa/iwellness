@@ -26,7 +26,8 @@ let Network = (function () {
                 { "data": "activated" },
                 { "data": "level" },
                 { "data": "commission" }
-            ]
+            ],
+            'order' : [[3, 'asc']]
         } );
     }
 

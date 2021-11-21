@@ -52,7 +52,12 @@ class WalletController extends Controller
     public function proceedRequest($type, $amount){
         switch ($type) {
             case 1:
-                $this->subscripClass->addCapital($amount);
+                if(auth()->user()->activated){
+                    $this->subscripClass->addCapital($amount);
+                }else{
+                
+                    $this->subscripClass->activateAccount(request()->toArray())->parentsCommision();
+                }
                 return url('res/profile');
                 break;
             

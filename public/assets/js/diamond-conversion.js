@@ -48,7 +48,8 @@ let DiamondConversion = (function () {
                 { "data": "details.contact_no" },
                 { "data": "status_badge" },
                 { "data": "date_sent" },
-            ] 
+            ],
+            'order' : [[4, 'desc']] 
         } );
     }
 

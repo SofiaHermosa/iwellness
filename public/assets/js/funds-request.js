@@ -105,7 +105,8 @@ let FundsRequest = (function () {
                         return `<center><p class="text-muted">No Attachment</p></center>`;
                     }
                 },
-            ]
+            ],
+            'order' : [[6, 'desc']]
         });
     }
 

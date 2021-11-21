@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\Contracts\Activity;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
@@ -14,13 +16,16 @@ use Session;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasRoles, LogsActivity;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
+
+    protected static $logName = 'profile';
+    
     protected $fillable = [
         'name',
         'contact',
@@ -34,6 +39,8 @@ class User extends Authenticatable
         'password',
         'prof_img'
     ];
+
+    protected static $logFillable = true;
 
     protected $appends = [
         'secret_question_string',
@@ -166,6 +173,10 @@ class User extends Authenticatable
 
     public function wallets(){
         return $this->belongsTo('App\Models\Wallets','id','user_id');
+    }
+
+    public function logs(){
+        return auth()->user()->hasanyrole('system administrator') ? Activitylogs::with('user')->get() : $this->hasmany('App\Models\Activitylogs','causer_id');
     }
 
     public function getWalletBalanceAttribute(){
