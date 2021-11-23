@@ -42,6 +42,7 @@ Route::middleware('auth')
         Route::resource('users', 'UsersController')->middleware('can:access users');
         Route::resource('orders', 'OrdersController')->middleware('can:access products');
         Route::resource('fund-request', 'ManageFundsController');
+        Route::resource('survey', 'SurveyController');
     });
 
     Route::get('my-orders', 'Admin\OrdersController@userOrders');

@@ -49,7 +49,7 @@
     <link rel="stylesheet" href="{{asset('app/material/global/vendor/alertify/alertify.css')}}">
     <link rel="stylesheet" href="{{asset('app/classic/global/vendor/icheck/icheck.css')}}">
     <link rel="stylesheet" href="{{asset('app/material/base/assets/examples/css/forms/advanced.css')}}">
-    <link rel="stylesheet" href="{{asset('app/material/base/assets/css/pages/invoice.css')}}">
+    <!-- <link rel="stylesheet" href="{{asset('app/material/base/assets/css/pages/invoice.css')}}"> -->
 
     <link rel="stylesheet" href="{{asset('assets/css/custom-admin.css')}}">
     <!-- Fonts -->

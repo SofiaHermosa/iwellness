@@ -53,15 +53,10 @@ class LoginController extends Controller
     protected function redirectTo(){
 
         if(auth()->user()->hasanyrole('system administrator')){
-            return '/res/users/';
+            return '/res/dashboard/';
         }else{
-            if(!is_null(auth()->user()->email_verified_at)){
-                return '/res/profile/';
-            }else{
-                Auth::logout();
-                $error = new MessageBag(['username' => 'Account not yet confirmed, check your email for confirmation link.']);
-                return '/res';
-            }
+    
+            return '/res/profile/';
         }
 
         return '/res';

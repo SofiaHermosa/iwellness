@@ -75,7 +75,8 @@ class RegisterController extends Controller
     {   
         $referrer = $this->referrer($data['referer']);
 
-        $data['referer'] = $referrer->id ?? null;
+        $data['referer']            = $referrer->id ?? null;
+
         unset($data['_token']);
 
         $registeredUser = User::create($data);
@@ -89,10 +90,10 @@ class RegisterController extends Controller
 
     protected function redirectTo()
     {
-        Auth::logout();
+        // Auth::logout();
         
         Session::flash('message', 'Registered successfully,<br/> Check your email for account activation');
-        return 'register';
+        return 'res';
     }
 
     public function referrer($uname){
