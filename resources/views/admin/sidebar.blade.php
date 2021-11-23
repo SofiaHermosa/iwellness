@@ -33,7 +33,7 @@
                 </li> 
               @endif
 
-             
+              @if(!auth()->user()->hasrole('system administrator'))
               <li class="site-menu-item">
                 <a class="animsition-link waves-effect waves-classic" href="{{url('res/network')}}">
                         <i class="site-menu-icon md-device-hub" aria-hidden="true"></i>
@@ -47,9 +47,7 @@
                   <span class="site-menu-title">Manage Funds</span>
                 </a>
               </li>
-    
-              
-              @if(!auth()->user()->hasrole('system administrator'))
+  
               <li class="site-menu-item">
                 <a class="animsition-link waves-effect waves-classic" href="{{url('res/diamond/conversion')}}">
                   <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
