@@ -51,7 +51,7 @@ Route::middleware('auth')
     Route::namespace('Member')
     ->group(function(){
         Route::resource('profile', 'DashboardController');
-        Route::resource('manage-funds', 'ManageFundsController')->middleware('account.activated');
+        Route::resource('manage-funds', 'ManageFundsController');
         Route::resource('network', 'NetworkController');
         Route::post('activate/account', 'SubscriptionController@activateAccount');
         // Route::get('checkout/cart', 'CartController@proceedToCheckout');
