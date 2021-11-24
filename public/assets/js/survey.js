@@ -1,34 +1,35 @@
 let Survey = (function () {
     let ui          = {};
-    let surveyForm  = '';
+    let table;
 
     function bindUi() {
         this._ui = {
-           saveBtn: $('.save-template')
+            dataTable: $('#surveyDataTable'),
         };
 
         return _ui;
     }
 
     function bindEvents() {
-        $(document).on('click', '.save-template', saveSurvey);
+    
     } 
 
     function onLoad() {
-        initializeFormBuilder();
+        initializeTable();
     }
 
 
-    function initializeFormBuilder(){
-        surveyForm = $('#surveyBuilder').formBuilder();
+    function initializeTable(){
+        table = ui.dataTable.DataTable( {
+            "ajax": window.url,
+            "columns": [
+                {"data" : "question"},
+                { "data": "choices" },
+                { "data": "date_sent" },
+            ],
+            'order' : [[2, 'desc']]   
+        });
     }
-
-    function saveSurvey(){
-        let questionaire = surveyForm.actions.getData('json');
-
-        console.log(questionaire);
-    }
-
 
     function init() {
         ui = bindUi();

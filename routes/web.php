@@ -42,12 +42,12 @@ Route::middleware('auth')
         Route::resource('users', 'UsersController')->middleware('can:access users');
         Route::resource('orders', 'OrdersController')->middleware('can:access products');
         Route::resource('fund-request', 'ManageFundsController');
-        Route::resource('survey', 'SurveyController');
     });
 
     Route::get('my-orders', 'Admin\OrdersController@userOrders');
     Route::resource('user/profile', 'User\ProfileController');
     Route::resource('logs/history', 'Member\LogsController');
+    Route::resource('survey', 'Admin\SurveyController');
 
     Route::namespace('Member')
     ->group(function(){

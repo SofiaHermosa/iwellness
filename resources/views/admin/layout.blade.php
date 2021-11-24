@@ -44,11 +44,13 @@
     <link rel="stylesheet" href="{{asset('app/classic/global/vendor/slidepanel/slidePanel.css')}}">
     <link rel="stylesheet" href="{{asset('app/material/global/vendor/waves/waves.css')}}">
     <link rel="stylesheet" href="{{asset('app/classic/global/vendor/jquery-mmenu/jquery-mmenu.css')}}">
+    <link rel="stylesheet" href="{{asset('app/classic/global/vendor/bootstrap-tokenfield/bootstrap-tokenfield.css')}}">
     <link rel="stylesheet" href="{{asset('app/material/global/vendor/bootstrap-sweetalert/sweetalert.css')}}">
     <link rel="stylesheet" href="{{asset('app/material/global/vendor/summernote/summernote.css')}}">
     <link rel="stylesheet" href="{{asset('app/material/global/vendor/alertify/alertify.css')}}">
     <link rel="stylesheet" href="{{asset('app/classic/global/vendor/icheck/icheck.css')}}">
     <link rel="stylesheet" href="{{asset('app/material/base/assets/examples/css/forms/advanced.css')}}">
+    <link rel="stylesheet" href="{{asset('app/classic/global/vendor/toastr/toastr.css')}}">
     <!-- <link rel="stylesheet" href="{{asset('app/material/base/assets/css/pages/invoice.css')}}"> -->
 
     <link rel="stylesheet" href="{{asset('assets/css/custom-admin.css')}}">
@@ -69,7 +71,7 @@
     </script>
   </head>
   <body class="animsition @yield('body-class') site-navbar-small {{!auth()->check() ? 'pt-0' : ''}}">
-      
+  
       @if(auth()->check())
         @include('admin.sidebar')  
         @include('admin.navbar')
@@ -78,7 +80,6 @@
       @endif
 
       <div class="page">
-    
         @yield('page_title')
         
         <div class="page-content container-fluid">
@@ -115,6 +116,7 @@
     <script src="{{asset('app/material/global/vendor/jquery-mmenu/jquery.mmenu.min.all.js')}}"></script>
     <script src="{{asset('app/material/global/vendor/waves/waves.js')}}"></script>
     <script src="{{asset('app/material/global/vendor/bootstrap-sweetalert/sweetalert.js')}}"></script>
+    <script src="{{asset('app/material/global/vendor/toastr/toastr.js')}}"></script>
     <!-- Plugins -->
     <script src="{{asset('app/classic/global/vendor/switchery/switchery.js')}}"></script>
     <script src="{{asset('app/classic/global/vendor/intro-js/intro.js')}}"></script>
@@ -123,6 +125,7 @@
     <script src="{{asset('app/classic/global/vendor/slidepanel/jquery-slidePanel.js')}}"></script>
     <script src="{{asset('app/classic/global/vendor/matchheight/jquery.matchHeight-min.js')}}"></script>
     <script src="{{asset('app/classic/global/vendor/peity/jquery.peity.min.js')}}"></script>
+    <script src="{{asset('app/classic/global/vendor/bootstrap-tokenfield/bootstrap-tokenfield.min.js')}}"></script>
     
     <!-- Scripts -->
     <script src="{{asset('app/classic/global/js/Component.js')}}"></script>
@@ -178,4 +181,15 @@
     @endif  
   
     @stack('scripts')
+    
+    @if(!empty(monthlySurvey()) && !auth()->user()->hasanyrole('system administrator'))
+        <script>
+            toastr.options.onclick = function(){
+                window.location.href = '{!! url('res/survey/'.base64_encode(auth()->user()->id)) !!}'
+            }
+            toastr.options.positionClass = 'toast-bottom-right';
+            toastr.options.showEasing  = 'slideUp';
+            toastr.info('Click Here!', "Help us to know you better, by answering our monthly survey.")
+        </script>
+    @endif
 </html>    
