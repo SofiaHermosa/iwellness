@@ -98,9 +98,6 @@
       
       <footer class="site-footer">
         <div class="site-footer-right">© {{date('Y')}} IWellness</div>
-        {{-- <div class="site-footer-right">
-          Crafted with <i class="red-600 icon md-favorite"></i> by <a href="https://themeforest.net/user/creation-studio">Creation Studio</a>
-        </div> --}}
       </footer>
   </body>
 
@@ -173,12 +170,8 @@
     <script src="{{asset('app/classic/global/vendor/datatables.net-buttons-bs4/buttons.bootstrap4.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
     <script async src="https://static.addtoany.com/menu/page.js"></script>
-
-    @if(auth()->check())
-      <script>window.referral_link = '{!! url('/register?referral='.base64_encode(auth()->user()->username)) !!}';</script>
-      <script src="{{asset('assets/js/share.js')}}"></script>
-      <script src="{{asset('assets/js/edit-profile.js')}}"></script>
-    @endif  
+    <script src="{{asset('assets/js/share.js')}}"></script>
+    <script src="{{asset('assets/js/edit-profile.js')}}"></script>
   
     @stack('scripts')
     
