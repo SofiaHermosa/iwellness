@@ -5,7 +5,7 @@
                 <th>Date Account Activated</th>
                 <th>Cut-off Date</th>
                 <th>Survey</th>
-                <th>Watched Ads</th>
+                <th>Watched Ads/Logged In</th>
                 <th>Release of Profit</th>
                 <th>Status</th>
             </tr>
