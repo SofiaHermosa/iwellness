@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-// use Spatie\Activitylog\Traits\LogsActivity;
-// use Spatie\Activitylog\Contracts\Activity;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\Contracts\Activity;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
@@ -177,7 +177,7 @@ class User extends Authenticatable
     }
 
     public function logs(){
-        return auth()->user()->hasanyrole('system administrator') ? Activitylogs::whereNotIn('log_name', ['survey', 'login','profit'])->with('user')->get() : $this->hasmany('App\Models\Activitylogs','causer_id')->whereNotIn('log_name', ['survey', 'login','profit']);
+        return auth()->user()->hasanyrole('system administrator') ? Activitylogs::whereNotIn('log_name', ['survey', 'login','profit', 'profile'])->with('user')->get() : $this->hasmany('App\Models\Activitylogs','causer_id')->whereNotIn('log_name', ['survey', 'login','profit', 'profile']);
     }
 
     public function getWalletBalanceAttribute(){
