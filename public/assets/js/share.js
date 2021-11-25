@@ -7,6 +7,10 @@ $(document).on("click", "#copy-referral_link", function() {
     copyToClipboard();
 });
 
+$(document).on("click", "#referral--link", function() {
+    copyToClipboard();
+});
+
 function copyToClipboard() {
     /* Get the text field */
   var copyText = document.getElementById("referral--link");
