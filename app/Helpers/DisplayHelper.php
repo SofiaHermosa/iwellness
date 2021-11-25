@@ -2,6 +2,7 @@
     use App\IWellness\ProductClass;
     use App\IWellness\DashboardClass;
     use App\IWellness\WalletClass;
+    use App\IWellness\SurveyClass;
     use App\IWellness\DiamondConversionClass;
     use Illuminate\Support\Facades\DB;
 
@@ -83,5 +84,13 @@
             $prefix .= "0";
         }
         return $prefix .= $id;
+    }
+
+    function monthlySurvey(){
+        $survey = new SurveyClass();
+
+        return $survey
+        ->monthlyEntries()
+        ->survey();
     }
 ?>

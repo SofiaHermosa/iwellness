@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
+use App\IWellness\ActivityClass;
 use Session;
 use Auth;
 
@@ -38,11 +39,14 @@ class LoginController extends Controller
      *
      * @return void
      */
+    public $activityClass;
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
 
         $this->username = 'username';
+
+        $this->activityClass = new ActivityClass;
     }
 
     public function username()
@@ -53,15 +57,10 @@ class LoginController extends Controller
     protected function redirectTo(){
 
         if(auth()->user()->hasanyrole('system administrator')){
-            return '/res/users/';
+            return '/res/dashboard/';
         }else{
-            if(!is_null(auth()->user()->email_verified_at)){
-                return '/res/profile/';
-            }else{
-                Auth::logout();
-                $error = new MessageBag(['username' => 'Account not yet confirmed, check your email for confirmation link.']);
-                return '/res';
-            }
+            $this->activityClass->logActivity('login', auth()->user()->id);
+            return '/res/profile/';
         }
 
         return '/res';

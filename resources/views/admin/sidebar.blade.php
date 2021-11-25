@@ -60,12 +60,6 @@
               
               @can('access products')
               <li class="site-menu-item">
-                <a class="animsition-link waves-effect waves-classic" href="{{url('res/products')}}">
-                      <i class="site-menu-icon md-shape" aria-hidden="true"></i>
-                      <span class="site-menu-title">Products</span>
-                </a>
-              </li> 
-              <li class="site-menu-item">
                 <a class="animsition-link waves-effect waves-classic" href="{{url('res/orders')}}">
                       <i class="site-menu-icon md-shopping-cart" aria-hidden="true"></i>
                       <span class="site-menu-title">Orders</span>
@@ -73,14 +67,6 @@
               </li> 
               @endcan
 
-              @can('access users')
-              <li class="site-menu-item">
-                <a class="animsition-link waves-effect waves-classic" href="{{url('res/users')}}">
-                      <i class="site-menu-icon md-accounts-alt" aria-hidden="true"></i>
-                      <span class="site-menu-title">Users</span>
-                </a>
-              </li>
-              @endcan
 
               @if(auth()->user()->hasrole('system administrator'))
               <li class="site-menu-item">
@@ -111,12 +97,49 @@
               </li>
               @endif
 
+              @can('access products')
+              <li class="site-menu-item has-sub">
+                <a href="javascript:void(0)">
+                    <i class="site-menu-icon md-folder" aria-hidden="true"></i>
+                    <span class="site-menu-title">File Management</span>
+                    <span class="site-menu-arrow"></span>
+                </a>
+                <ul class="site-menu-sub">
+                  @can('access users')
+                  <li class="site-menu-item">
+                    <a class="animsition-link" href="{{url('res/users')}}">
+                      <span class="site-menu-title">Users</span>
+                    </a>
+                  </li>
+                  @endcan
+                  <li class="site-menu-item">
+                    <a class="animsition-link" href="{{url('res/products')}}">
+                      <span class="site-menu-title">Products</span>
+                    </a>
+                  </li>
+                  <li class="site-menu-item">
+                    <a class="animsition-link" href="{{url('res/survey')}}">
+                      <span class="site-menu-title">Survey</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              @endcan
+
               <li class="site-menu-item">
                 <a class="animsition-link waves-effect waves-classic" href="{{url('res/logs/history')}}">
-                      <i class="site-menu-icon md-dns" aria-hidden="true"></i>
+                      <i class="site-menu-icon wb-order" aria-hidden="true"></i>
                       <span class="site-menu-title">Transaction History</span>
                 </a>
               </li>
+              @if(!auth()->user()->hasanyrole('system administrator'))
+              <li class="site-menu-item">
+                <a class="animsition-link waves-effect waves-classic" href="{{url('res/activity/logs')}}">
+                      <i class="site-menu-icon md-dns" aria-hidden="true"></i>
+                      <span class="site-menu-title">Activity Logs</span>
+                </a>
+              </li>
+              @endif
             </ul>
         </div>
     </div>
