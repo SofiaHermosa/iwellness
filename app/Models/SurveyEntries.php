@@ -13,7 +13,6 @@ class SurveyEntries extends Model
 
     protected $fillable = [
         'user_id',
-        'question_id',
         'answer',
         'month'
     ];
@@ -21,5 +20,15 @@ class SurveyEntries extends Model
     public function setMonthAttribute($value)
     {
         $this->attributes['month'] = date('F');
+    }
+
+    public function setAnswerAttribute($value)
+    {
+        $this->attributes['answer'] = json_encode($value);
+    }
+
+    public function getAnswerAttribute($value)
+    {
+        return json_decode($value);
     }
 }

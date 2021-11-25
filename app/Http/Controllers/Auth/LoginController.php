@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
+use App\IWellness\ActivityClass;
 use Session;
 use Auth;
 
@@ -38,11 +39,14 @@ class LoginController extends Controller
      *
      * @return void
      */
+    public $activityClass;
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
 
         $this->username = 'username';
+
+        $this->activityClass = new ActivityClass;
     }
 
     public function username()
@@ -55,7 +59,7 @@ class LoginController extends Controller
         if(auth()->user()->hasanyrole('system administrator')){
             return '/res/dashboard/';
         }else{
-    
+            $this->activityClass->logActivity('login', auth()->user()->id);
             return '/res/profile/';
         }
 

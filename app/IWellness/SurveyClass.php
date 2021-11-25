@@ -4,6 +4,7 @@ namespace App\IWellness;
 use Illuminate\Http\Request;
 use App\Models\SurveyQuestions;
 use App\Models\SurveyEntries;
+use App\IWellness\ActivityClass;
 use Carbon\Carbon;
 use Storage;
 use Session;
@@ -12,11 +13,12 @@ use DB;
 
 class SurveyClass
 {
-    public $surveys, $request, $entries;
+    public $surveys, $request, $entries, $activityClass;
 
     public function __construct()
     {
-        $this->request = request();
+        $this->request       = request();
+        $this->activityClass = new ActivityClass;
     }
 
     public function manageSurvey(){
@@ -60,16 +62,15 @@ class SurveyClass
     }
 
     public function sendEntry(){
-        foreach($this->request->answer as $key => $answer){
-            $data = [
-                'user_id'       => auth()->user()->id,
-                'question_id'   => $key,
-                'answer'        => $answer,
-                'month'         => date('F')
-            ];
+       
+        $data = [
+            'user_id'       => auth()->user()->id,
+            'answer'        => $this->request->answer,
+            'month'         => date('F')
+        ];
 
-            SurveyEntries::create($data);
-        }
+        $survey = SurveyEntries::create($data);
+        $this->activityClass->logActivity('survey', auth()->user()->id, $survey->id);
     }
 }
 

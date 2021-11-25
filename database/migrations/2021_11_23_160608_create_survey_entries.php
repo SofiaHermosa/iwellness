@@ -16,8 +16,7 @@ class CreateSurveyEntries extends Migration
         Schema::create('survey_entries', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
-            $table->string('question_id');
-            $table->string('answer')->nullable();
+            $table->json('answer')->nullable();
             $table->text('month')->nullable();
             $table->timestamps();
             $table->softDeletes();

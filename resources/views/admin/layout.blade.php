@@ -188,7 +188,6 @@
                 window.location.href = '{!! url('res/survey/'.base64_encode(auth()->user()->id)) !!}'
             }
             toastr.options.positionClass = 'toast-bottom-right';
-            toastr.options.showEasing  = 'slideUp';
             toastr.info('Click Here!', "Help us to know you better, by answering our monthly survey.")
         </script>
     @endif

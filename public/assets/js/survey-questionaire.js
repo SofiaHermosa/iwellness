@@ -1,3 +1,4 @@
+let valid = true;
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
       define("/forms/wizard", ["jquery", "Site"], factory);
@@ -14,10 +15,6 @@
     "use strict";
   
     _jquery = babelHelpers.interopRequireDefault(_jquery);
-    // (0, _jquery.default)(document).ready(function ($$$1) {
-    //   (0, _Site.run)();
-    // }); // Example Wizard Form
-
   
     (function () {
       var defaults = Plugin.getDefaults("wizard");
@@ -34,6 +31,7 @@
           this.$progressbar.removeClass('progress-bar-striped').addClass('progress-bar-success');
           $('#surveyForm').submit();
         },
+        
         onAfterChange: function onAfterChange(prev, step) {
             var total = this.length();
             var current = step.index + 1;
@@ -46,7 +44,7 @@
       });
   
       (0, _jquery.default)("#exampleWizardProgressbar").wizard(options);
+
     })(); // Example Wizard Tabs
     // -------------------
-});
-
+});  

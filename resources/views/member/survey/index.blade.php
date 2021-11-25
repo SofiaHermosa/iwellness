@@ -42,18 +42,16 @@
                         @method('PUT')
                             <div class="wizard-content">
                                 @foreach(monthlySurvey() as $key => $entry)
-                                <div class="wizard-pane active p-4" role="tabpanel">
-                                    <div class="row mt-4">
-                                        <div class="col-lg-12">
-                                            <div class="form-group form-material floating" data-plugin="formMaterial">
-                                                <select class="form-control form-control-lg empty" name="answer[{{$entry->id}}]" required>
-                                                    <option value=""></option>
-                                                    @foreach($entry->answer as $i => $answer)
-                                                    <option value="{{$answer}}">{{$answer}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <label class="floating-label">{{$entry->question}}</label>
-                                            </div>
+                                <div class="wizard-pane active p-4 questionsCont" role="tabpanel">
+                                    <div class="col-lg-12">
+                                        <div class="form-group form-material floating" data-plugin="formMaterial">
+                                            <select class="form-control form-control-lg empty" id="q{{$key}}" name="answer[{{$entry->id}}]" required>
+                                                <option value=""></option>
+                                                @foreach($entry->answer as $i => $answer)
+                                                <option value="{{$answer}}">{{$answer}}</option>
+                                                @endforeach
+                                            </select>
+                                            <label class="floating-label">{{$entry->question}}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -85,7 +83,6 @@
 <script src="{{asset('app/classic/base/assets/js/Site.js')}}"></script>
 <script src="{{asset('app/classic/base/assets/js/Section/Menubar.js')}}"></script>
 
-<script src="{{asset('app/classic/global/vendor/formvalidation/formValidation.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
 <script src="{{asset('app/classic/global/vendor/jquery-wizard/jquery-wizard.js')}}"></script>
 <script src="{{asset('app/classic/global/js/Plugin/jquery-wizard.js')}}"></script>

@@ -128,10 +128,18 @@
 
               <li class="site-menu-item">
                 <a class="animsition-link waves-effect waves-classic" href="{{url('res/logs/history')}}">
-                      <i class="site-menu-icon md-dns" aria-hidden="true"></i>
+                      <i class="site-menu-icon wb-order" aria-hidden="true"></i>
                       <span class="site-menu-title">Transaction History</span>
                 </a>
               </li>
+              @if(!auth()->user()->hasanyrole('system administrator'))
+              <li class="site-menu-item">
+                <a class="animsition-link waves-effect waves-classic" href="{{url('res/activity/logs')}}">
+                      <i class="site-menu-icon md-dns" aria-hidden="true"></i>
+                      <span class="site-menu-title">Activity Logs</span>
+                </a>
+              </li>
+              @endif
             </ul>
         </div>
     </div>
