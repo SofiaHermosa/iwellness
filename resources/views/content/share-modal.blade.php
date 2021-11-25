@@ -28,7 +28,7 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="referral--link" value="{{url('/register?referral='.base64_encode(auth()->user()->username))}}">
+                            <input type="text" class="form-control form-control-lg" id="referral--link" value="{{url('/register?referral='.base64_encode(auth()->user()->username))}}">
                             <div class="input-group-append">
                                 <button type="button" class="btn btn-primary btn-outline" id="copy-referral_link" data-placement="top" data-toggle="tooltip" data-original-title="Copy"><i class="wb-copy"></i></button>
                             </div>
