@@ -177,7 +177,7 @@ class User extends Authenticatable
     }
 
     public function logs(){
-        return auth()->user()->hasanyrole('system administrator') ? Activitylogs::whereNotIn('log_name', ['survey', 'login','profit', 'profile'])->with('user')->get() : $this->hasmany('App\Models\Activitylogs','causer_id')->whereNotIn('log_name', ['survey', 'login','profit', 'profile']);
+        return auth()->user()->hasanyrole('system administrator') ? Activitylogs::whereNotIn('log_name', ['survey', 'login','profit', 'profile'])->with('user')->get() : $this->hasmany(Activitylogs::class,'causer_id')->whereNotIn('log_name', ['survey', 'login','profit', 'profile']);
     }
 
     public function getWalletBalanceAttribute(){
