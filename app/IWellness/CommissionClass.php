@@ -96,7 +96,7 @@ class CommissionClass
             unset($commission['user']);
             Earnings::create($commission);
         }
-
+  
 
 
         foreach($diamonds as $diamond){

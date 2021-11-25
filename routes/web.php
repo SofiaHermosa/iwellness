@@ -66,6 +66,7 @@ Route::resource('res/cart', 'Member\CartController');
 Route::get('res/checkout/cart', 'Member\CartController@proceedToCheckout');
 Route::post('res/checkout/payment', 'Member\CartController@checkoutPayment');
 Route::get('res/order/invoice/{id}', 'Member\CartController@show');
+Route::get('res/validate/cashin', 'Member\ManageFundsController@validateRefence');
 
 Route::namespace('Auth')
 ->group(function(){

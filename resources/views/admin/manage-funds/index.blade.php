@@ -26,6 +26,29 @@ page-profile
 @section('content')
 @include('admin.manage-funds.modal.cash-in')
 @include('admin.manage-funds.modal.cash-out')
+<div class="col-lg-12 px-0">
+    <div class="col-lg-2 col-sm-6 float-right">
+        <div class="form-group">
+            <select class="form-control filter" data-sec="status">
+                <option value="" disabled selected>Filter by Status</option>
+                <option value="0">Pending</option>
+                <option value="1">Approved</option>
+                <option value="2">Declined</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-sm-6 float-right">
+        <div class="form-group">
+            <select class="form-control filter" data-sec="mop">
+                <option value="" disabled selected>Filter by MOP</option>
+                @foreach (config('constants.mode_of_payment') as $key => $mop)
+                <option value="{{$mop}}">{{$mop}}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+</div>
 <div class="col-lg-12">
     <div class="panel">
         <div class="panel-body container-fluid">
@@ -60,8 +83,8 @@ page-profile
 
 @push('scripts')
 <script>
-    window.cashin_url = "{!! url('res/fund-request?type=cashin') !!}";
-    window.cashout_url = "{!! url('res/fund-request?type=cashout') !!}";
+    window.cashin_url   = "{!! url('res/fund-request?type=cashin') !!}";
+    window.cashout_url  = "{!! url('res/fund-request?type=cashout') !!}";
 </script>
 <script src="{{asset('assets/js/jquery.mask.min.js')}}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

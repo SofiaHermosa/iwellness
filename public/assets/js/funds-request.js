@@ -6,6 +6,7 @@ let FundsRequest = (function () {
         this._ui = {
             cashinTable: $('#cashInDataTable'),
             cashoutTable: $('#cashOutDataTable'),
+            filter: $('.filter')
         };
 
         return _ui;
@@ -14,6 +15,7 @@ let FundsRequest = (function () {
     function bindEvents() {
         ui.cashinTable.on('click', 'tbody td', editCashIn);
         ui.cashoutTable.on('click', 'tbody td', editCashOut);
+        ui.filter.on('change', filterDatatable);
         $('.request--btn').on('click', resetInput);
         $('.cash-in__approve').on('click', approveCashIn);
         $('.cash-out__approve').on('click', approveCashOut);
@@ -29,6 +31,28 @@ let FundsRequest = (function () {
         initializeFancybox();
         initializeCashOutDatatable();
         initializeFormValidation();
+    }
+
+    function filterDatatable(){
+        
+        let array   = [];
+
+        $('.filter').each(function(){
+            let val     = $(this).val();
+            let param   = $(this).data('sec');
+
+            if(val != null){
+                array.push(`${param}=${val}`);
+            }
+        });
+
+        let filterParam = array.join('&');
+        let cashin      = filterParam != '' ? `${window.cashin_url}&${filterParam}` : `${window.cashin_url}`;
+        cashInTable.ajax.url(cashin).load();
+
+        let cashout  = filterParam != '' ? `${window.cashout_url}&${filterParam}` : `${window.cashout_url}`;
+        cashOutTable.ajax.url(cashout).load();
+        
     }
 
     function initializeFormValidation(){

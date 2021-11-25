@@ -10,13 +10,21 @@
         <form method="POST" action="{{url('res/manage-funds')}}" id="CashInForm" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="type" value="1">
-        <input type="hidden" name="id" value="">
+        <input type="hidden" class=" valid-ref_id" name="id" value="">
         <input type="hidden" name="current_attachment" value="">
         <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
         <div class="modal-body pt-0">
             <div class="row pt-0 px-20">
-                <div class="col-lg-12 pt-0 pb-20 px-0">
-                    <h3 class="modal-title mt-0" id="exampleModalLabel">Cash-in Request</h3>
+                <div class="col-lg-12 pt-0 px-0">
+                    <h3 class="modal-title mt-0" id="exampleModalLabel">Cash-in Request</h3><br>
+                </div>
+                <div class="col-lg-12 p-0 pb-20">
+                    <div class="alert dark alert-icon alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                        </button>
+                        <i class="icon wb-info" aria-hidden="true"></i>Reference numbers should be the same in the receipt.
+                  </div>
                 </div>
                 <div class="col-lg-5 p-0 m-0">
                     <div class="col-md-12 px-0">
@@ -50,7 +58,7 @@
         
                         <div class="col-md-6 pr-0">
                             <div class="form-group form-material floating" data-plugin="formMaterial">
-                                <input type="text" class="form-control" name="details[reference_no]">
+                                <input type="text" class="form-control  valid-ref_no" name="details[reference_no]">
                                 <label class="floating-label">Reference #</label>
                             </div>
                         </div>

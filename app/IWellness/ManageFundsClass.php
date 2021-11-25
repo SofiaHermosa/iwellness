@@ -30,6 +30,14 @@ class ManageFundsClass
             $this->funds = $this->funds->where('user_id', $user);
         }
 
+        if(request()->has('status')){
+            $this->funds = $this->funds->where('status', request()->status);
+        }
+
+        if(request()->has('mop')){
+            $this->funds = $this->funds->whereJsonContains('details', ['mop' => request()->mop]);
+        }
+
         $this->funds = $this->funds
         ->with('user')
         ->orderBy('created_at', 'DESC')
@@ -40,6 +48,11 @@ class ManageFundsClass
     }
 
     public function store(){
+        if($this->validRefno()){
+            Session::flash('invalid_ref_no', 'Reference no has already been used');
+            return back();
+        }
+
         if($this->request->hasFile('attachments') || $this->request->has('current_attachment')){
             $this->saveImages();
         }
@@ -148,6 +161,17 @@ class ManageFundsClass
 
             Mail::to($cashinRequest->user->email)->send(new FundRequest($cashinRequest, 'cash-in'));
         }
+    }
+
+    public function validRefno(){
+        $ref_no =  preg_replace('/[^A-Za-z0-9\-]/', '', request()->details['reference_no']);
+        $cashIn = CashIn::whereJsonContains('details', ['reference_no' => $ref_no])->where('id', '!=',request()->id)->first();
+        
+        if(!empty($cashIn)){
+            return true;
+        }
+
+        return false;
     }
 }
 

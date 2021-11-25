@@ -12,12 +12,10 @@ $(document).on("click", "#referral--link", function() {
 });
 
 function copyToClipboard() {
-    /* Get the text field */
   var copyText = document.getElementById("referral--link");
 
-  /* Select the text field */
   copyText.select();
-  copyText.setSelectionRange(0, 99999); /* For mobile devices */
+  copyText.setSelectionRange(0, 99999);
 
   navigator.clipboard.writeText(copyText.value);
 }

@@ -6,6 +6,7 @@ let ManageFunds = (function () {
         this._ui = {
             cashinTable: $('#cashInDataTable'),
             cashoutTable: $('#cashOutDataTable'),
+            filter: $('.filter')
         };
 
         return _ui;
@@ -14,6 +15,7 @@ let ManageFunds = (function () {
     function bindEvents() {
         ui.cashinTable.on('click', 'tbody td', editCashIn);
         ui.cashoutTable.on('click', 'tbody td', previewCashOut);
+        ui.filter.on('change', filterDatatable);
         $(document).on('click', '.upload--attachments',uploadAttachments);
         $(document).on('click', '.cashin--delete', deleteCashin);
         $(document).on('click', '.cashout--delete', deleteCashOut);
@@ -22,6 +24,13 @@ let ManageFunds = (function () {
         $(document).on('click', '.edit--cashout', updateCashout);
         $(document).on('click', '.edit--cashin', function(){
             edit(window.cashin_details, '#cashinModal');
+        });
+        $('#CashInForm').on('submit', function(){
+            let id = $(this).find('input[name="id"]').val();
+
+            if(id != ''){
+                $("#CashInForm")[0].submit();
+            }
         });
         $('.request--btn').on('click', resetInput);
     } 
@@ -37,6 +46,27 @@ let ManageFunds = (function () {
             $('.request--btn').find('.icon').addClass('fa-sign-out').removeClass('fa-sign-in');
         }
 
+    }
+    function filterDatatable(){
+        
+        let array   = [];
+
+        $('.filter').each(function(){
+            let val     = $(this).val();
+            let param   = $(this).data('sec');
+
+            if(val != null){
+                array.push(`${param}=${val}`);
+            }
+        });
+
+        let filterParam = array.join('&');
+        let cashin      = filterParam != '' ? `${window.url}/cashin?${filterParam}` : `${window.url}/cashin`;
+        cashInTable.ajax.url(cashin).load();
+
+        let cashout  = filterParam != '' ? `${window.url}/cashout?${filterParam}` : `${window.url}/cashout`;
+        cashOutTable.ajax.url(cashout).load();
+        
     }
     function initializeFancybox(){
         $("a[data-fancybox='image']").fancybox({
@@ -72,6 +102,7 @@ let ManageFunds = (function () {
                 'details[reference_no]' : {
                     required: true,
                     minlength: 6,
+                    remote:`${baseURL}res/validate/cashin`
                 }
             },
             messages: {
@@ -89,6 +120,7 @@ let ManageFunds = (function () {
                 'details[reference_no]' : {
                     required: "Please enter your reference/tracking #",
                     minlength:"Reference No. most be atleast 6 character long",
+                    remote: "Reference no. have used already"
                 }
             }    
         });
@@ -133,9 +165,9 @@ let ManageFunds = (function () {
         });
     }
 
-    function initializeCashInDatatable(){
+    function initializeCashInDatatable(filter=null){
         cashInTable = ui.cashinTable.DataTable({
-            "ajax": `${window.url}/cashin`,
+            "ajax": `${window.url}/cashin${filter != null ? `?${filter}` : ''}`,
             "columns": [
                 { "data": "details.sender_name" },
                 { "data": "" },
@@ -226,7 +258,7 @@ let ManageFunds = (function () {
 
         if(data.status == 2){
             $('.reason--cont').fadeIn();
-            $('.edit--cashout').fadeIn();
+            $('.edit--cashout').fadeOut();
             $(modal).find('textarea[name="reason"]').val(atob(data.declining_reason));
         }else if(data.status == 0){
             $('.reason--cont').fadeOut();
@@ -345,7 +377,7 @@ let ManageFunds = (function () {
 
         if(data.status == 2){
             $('.reason--cont').fadeIn();
-            $('.edit--cashin').fadeIn();
+            $('.edit--cashin').fadeOut();
             $(modal).find('textarea[name="reason"]').val(atob(data.declining_reason));
         }else if(data.status == 0){
             $('.reason--cont').fadeOut();

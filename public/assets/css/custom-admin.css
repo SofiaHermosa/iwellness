@@ -214,3 +214,7 @@ a.avatar.avatar-lg.bg-gray img {
 .bg-cream{
     background-color: #362f2f0f !important;
 }
+
+textarea[name="reason"]{
+    min-height: 10rem !important;
+}

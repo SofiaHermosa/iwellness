@@ -34,6 +34,40 @@ page-profile
 @include('member.manage-funds.modal.cash-out')
 @include('member.manage-funds.modal.cash-in-status')
 @include('member.manage-funds.modal.cash-out-status')
+<div class="col-lg-12 px-0">
+    <div class="col-lg-2 col-sm-6 float-right">
+        <div class="form-group">
+            <select class="form-control filter" data-sec="status">
+                <option value="" disabled selected>Filter by Status</option>
+                <option value="0">Pending</option>
+                <option value="1">Approved</option>
+                <option value="2">Declined</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-sm-6 float-right">
+        <div class="form-group">
+            <select class="form-control filter" data-sec="mop">
+                <option value="" disabled selected>Filter by MOP</option>
+                @foreach (config('constants.mode_of_payment') as $key => $mop)
+                <option value="{{$mop}}">{{$mop}}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+</div>
+
+@if(Session::has('invalid_ref_no'))
+<div class="col-lg-12">
+    <div class="alert dark alert-icon alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        <i class="icon md-alert-triangle" aria-hidden="true"></i> {{ Session::get('invalid_ref_no') }}
+    </div>
+</div>
+@endif  
 <div class="col-lg-12">
     <div class="panel">
         <div class="panel-body container-fluid">
