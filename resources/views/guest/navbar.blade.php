@@ -74,7 +74,7 @@
 
       <a href="javascript:void(0)" class="text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded text-base font-medium toggle-menu" data-toggle="#viewCart">Cart</a>
 
-      <a href="#" class="bg-yellow-300 text-white block px-3 py-2 rounded text-base font-medium">Sign In</a>
+      <a href="{{url('login')}}" class="bg-yellow-300 text-white block px-3 py-2 rounded text-base font-medium">Sign In</a>
     </div>
   </div>
 </nav>
