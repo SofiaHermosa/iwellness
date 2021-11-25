@@ -82,7 +82,7 @@ class WalletController extends Controller
 
         $amount         = array_sum($amount);
         $shipping_fee   = $amount <= 5000 ? 120 : 200;
-        $service_charge = ($amount + $shipping_fee) * 0.01;
+        $service_charge = 0;
         $data = [
             'amount'            => $amount,
             'shipping_fee'      => $shipping_fee,

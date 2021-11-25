@@ -25,7 +25,7 @@ class CommissionClass
     public function disseminate($amount, $source)
     {
         $parents = $this->getParents(auth()->check() ? auth()->user()->referer : '');
-        $percentage  = ['0.05', '0.02', '0.02', '0.01'];
+        $percentage  = $source == 2 ? ['0.03', '0.02', '0.02', '0.01'] : ['0.05', '0.02', '0.02', '0.01'];
         $commissions = [];
         $diamonds    = [];
         $level       = 0;
@@ -92,12 +92,12 @@ class CommissionClass
             ];
         }
 
-        foreach($commissions as $commission){      
-            unset($commission['user']);
-            Earnings::create($commission);
+        if(auth()->user()->activated == 1){
+            foreach($commissions as $commission){      
+                unset($commission['user']);
+                Earnings::create($commission);
+            }
         }
-  
-
 
         foreach($diamonds as $diamond){
             unset($diamond['user']);
