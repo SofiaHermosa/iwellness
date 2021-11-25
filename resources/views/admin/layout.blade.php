@@ -182,7 +182,7 @@
   
     @stack('scripts')
     
-    @if(!empty(monthlySurvey()) && !auth()->user()->hasanyrole('system administrator'))
+    @if(!empty(monthlySurvey()) && monthlySurvey()->count() != 0 && !auth()->user()->hasanyrole('system administrator'))
         <script>
             toastr.options.onclick = function(){
                 window.location.href = '{!! url('res/survey/'.base64_encode(auth()->user()->id)) !!}'

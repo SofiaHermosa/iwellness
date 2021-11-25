@@ -91,6 +91,6 @@
 
         return $survey
         ->monthlyEntries()
-        ->survey() ?? [];
+        ->survey();
     }
 ?>
