@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta name="description" content="Experience the difference">
+    <meta name="og:image" content="{{asset('assets/images/iwellness_logo_text.png')}}">
     <meta name="author" content="">
     
     <title>@yield('page_title') | iWellness</title>
