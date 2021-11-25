@@ -47,6 +47,8 @@ Route::middleware('auth')
     Route::get('my-orders', 'Admin\OrdersController@userOrders');
     Route::resource('user/profile', 'User\ProfileController');
     Route::resource('logs/history', 'Member\LogsController');
+    Route::resource('activity/logs', 'Admin\ActivityController');
+    Route::resource('survey', 'Admin\SurveyController');
 
     Route::namespace('Member')
     ->group(function(){

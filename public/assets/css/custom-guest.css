@@ -61,3 +61,10 @@ html{
     font-size: larger !important;
     padding: 1.5rem 1rem !important;
 }
+
+div label input {
+    margin-right:100px;
+ }
+ body {
+     font-family:sans-serif;
+ }

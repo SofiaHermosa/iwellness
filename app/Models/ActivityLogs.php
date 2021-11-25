@@ -11,6 +11,16 @@ class ActivityLogs extends Model
 
     protected $table = "activity_log";
 
+    protected $fillable = [
+        'causer_id',
+        'log_name',
+        'description',
+        'subject_type',
+        'subject_id',
+        'causer_type',
+        'properties'
+    ];
+
     protected $appends = [
         'date_sent'
     ];

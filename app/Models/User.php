@@ -177,7 +177,7 @@ class User extends Authenticatable
     }
 
     public function logs(){
-        return auth()->user()->hasanyrole('system administrator') ? Activitylogs::with('user')->get() : $this->hasmany(Activitylogs::class,'causer_id');
+        return auth()->user()->hasanyrole('system administrator') ? Activitylogs::whereNotIn('log_name', ['survey', 'login','profit'])->with('user')->get() : $this->hasmany('App\Models\Activitylogs','causer_id')->whereNotIn('log_name', ['survey', 'login','profit']);
     }
 
     public function getWalletBalanceAttribute(){
@@ -194,9 +194,10 @@ class User extends Authenticatable
         ->first() ?? '';
 
         return !empty($subscription) ? [
-            $subscription->created_at->addDays(8)->format('Y-m-d'),
-            $subscription->created_at->addDays(16)->format('Y-m-d'),
-            $subscription->created_at->addDays(24)->format('Y-m-d'),
+            $subscription->created_at->addDays(7)->format('Y-m-d'),
+            $subscription->created_at->addDays(15)->format('Y-m-d'),
+            $subscription->created_at->addDays(22)->format('Y-m-d'),
+            $subscription->created_at->addDays(29)->format('Y-m-d'),
         ] : [];
     }
 }

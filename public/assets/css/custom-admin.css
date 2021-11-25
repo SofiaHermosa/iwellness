@@ -175,3 +175,42 @@ a.avatar.avatar-lg.bg-gray img {
     height: 10rem !important;
     object-fit: cover;
 }
+
+ 
+.ck-button {
+    margin:4px;
+    background-color:#EFEFEF;
+    border-radius:4px;
+    border:1px solid #D0D0D0;
+    overflow:auto;
+    float:left;
+}
+
+.ck-button:hover {
+    background:red;
+}
+
+.ck-button label {
+    float:left;
+    padding: 5px;
+}
+
+.ck-button label span {
+    text-align:center;
+    padding:3px 0px;
+    display:block;
+}
+
+.ck-button label input {
+    position:absolute;
+    top:-20px;
+}
+
+.ck-button input:checked + span {
+    background-color:#911;
+    color:#fff;
+}
+
+.bg-cream{
+    background-color: #362f2f0f !important;
+}

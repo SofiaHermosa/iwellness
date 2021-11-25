@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\IWellness\ActivityClass;
 use App\Models\Earnings;
 use App\Models\User;
 
@@ -27,9 +28,12 @@ class RecurringEarnings extends Command
      *
      * @return void
      */
+    public $activityClass;
+
     public function __construct()
     {
         parent::__construct();
+        $this->activityClass = new ActivityClass;
     }
 
     /**
@@ -59,8 +63,10 @@ class RecurringEarnings extends Command
                     'amount'            => $earning,
                 ];
 
-                Earnings::create($data);
+                $profit = Earnings::create($data);
 
+                $this->activityClass->logActivity('profit', $user->id, $profit->id);
+                
                 $this->info('- ' . $user->name . ' earned total amount of ₱' . $earning);
             }
         }
