@@ -99,7 +99,7 @@ class CommissionClass
                 Earnings::create($commission);
 
                 $earning_data = [
-                    'balance' => $earning['amount'],
+                    'balance' => $commission['amount'],
                     'user_id' => $user->id
                 ];
                 
