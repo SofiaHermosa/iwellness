@@ -111,8 +111,13 @@ class CartController extends Controller
 
     public function proceedToCheckout(Request $request)
     {   
-        $toCheckedOut = $request->checkout;
-        return $this->checkOrderTotal($toCheckedOut);
+        if(auth()->check()){
+            $toCheckedOut = $request->checkout;
+            return $this->checkOrderTotal($toCheckedOut);
+        }else{
+            Session::flash('message', 'To proceed checkout please sign-in or sign-up your account.');
+            return redirect('register');
+        }
     }
 
     public function checkoutPayment(Request $request){

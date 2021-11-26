@@ -189,15 +189,18 @@ class User extends Authenticatable
     }
 
     public function getEarningDatesAttribute(){
-        $subscription = Subscription::where('user_id', $this->id)
+        $releaseSched = [];
+        $subscriptions = Subscription::where('user_id', $this->id)
         ->orderBy('created_at', 'DESC')
-        ->first() ?? '';
+        ->get() ?? '';
 
-        return !empty($subscription) ? [
-            $subscription->created_at->addDays(7)->format('Y-m-d'),
-            $subscription->created_at->addDays(15)->format('Y-m-d'),
-            $subscription->created_at->addDays(22)->format('Y-m-d'),
-            $subscription->created_at->addDays(29)->format('Y-m-d'),
-        ] : [];
+        foreach($subscriptions as $subscription){
+            $releaseSched[$subscription->id][] = $subscription->created_at->addDays(7)->format('Y-m-d');
+            $releaseSched[$subscription->id][] = $subscription->created_at->addDays(15)->format('Y-m-d');
+            $releaseSched[$subscription->id][] = $subscription->created_at->addDays(22)->format('Y-m-d');
+            $releaseSched[$subscription->id][] = $subscription->created_at->addDays(29)->format('Y-m-d');
+        }
+
+        return $releaseSched ?? [];
     }
 }

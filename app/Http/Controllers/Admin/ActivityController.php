@@ -21,7 +21,6 @@ class ActivityController extends Controller
 
     public function index()
     {
-        // dd($this->activityClass->get());
         if(request()->ajax()){
             $data = $this->activityClass->get();
             return response()->json(['data'=> $data]);

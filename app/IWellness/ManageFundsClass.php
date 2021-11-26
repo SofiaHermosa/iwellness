@@ -8,18 +8,19 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\CashIn;
 use App\Models\CashOut;
 use App\Models\Earnings;
+use Carbon\Carbon;
 use Storage;
 use Session;
 
 
 class ManageFundsClass
 {
-    public $request,$funds,$wallet;
+    public $request,$funds,$wallet, $wallet_balance;
 
     public function __construct()
     {
-        $this->request = request();
-        $this->wallet = new WalletClass();
+        $this->request          = request();
+        $this->wallet           = new WalletClass();
     }
 
     public function get($type, $user = null){
@@ -48,8 +49,23 @@ class ManageFundsClass
     }
 
     public function store(){
-        if($this->validRefno()){
+        if($this->request->type == 1 && request()->has('ref_no') && $this->validRefno()){
             Session::flash('invalid_ref_no', 'Reference no has already been used');
+            return back();
+        }
+
+        if($this->request->type != 1 && auth()->user()->wallet_balance < request()->amount){
+            Session::flash('invalid_ref_no', 'Insufficient balance');
+            return back();
+        }
+
+        if($this->request->type != 1 && $this->request->id == null && !in_array(date('w'), [6,7,1,2])){
+            Session::flash('invalid_ref_no', 'Request failed, Cash-out request can only be made every Saturday to Tuesday.');
+            return back();
+        }
+
+        if($this->request->type != 1 && $this->request->id == null && ($this->cashoutRequestPerDay()->sum('amount') + $this->request->amount) > 500000){
+            Session::flash('invalid_ref_no', "Request failed, You've already reached the daily limit of 500,000 per day.");
             return back();
         }
 
@@ -63,6 +79,12 @@ class ManageFundsClass
             ['id' => $this->request->id],
             $this->request->except(['_token', 'attachments', 'type'])
         );
+    }
+
+    public function cashoutRequestPerDay(){
+        $cashout = Cashout::where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today())->get();
+
+        return $cashout;
     }
 
     public function saveImages(){
@@ -109,6 +131,7 @@ class ManageFundsClass
         $cashoutRequest = CashOut::with('user')->findOrFail($id);
         $earnings = Earnings::where('user_id', $user_id)->get();
 
+        $this->wallet->deductTobalance($cashoutRequest->amount, $cashoutRequest->user); 
         if ($earnings->sum('amount') >= $amount) {
             if ($cashoutRequest->status == 0) {
                 $new_balance = $earnings->sum('amount') - $amount;
@@ -118,7 +141,7 @@ class ManageFundsClass
     
                 if ($new_balance > 0) {
                     Earnings::insert([
-                        'user_id'      => auth()->user()->id,
+                        'user_id'      => $cashoutRequest->user->id,
                         'downline_id'  => $earnings->first()->downline_id,
                         'from'         => 4,
                         'amount'       => $new_balance

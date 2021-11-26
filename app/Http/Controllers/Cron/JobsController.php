@@ -9,9 +9,19 @@ use App\Models\Earnings;
 use App\Models\User;
 use App\Models\Subscription;
 use Illuminate\Support\Carbon;
+use App\IWellness\ActivityClass;
+use App\IWellness\WalletClass;
 
 class JobsController extends Controller
 {
+    public $activityClass, $walletClass;
+
+    public function __construct()
+    {
+        $this->activityClass = new ActivityClass;
+        $this->walletClass   = new WalletClass;
+    }
+
     function endSubscription(){
         try {
             $subscriptions = Subscription::whereMonth(
@@ -51,19 +61,37 @@ class JobsController extends Controller
             ->where('from', 3)
             ->whereDate('created_at', $current)
             ->first();
-           
-            if(in_array($current, $user->earning_dates) && empty($flag)){
-                $earning = $user->capital * 0.08;
             
-                $data = [
-                    'user_id'           => $user->id,
-                    'downline_id'       => $user->id,
-                    'from'              => 3,
-                    'amount'            => $earning,
-                ];
+            foreach($user->earning_dates as $key => $active_subscription){
+                $capital_details = Subscription::where('id', $key)->with('capital')->first();
+                if(in_array($current, $active_subscription) && empty($flag)){
 
-                Earnings::create($data);
+                    $earning = $capital_details->capital->first()->amount * 0.08;
+                
+                    $data = [
+                        'user_id'           => $user->id,
+                        'downline_id'       => $user->id,
+                        'from'              => 3,
+                        'amount'            => $earning,
+                    ];
+    
+                    $earning_data = [
+                        'balance' => $earning,
+                        'user_id' => $user->id
+                    ];
+                    
+
+                    $profit = Earnings::create($data);
+                    
+                    $this->activityClass->logActivity('profit', $user->id, $profit->id);
+    
+                    $this->walletClass->update($earning_data); 
+                    
+                   echo '- ' . $user->name . ' earned total amount of ₱' . $earning;
+                }
             }
         }
+
+        echo 'Dissemination of quarterly earnigns succeeded';    
     }
 }

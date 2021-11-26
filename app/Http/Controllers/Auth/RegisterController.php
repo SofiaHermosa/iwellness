@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Cart;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -88,9 +89,23 @@ class RegisterController extends Controller
         return $registeredUser;
     }
 
+    protected function updateCart(){
+        $cart = Session::has('my-cart') ? json_decode(Session::get('my-cart')) : [];
+
+        if(!empty($cart)){
+            Cart::updateOrCreate(
+                ['user_id' => auth()->user()->id],
+                [
+                    'user_id' => auth()->user()->id,
+                    'cart'    => $cart
+                ]
+            );
+        }
+    }
+
     protected function redirectTo()
     {
-        // Auth::logout();
+        $this->updateCart();
         
         Session::flash('message', 'Registered successfully,<br/> Check your email for account activation');
         return 'res';

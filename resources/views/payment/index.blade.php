@@ -146,21 +146,10 @@
 
                     <tr class="wallet--cont hidden pay__cont">
                         <td colspan="2" class="text-left">
-                            <h5>Payment Charge:</h5>
-                        </td>
-                        <td colspan="2" class="text-right">
-                            @php 
-                                $wallet_charge = request()->amount * 0.01
-                            @endphp
-                            <h5>₱ {{number_format($wallet_charge, 2, '.', ',')}}</h5>
-                        </td>
-                    </tr>
-                    <tr class="wallet--cont hidden pay__cont">
-                        <td colspan="2" class="text-left">
                             <h3>Total:</h3>
                         </td>
                         <td colspan="2" class="text-right">
-                            <h3>₱ {{number_format(request()->amount + $wallet_charge, 2, '.', ',')}}</h3>
+                            <h3>₱ {{number_format(request()->amount, 2, '.', ',')}}</h3>
                         </td>
                     </tr>
                 </table>    

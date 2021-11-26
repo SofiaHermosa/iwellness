@@ -33,14 +33,14 @@ let Logs = (function () {
                 {
                     'targets' : 2,
                     'render' : function ( url, type, full) {
-                        return full['survey'].length == 0 ? `` : `<i class="text-success wb-check text-center"></i>`;
+                        return full['survey'].length == 0 ? `` : `<i class="text-success wb-check text-center w--full"></i>`;
                     }
                 },
 
                 {
                     'targets' : 3,
                     'render' : function ( url, type, full) {
-                        return full['logged_in'].length == 0 ? `` : `<i class="text-success wb-check text-center"></i>`;
+                        return full['logged_in'].length == 0 ? `` : `<i class="text-success wb-check text-center w-full"></i>`;
                     }
                 },
 
@@ -51,7 +51,7 @@ let Logs = (function () {
                     }
                 }
             ],   
-            'order' : [4, 'asc']
+            'order' : [[0, 'desc'], [4, 'asc']]
         } );
     }
 

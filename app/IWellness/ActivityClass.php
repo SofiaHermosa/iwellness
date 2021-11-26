@@ -40,18 +40,20 @@ class ActivityClass
         $activity      = [];
 
         foreach($subscriptions as $subscription){
-            $data = [
-                'activation_date'   =>  Carbon::parse($subscriptions[0])->subDays(7)->format('M d, Y'),
-                'sched'             =>  Carbon::parse($subscription)->subDays(7)->format('m/d') . ' - ' . Carbon::parse($subscription)->format('m/d'), 
-                'survey'            =>  $this->hasSurvey($subscription),
-                'logged_in'         =>  $this->retriveActivity($subscription, 'login'),
-                'profit'            =>  $this->retriveActivity($subscription, 'profit'),
-                'release'           =>  Carbon::parse($subscription)->format('m-d-Y'),
-            ];
-
-            $activity[] = $data;
+            foreach($subscription as $release_date){
+                $data = [
+                    'activation_date'   =>  Carbon::parse($subscription[0])->subDays(7)->format('M d, Y'),
+                    'sched'             =>  Carbon::parse($release_date)->subDays(7)->format('m/d') . ' - ' . Carbon::parse($release_date)->format('m/d'), 
+                    'survey'            =>  $this->hasSurvey($release_date),
+                    'logged_in'         =>  $this->retriveActivity($release_date, 'login'),
+                    'profit'            =>  $this->retriveActivity($release_date, 'profit'),
+                    'release'           =>  Carbon::parse($release_date)->format('m-d-Y'),
+                ];
+    
+                $activity[] = $data;            
+            }
         }   
-        
+
         return !empty($activity) ? collect($activity) : [];
     }
 
@@ -68,7 +70,17 @@ class ActivityClass
         $start = Carbon::parse($date)->subDays(7);
         $end   = Carbon::parse($date);
 
-        $activity = ActivityLogs::whereBetween('created_at', [$start, $end])->where('causer_id', auth()->user()->id)->where('log_name', $type)->first();
+        $activity = new ActivityLogs;
+        
+        if($type == 'login'){
+            $activity = $activity->whereBetween('created_at', [$start, $end]);
+        }
+
+        if($type == 'profit'){
+            $activity = $activity->whereDate('created_at', Carbon::parse($end));
+        }
+
+        $activity = $activity->where('causer_id', auth()->user()->id)->where('log_name', $type)->first();
 
         return $activity ?? [];
     }

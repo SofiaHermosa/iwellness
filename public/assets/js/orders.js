@@ -39,13 +39,21 @@ let Orders = (function () {
         table = ui.dataTable.DataTable( {
             "ajax": window.url,
             "columns": [
-                { "data": "user.name" },
+                { "data": "" },
                 { "data": "ordered_list" },
                 { "data": "order_contact" },
                 { "data": "full_address" },
                 { "data": "status_badge" },
                 { "data": "order_date" }
             ],
+            'columnDefs' : [
+                {
+                    'targets' : 0,
+                    'render' : function ( url, type, full) {
+                        return full['user'] != null ? full['user']['name'] : full['details']['name'];
+                    }
+                }
+            ],    
             'order' : [[5, 'desc']]
         } );
     }

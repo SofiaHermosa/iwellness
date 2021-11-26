@@ -30,7 +30,6 @@ class WalletClass
     }
 
     public function payWithWallet($amount){
-        $amount          = ($amount * 0.01) + $amount;
         $current_balance = auth()->user()->wallet_balance;
         $new_balance     = $current_balance - $amount;
         $new_balance     = $new_balance < 0 ? 0 : $new_balance;
@@ -58,6 +57,22 @@ class WalletClass
         ];
 
         return Payment::create($data);
+    }
+
+    public function deductTobalance($amount, $user){
+        $current_balance = $user->wallet_balance;
+
+        if($current_balance >= $amount){
+            $new_balance     = $current_balance - $amount;
+            $new_balance     = $new_balance < 0 ? 0 : $new_balance;
+    
+            $wallet = Wallets::where('user_id', $user->id)->first();
+            $wallet->balance = $new_balance;
+            $wallet->save();
+        }else{
+            Session::flash('invalid_ref_no', 'Insufficient balance, '.$user->username.' request for '. number_format($amount, 2, '.', ',').' but his current balance is only '. number_format($current_balance, 2, '.', ','));
+            return back();
+        }
     }
 }
 

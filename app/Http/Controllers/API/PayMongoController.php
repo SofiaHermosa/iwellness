@@ -278,11 +278,7 @@ class PayMongoController extends Controller
 
     public function eventPerTransacType($data = null, $attachedPaymentIntent){
         if($data['transaction_type'] == 1){
-            if(auth()->user()->activated){
-                $this->subsClass->addCapital($data['amount']);
-            }else{
-                $this->subsClass->activateAccount($data)->parentsCommision();
-            }
+            $this->subsClass->activateAccount($data)->parentsCommision();
 
             $this->url = url('res/');
         }

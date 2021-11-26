@@ -1,7 +1,7 @@
-<div class="col-md-8 offset-2">
+<div class="col-md-8 offset-lg-2">
     <h1 class="page-title my-4">Cart</h1>
 </div>
-<div class="col-lg-8 offset-2" id="cart">
+<div class="col-lg-8 offset-lg-2" id="cart">
     @if(Session::has('error'))
     <div class="alert dark alert-icon alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

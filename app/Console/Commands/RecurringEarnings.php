@@ -4,7 +4,9 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\IWellness\ActivityClass;
+use App\IWellness\WalletClass;
 use App\Models\Earnings;
+use App\Models\Subscription;
 use App\Models\User;
 
 class RecurringEarnings extends Command
@@ -28,12 +30,13 @@ class RecurringEarnings extends Command
      *
      * @return void
      */
-    public $activityClass;
+    public $activityClass, $walletClass;
 
     public function __construct()
     {
         parent::__construct();
         $this->activityClass = new ActivityClass;
+        $this->walletClass   = new WalletClass;
     }
 
     /**
@@ -52,22 +55,33 @@ class RecurringEarnings extends Command
             ->where('from', 3)
             ->whereDate('created_at', $current)
             ->first();
-           
-            if(in_array($current, $user->earning_dates) && empty($flag)){
-                $earning = $user->capital * 0.08;
             
-                $data = [
-                    'user_id'           => $user->id,
-                    'downline_id'       => $user->id,
-                    'from'              => 3,
-                    'amount'            => $earning,
-                ];
+            foreach($user->earning_dates as $key => $active_subscription){
+                $capital_details = Subscription::where('id', $key)->with('capital')->first();
+                if(in_array($current, $active_subscription) && empty($flag)){
 
-                $profit = Earnings::create($data);
-
-                $this->activityClass->logActivity('profit', $user->id, $profit->id);
+                    $earning = $capital_details->capital->first()->amount * 0.08;
                 
-                $this->info('- ' . $user->name . ' earned total amount of ₱' . $earning);
+                    $data = [
+                        'user_id'           => $user->id,
+                        'downline_id'       => $user->id,
+                        'from'              => 3,
+                        'amount'            => $earning,
+                    ];
+    
+                    $earning_data = [
+                        'balance' => $earning,
+                        'user_id' => $user->id
+                    ];
+    
+                    $profit = Earnings::create($data);
+    
+                    $this->activityClass->logActivity('profit', $user->id, $profit->id);
+    
+                    $this->walletClass->update($earning_data); 
+                    
+                    $this->info('- ' . $user->name . ' earned total amount of ₱' . $earning);
+                }
             }
         }
 

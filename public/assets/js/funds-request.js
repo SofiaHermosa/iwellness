@@ -192,6 +192,10 @@ let FundsRequest = (function () {
         $('#cashoutModal').find('input[name="amount"]').val(data.amount_number_format);
         $('#cashoutModal').find('.mot--details').text(data.details.mot);
         $('#cashoutModal').find('.status--badge').html(data.status_badge);
+
+        $('#cashoutModal').find('.cashout-sub__total').html(numberFormat(parseFloat(data.amount).toFixed(2).replace(/(\.0+|0+)$/, '')));
+        $('#cashoutModal').find('.cashout-maintenance__fee').html(' - '+numberFormat(parseFloat(data.amount) * parseFloat(0.02)));
+        $('#cashoutModal').find('.cashout-grand__total').html(numberFormat(parseFloat(data.amount) - (parseFloat(data.amount) * parseFloat(0.02))));
         window.user_cashout = {
             type    : 'cashout',
             id      : data.id,
@@ -360,6 +364,19 @@ let FundsRequest = (function () {
                 });
             }
         })
+    }
+
+    function numberFormat(nStr)
+    {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
     }
 
     function init() {

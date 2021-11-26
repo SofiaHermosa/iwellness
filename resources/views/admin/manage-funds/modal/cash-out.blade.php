@@ -33,18 +33,36 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group form-material" data-plugin="formMaterial">
                         <label class="form-control-label">Reference/Tracking #</label>
                         <input type="text" class="form-control" name="details[account_no]" readonly>
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <div class="form-group form-material" data-plugin="formMaterial">
                         <label class="form-control-label">Amount</label>
                         <input type="text" class="form-control money" name="amount" readonly>
                     </div>
+                </div> -->
+
+                <div class="col-lg-12 text-right mb-4 px-0">
+                    <table width="50%" class="float-right">
+                        <tr>
+                            <th class="font-size-16">Sub Total: </th>
+                            <td class="font-size-16  cashout-sub__total">20000000000</td>
+                        </tr>
+                        <tr>
+                            <th class="font-size-16">Maintenance Fee: </th>
+                            <td class="font-size-16  cashout-maintenance__fee">2000000000</td>
+                        </tr>
+
+                        <tr>
+                            <th class="font-size-16">Grand Total: </th>
+                            <td class="font-size-16  cashout-grand__total">1000000000</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

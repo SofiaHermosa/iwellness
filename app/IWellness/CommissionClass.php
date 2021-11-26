@@ -2,6 +2,7 @@
 
 namespace App\IWellness;
 use Illuminate\Http\Request;
+use App\IWellness\WalletClass;
 use App\Models\Earnings;
 use App\Models\Diamonds;
 use App\Models\User;
@@ -11,11 +12,11 @@ use Session;
 
 class CommissionClass
 {
-    public $earnings;
+    public $earnings, $walletClass;
 
     public function __construct()
     {
-        
+        $this->walletClass = new WalletClass();
     }
 
     public function getParents($id=null){
@@ -96,6 +97,13 @@ class CommissionClass
             foreach($commissions as $commission){      
                 unset($commission['user']);
                 Earnings::create($commission);
+
+                $earning_data = [
+                    'balance' => $earning,
+                    'user_id' => $user->id
+                ];
+                
+                $this->walletClass->update($earning_data); 
             }
         }
 
