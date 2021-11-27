@@ -27,7 +27,7 @@ class NetworkController extends Controller
             }
             return view('member.network.index');
         } catch (\Throwable $th) {
-            dd($th);
+            abort(500);
         }
     }
 
