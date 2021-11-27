@@ -67,7 +67,7 @@ page-profile
           <div class="card-footer">
             <div class="row no-space">
               <div class="col-6">
-                <strong class="profile-stat-count">{{number_format(getCurrentWalletBalance(auth()->user()->id), 2, '.', ',')}}</strong>
+                <strong class="profile-stat-count">{{number_format(auth()->user()->wallet_balance, 2, '.', ',')}}</strong>
                 <span>Wallet Balance</span>
               </div>
               <div class="col-6">

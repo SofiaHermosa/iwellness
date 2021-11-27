@@ -32,7 +32,7 @@ $balance = dashboardcontent(auth()->user()->id);
                             <div class="content-text text-center mb-0">
                                 <i class="text-danger icon ti-triangle-up font-size-20">
                             </i>
-                            <span class="font-size-40 font-weight-100">{{!empty($dashboard->commissions) ? number_format($dashboard->commissions->sum('amount'), 2, '.', ',') : 0}}</span>
+                            <span class="font-size-40 font-weight-100">{{number_format(auth()->user()->wallet_balance, 2, '.', ',')}}</span>
                             <p class="blue-grey-400 font-weight-100 m-0">Last month commissions {{!empty(monthlyRecords('commissions', auth()->user()->id)->last->first()) ? number_format(monthlyRecords('commissions', auth()->user()->id)->last->sum('amount'), 2, '.', ',') : 0}}</p>
                         </div>
                         </div>

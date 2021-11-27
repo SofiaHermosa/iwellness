@@ -94,25 +94,44 @@ class CommissionClass
         }
 
         if(auth()->user()->activated == 1){
-            foreach($commissions as $commission){      
-                unset($commission['user']);
-                Earnings::create($commission);
-
-                $earning_data = [
-                    'balance' => $commission['amount'],
-                    'user_id' => $user->id
-                ];
-                
-                $this->walletClass->update($earning_data); 
+            foreach($commissions as $key => $commission){      
+                if($key <= 3){
+                    $this->updateUserEarning($commission);
+                }else if($key <= 9 && $commission['user']->hasanyrole('team leader|manager')){
+                    $this->updateUserEarning($commission);
+                }else if($key > 9 && $commission['user']->hasanyrole('manager')){
+                    $this->updateUserEarning($commission);
+                }
             }
         }
 
         foreach($diamonds as $diamond){
-            unset($diamond['user']);
-            Diamonds::create($diamond);
+            if($key <= 3){
+                unset($diamond['user']);
+                Diamonds::create($diamond);
+            }else if($key <= 9 && $commission['user']->hasanyrole('team leader|manager')){
+                unset($diamond['user']);
+                Diamonds::create($diamond);
+            }else if($key > 9 && $commission['user']->hasanyrole('manager')){
+                unset($diamond['user']);
+                Diamonds::create($diamond);
+            }
         }
 
         return $this;
+    }
+
+
+    public function updateUserEarning($commission){
+        unset($commission['user']);
+        Earnings::create($commission);
+
+        $earning_data = [
+            'balance' => $commission['amount'],
+            'user_id' => $commission['user_id']
+        ];
+        
+        $this->walletClass->update($earning_data); 
     }
 }
 
