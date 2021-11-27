@@ -13,7 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 use App\Models\ActivityLogs;
-use App\Models\Cashout;
+use App\Models\CashOut;
 use Session;
 
 class User extends Authenticatable
@@ -182,7 +182,7 @@ class User extends Authenticatable
     }
 
     public function getWalletBalanceAttribute(){
-        $cashout = Cashout::where('status', 0)->where('user_id', $this->id)->get()->sum('amount');
+        $cashout = CashOut::where('status', 0)->where('user_id', $this->id)->get()->sum('amount');
         $balance = $this->wallets()->first()->balance - $cashout;
         $balance = $balance < 0 ? 0 : $balance;
 
