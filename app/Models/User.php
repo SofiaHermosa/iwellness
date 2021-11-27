@@ -183,10 +183,11 @@ class User extends Authenticatable
 
     public function getWalletBalanceAttribute(){
         $cashout = CashOut::where('status', 0)->where('user_id', $this->id)->get()->sum('amount');
-        $balance = ($this->wallets()->first()->balance ?? 0) - $cashout;
+        $wallet  = $this->wallets()->first()->balance ?? 0;
+        $balance = $wallet - $cashout;
         $balance = $balance < 0 ? 0 : $balance;
 
-        return  $balance ?? 0;
+        return  $balance;
     }
 
     public function getProfImgAttribute($value){
