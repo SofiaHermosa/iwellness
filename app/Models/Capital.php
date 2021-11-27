@@ -10,7 +10,7 @@ use Spatie\Activitylog\Contracts\Activity;
 
 class Capital extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, LogsActivity;
 
     protected $table = "capital";
 
