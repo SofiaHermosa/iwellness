@@ -180,13 +180,13 @@
   
     @stack('scripts')
     
-    @if(!empty(monthlySurvey()) && monthlySurvey()->count() != 0 && !auth()->user()->hasanyrole('system administrator'))
-        <script>
-            toastr.options.onclick = function(){
-                window.location.href = '{!! url('res/survey/'.base64_encode(auth()->user()->id)) !!}'
-            }
-            toastr.options.positionClass = 'toast-bottom-right';
-            toastr.info('Click Here!', "Help us to know you better, by answering our monthly survey.")
-        </script>
-    @endif
+    // @if(!empty(monthlySurvey()) && monthlySurvey()->count() != 0 && !auth()->user()->hasanyrole('system administrator'))
+    //     <script>
+    //         toastr.options.onclick = function(){
+    //             window.location.href = '{!! url('res/survey/'.base64_encode(auth()->user()->id)) !!}'
+    //         }
+    //         toastr.options.positionClass = 'toast-bottom-right';
+    //         toastr.info('Click Here!', "Help us to know you better, by answering our monthly survey.")
+    //     </script>
+    // @endif
 </html>    
