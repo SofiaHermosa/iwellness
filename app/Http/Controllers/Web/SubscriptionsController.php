@@ -1,38 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\IWellness\SurveyClass;
-use App\IWellness\ActivityClass;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
-use Session;
 
-class SurveyController extends Controller
+class SubscriptionsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public $surveyClass, $activityClass;
-
-    public function __construct()
-    {
-        $this->surveyClass   = new SurveyClass;
-        $this->activityClass = new ActivityClass;
-    }
-
     public function index()
     {
-        $survey = $this->surveyClass->get()->surveys;
-       
-        if(request()->ajax()){
-            return response()->json(['data'=> $survey]);
-        }
 
-        return view('admin.survey.index');
+        $subsciptions = auth()->user()->active_subscriptions;
+        if(request()->ajax()){
+            return response()->json(['data'=> $subsciptions]);
+        }
     }
 
     /**
@@ -42,7 +28,7 @@ class SurveyController extends Controller
      */
     public function create()
     {
-        return view('admin.survey.module.create');
+        //
     }
 
     /**
@@ -53,10 +39,7 @@ class SurveyController extends Controller
      */
     public function store(Request $request)
     {
-        $this->surveyClass->manageSurvey();
-
-        Session::flash('message', 'New survey question was successfully added'); 
-        return back();
+        //
     }
 
     /**
@@ -67,12 +50,7 @@ class SurveyController extends Controller
      */
     public function show($id)
     {
-        if($this->surveyClass->hasSurvey()){
-            return view('member.survey.index');
-        }else{
-            Session::flash('error', 'Cutoff survey has been already answered');
-            return redirect('res/profile');
-        }
+        //
     }
 
     /**
@@ -95,10 +73,7 @@ class SurveyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->surveyClass->sendEntry();
-
-        Session::flash('message', 'Thank you for your help!'); 
-        return redirect('res/');
+        //
     }
 
     /**

@@ -30,12 +30,23 @@ return [
         7 => "Who is your childhood hero?",
         8 => "Where did you meet your spouse/partner?",
     ],
-    'mode_of_payment' => [
+    'cashout_mode_of_payment' => [
         'AUB',
-        'Chine Bank',
+        'China Bank',
         'BPI',
         'Union Bank',
         'BDO',
+        'GCash',
+        'Cebuana',
+        'Palawan',
+        'LBC',
+    ],
+
+    'cashin_mode_of_payment' => [
+        'AUB',
+        'China Bank',
+        'BPI',
+        'Union Bank',
         'GCash',
         'Cebuana',
         'Palawan',

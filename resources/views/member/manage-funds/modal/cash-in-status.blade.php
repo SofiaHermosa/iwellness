@@ -35,7 +35,7 @@
                             <label class="form-control-label">Mode of Payment</label>
                             <select class="form-control" name="details[mop]" readonly>
                                 <option value="" disabled></option>
-                                @foreach (config('constants.mode_of_payment') as $key => $mop)
+                                @foreach (config('constants.cashin_mode_of_payment') as $key => $mop)
                                   <option value="{{$mop}}" disabled>{{$mop}}</option>
                                 @endforeach
                             </select>

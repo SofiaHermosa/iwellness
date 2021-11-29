@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\Contracts\Activity;
+use Carbon\Carbon;
 
 class Subscription extends Model
 {
@@ -23,6 +24,12 @@ class Subscription extends Model
         'validity',
         'status',
         'valid',
+    ];
+
+    protected $appends = [
+        'release_dates',
+        'date_sent',
+        'valid_until'
     ];
 
     protected static $logFillable = true;
@@ -43,4 +50,22 @@ class Subscription extends Model
         return $this->belongsTo('App\Models\User', 'user_id');
     }
 
+    public function getReleaseDatesAttribute(){        
+        $releaseSched = array(
+            $this->created_at->addDays(7)->format('M d'),
+            $this->created_at->addDays(15)->format('M d'),
+            $this->created_at->addDays(22)->format('M d'),
+            $this->created_at->addDays(29)->format('M d')
+        );
+
+        return $releaseSched ?? [];
+    }
+
+    public function getDateSentAttribute(){
+        return $this->created_at->format('M d, Y g:ia');
+    }
+
+    public function getValidUntilAttribute(){
+        return Carbon::parse($this->created_at)->addMonth()->format('M d, Y g:ia');
+    }
 }

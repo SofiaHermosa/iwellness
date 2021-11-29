@@ -44,11 +44,50 @@ class SurveyClass
     }
 
     public function monthlyEntries(){
-        $this->entries = SurveyEntries::where('user_id', auth()->user()->id)
-        ->whereMonth('created_at', Carbon::now()->month)
-        ->get();
+        $this->entries = [];
+
+        $pending = [];
+        $now     = Carbon::now()->format('Y-m-d');
+        $survey  = !empty($this->activityClass->get()) ? 
+        $this->activityClass
+        ->get()
+        ->where('survey', '===', []) : 
+        [];
+
+        foreach($survey as $entry){
+            if(($now >= $entry['start']) && ($now <= $entry['end'])){
+                $this->entries[] = SurveyEntries::where('user_id', auth()->user()->id)
+                ->whereBetween('created_at', [$entry['start'], $entry['end']])
+                ->first();
+            }
+        }
+
+        $this->entries = collect($this->entries);
 
         return $this;
+    }
+
+    public function hasSurvey(){
+        $pending = [];
+        $now     = Carbon::now()->format('Y-m-d');
+        $survey  = !empty($this->activityClass->get()) ? 
+        $this->activityClass
+        ->get()
+        ->where('survey', '===', []) : 
+        [];
+
+        foreach($survey as $entry){
+            if(($now >= $entry['start']) && ($now <= $entry['end'])){
+                $pending[] = $entry;
+            }
+        }
+
+        
+        if(count($pending) == 0){
+            return false;
+        }
+
+        return true;
     }
 
     public function survey(){

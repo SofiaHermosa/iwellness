@@ -34,6 +34,7 @@ page-profile
 @include('member.manage-funds.modal.cash-out')
 @include('member.manage-funds.modal.cash-in-status')
 @include('member.manage-funds.modal.cash-out-status')
+@include('member.account-activation.modal.activate')
 <div class="col-lg-12 px-0">
     <div class="col-lg-2 col-sm-6 float-right">
         <div class="form-group">
@@ -50,7 +51,7 @@ page-profile
         <div class="form-group">
             <select class="form-control filter" data-sec="mop">
                 <option value="" disabled selected>Filter by MOP</option>
-                @foreach (config('constants.mode_of_payment') as $key => $mop)
+                @foreach (config('constants.cashout_mode_of_payment') as $key => $mop)
                 <option value="{{$mop}}">{{$mop}}</option>
                 @endforeach
             </select>
@@ -74,23 +75,31 @@ page-profile
             <div class="example-wrap m-xl-0">
                 <div class="nav-tabs-horizontal" data-plugin="tabs">
                     <ul class="nav nav-tabs nav-tabs-line" role="tablist">
+                        <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" data-action="{{empty(auth()->user()->subscription()->first()) && empty(auth()->user()->subscription()->where('valid', 1)->where('status', 1)->first()) ? 'Activate Account': 'Add Capital'}}" href="#subscriptionTab" aria-controls="subscriptionTab" role="tab" aria-selected="true">Capital</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link active show" data-action="Cash-in" data-toggle="tab" href="#exampleTabsLineOne" aria-controls="exampleTabsLineOne" role="tab" aria-selected="false">Cash-in</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" data-action="Cash-out" data-toggle="tab" href="#exampleTabsLineTwo" aria-controls="exampleTabsLineTwo" role="tab" aria-selected="true">Cash-out</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" data-action="{{auth()->user()->activated == 1 ? 'Cash-out' : 'disabled'}}" data-toggle="{{auth()->user()->activated == 1 ? 'tab' : 'disabled'}}" href="{{auth()->user()->activated == 1 ? '#exampleTabsLineTwo' : 'javascript:void(0)'}}" aria-controls="exampleTabsLineTwo" role="tab" aria-selected="true" {{auth()->user()->activated == 1 ? '' : 'disabled'}}>Cash-out</a></li>
                         <li class="dropdown nav-item" role="presentation" style="display: none;">
                         <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" aria-expanded="false">Dropdown </a>
                         <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" data-toggle="tab" data-action="Cash-in" href="#exampleTabsLineOne" aria-controls="exampleTabsLineOne" role="tab">Cash-in</a>
+                            <a class="dropdown-item" data-action="{{auth()->user()->activated == 1 ? 'Cash-out' : 'disabled'}}" data-toggle="{{auth()->user()->activated == 1 ? 'tab' : 'disabled'}}" href="{{auth()->user()->activated == 1 ? '#exampleTabsLineTwo' : 'javascript:void(0)'}}" aria-controls="exampleTabsLineTwo" role="tab" aria-selected="true" {{auth()->user()->activated == 1 ? '' : 'disabled'}} aria-controls="exampleTabsLineOne" role="tab">Cash-in</a>
                             <a class="dropdown-item" data-toggle="tab" data-action="Cash-out" href="#exampleTabsLineTwo" aria-controls="exampleTabsLineTwo" role="tab">Cash-out</a>
+                            <a class="dropdown-item" data-toggle="tab" data-action="{{empty(auth()->user()->subscription()->first()) && empty(auth()->user()->subscription()->where('valid', 1)->where('status', 1)->first()) ? 'Activate Account': 'Add Capital'}}" href="#subscriptionTab" aria-controls="subscriptionTab" role="tab">Capital</a>
                         </div>
                         </li>
                     </ul>
                     <div class="tab-content pt-20">
+                        <div class="tab-pane" id="subscriptionTab" role="tabpanel">
+                            @include('member.manage-funds.table.subscriptions')
+                        </div>
                         <div class="tab-pane active show" id="exampleTabsLineOne" role="tabpanel">
                             @include('member.manage-funds.table.cash-in')
                         </div>
+
+                        @if(auth()->user()->hasanyrole('member|team leader|manager'))
                         <div class="tab-pane" id="exampleTabsLineTwo" role="tabpanel">
                             @include('member.manage-funds.table.cash-out')
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -102,8 +111,10 @@ page-profile
 
 @push('scripts')
 <script>
-    window.url = "{!! url('res/manage-funds/') !!}";
+    window.url           = "{!! url('res/manage-funds/') !!}";
+    window.subscriptions = "{!! url('res/subscriptions/') !!}";
 </script>
+
 <script src="{{asset('assets/js/jquery.mask.min.js')}}"></script>
 <script src="{{asset('app/classic/global/vendor/dropify/dropify.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>

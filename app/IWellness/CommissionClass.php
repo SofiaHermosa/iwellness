@@ -35,14 +35,15 @@ class CommissionClass
             $nextParent = [];
             foreach($parents as $key => $user){
                 $percent = $level <= 3 ? $percentage[$level] : '0.01';
+                $dias_percent = floor($amount/700);
                 $dias    = 0;
 
                 if($source == 1){
-                    $dias = $level == 0 ? 10 : 2;
+                    $dias = $level == 0 ? 10 * $dias_percent  : 2;
                 }
 
                 if($source == 2){
-                    $dias = $level == 0 ? 10 : 2;
+                    $dias = $level == 0 ? 10 * $dias_percent : 2;
                 }
         
                 $commissions[$level] = [

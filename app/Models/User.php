@@ -13,6 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 use App\Models\ActivityLogs;
+use App\Models\Subscription;
 use App\Models\CashOut;
 use Session;
 
@@ -53,7 +54,8 @@ class User extends Authenticatable
         'orders',
         'wallet_balance',
         'earning_dates',
-        'capital'
+        'capital',
+        'active_subscriptions'
     ];
 
     /**
@@ -76,7 +78,7 @@ class User extends Authenticatable
     ];
 
     public function hasSubscription() {
-        return $this->hasMany('App\Models\Subscription', 'user_id');
+        return $this->hasMany(Subscription::class, 'user_id');
     }
 
     public function subscription(){
@@ -104,6 +106,24 @@ class User extends Authenticatable
     public function getSecretQuestionAttribute($value)
     {
         return json_decode($value);
+    }
+
+    public function getActiveSubscriptionsAttribute(){
+        $subscriptions = new Subscription;
+
+        if(!auth()->user()->hasanyrole('system administrator')){
+            $subscriptions = $subscriptions
+            ->where('user_id',auth()->user()->id);
+        }
+
+        $subscriptions = $subscriptions
+        ->with('capital')
+        ->where('valid', 1)
+        ->where('status', 1)
+        ->orderBy('created_at', 'DESC')
+        ->get();
+
+        return $subscriptions ?? [];
     }
 
     public function referrer(){

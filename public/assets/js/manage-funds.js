@@ -6,6 +6,7 @@ let ManageFunds = (function () {
         this._ui = {
             cashinTable: $('#cashInDataTable'),
             cashoutTable: $('#cashOutDataTable'),
+            subscriptionTable: $('#subscriptionsDataTable'),
             filter: $('.filter')
         };
 
@@ -36,14 +37,19 @@ let ManageFunds = (function () {
     } 
     function changeTabAction(){
         var action = $(this).data('action');
-        $('.request--btn').find('.btn--text').text(action);
+        if(action !== 'disabled'){
+            $('.request--btn').find('.btn--text').text(action);
+        }
 
-        if(action == 'Cash-in'){
+        if(action == 'Cash-in' && action !== null){
             window.modal__tab = '#cashinModal';
-            $('.request--btn').find('.icon').addClass('fa-sign-in').removeClass('fa-sign-out');
-        }else{
+            $('.request--btn').find('.icon').addClass('fa-sign-in').removeClass('fa-sign-out fa-plus');
+        }else if(action == 'Cash-out' && action !== null){
             window.modal__tab = '#cashoutModal';
-            $('.request--btn').find('.icon').addClass('fa-sign-out').removeClass('fa-sign-in');
+            $('.request--btn').find('.icon').addClass('fa-sign-out').removeClass('fa-sign-in fa-plus');
+        }else if(action !== 'disabled'){
+            window.modal__tab = '#activateAccountModal';
+            $('.request--btn').find('.icon').addClass('fa-plus').removeClass('fa-sign-in fa-sign-out');
         }
 
     }
@@ -82,6 +88,7 @@ let ManageFunds = (function () {
         initializeCashInDatatable();
         initializeFancybox();
         initializeCashOutDatatable();
+        initializeSubscriptionsDatatable();
         initializeFormValidation();
     }
 
@@ -210,6 +217,33 @@ let ManageFunds = (function () {
             ],
             'order' : [[4, 'desc']]
         });
+    }
+
+    function initializeSubscriptionsDatatable(){
+        ui.subscriptionTable.DataTable( {
+            "ajax": window.subscriptions,
+            "columns": [
+                { "data": "" },
+                { "data": "" },
+                { "data": "date_sent" },
+                { "data": "valid_until" }
+            ],
+            'columnDefs' : [
+                {
+                    'targets' : 0,
+                    'render' : function ( url, type, full) {
+                        return `${numberFormat(full['capital'][0].amount)}`;
+                    }
+                },
+                {
+                    'targets' : 1,
+                    'render' : function ( url, type, full) {
+                        return full['release_dates'].join(', ');
+                    }
+                },
+            ], 
+            'order' : [[2, 'DESC']]
+        } );
     }
 
     function uploadAttachments(){

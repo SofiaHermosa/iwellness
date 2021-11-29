@@ -51,7 +51,7 @@ $balance = dashboardcontent(auth()->user()->id);
                         <div class="form-group form-material floating" data-plugin="formMaterial">
                             <select class="form-control" name="details[mot]" required>
                                 <option value=""></option>
-                                @foreach (config('constants.mode_of_payment') as $key => $mop)
+                                @foreach (config('constants.cashout_mode_of_payment') as $key => $mop)
                                   <option value="{{$mop}}">{{$mop}}</option>
                                 @endforeach
                             </select>

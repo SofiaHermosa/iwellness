@@ -101,6 +101,7 @@ let FundsRequest = (function () {
                 { "data": "" },
                 { "data": "details.sender_name" },
                 { "data": "" },
+                { "data": "details.mop" },
                 { "data": "details.reference_no" },
                 { "data": "" },
                 { "data": "status_badge" },
@@ -120,7 +121,7 @@ let FundsRequest = (function () {
                     }
                 },
                 {
-                    'targets' : 4,
+                    'targets' : 5,
                     'render' : function ( url, type, full) {
                         if(full['attachments'] != null){
                             return `<center><a data-fancybox="image" href="${full['attachments']}"><img height="50" width="50" class="img rounded cover" src="${full['attachments']}"></a></center>`;
@@ -130,7 +131,7 @@ let FundsRequest = (function () {
                     }
                 },
             ],
-            'order' : [[6, 'desc']]
+            'order' : [[7, 'desc']]
         });
     }
 
@@ -159,7 +160,7 @@ let FundsRequest = (function () {
 
     function editCashIn(){     
         let col = $(this).parent().children().index($(this));
-        if(col != 4){
+        if(col != 5){
             let data = cashInTable.row($(this).parent()).data();
             $('#cashinModal').find('input[name="user"]').val(data.user.name);
             $('#cashinModal').find('input[name="details[sender_name]"]').val(data.details.sender_name);

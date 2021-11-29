@@ -21,11 +21,9 @@ let Network = (function () {
         ui.dataTable.DataTable( {
             "ajax": window.url,
             "columns": [
-                { "data": "name" },
+                { "data": "" },
                 { "data": "username" },
                 { "data": "activated" },
-                { "data": "level" },
-                { "data": "commission" }
             ],
             'order' : [[3, 'asc']]
         } );

@@ -123,7 +123,14 @@
                 </ul>
               </li>
               @endcan
-
+              @if(!auth()->user()->hasanyrole('system administrator'))
+              <li class="site-menu-item">
+                <a class="animsition-link waves-effect waves-classic" href="{{url('res/survey/'.base64_encode(auth()->user()->id))}}">
+                      <i class="site-menu-icon fa-tasks" aria-hidden="true"></i>
+                      <span class="site-menu-title">Survey</span>
+                </a>
+              </li>
+              @endif
               <li class="site-menu-item">
                 <a class="animsition-link waves-effect waves-classic" href="{{url('res/logs/history')}}">
                       <i class="site-menu-icon wb-order" aria-hidden="true"></i>
@@ -143,22 +150,22 @@
     </div>
 </div>
     
-      <div class="site-menubar-footer">
-        <a href="javascript: void(0);" class="fold-show" data-placement="top" data-toggle="tooltip" data-original-title="Settings">
-          <span class="icon md-settings" aria-hidden="true"></span>
-        </a>
-        <a href="javascript:void(0)" class="share--btn" data-placement="top" data-toggle="tooltip" data-original-title="Share">
-          <span class="icon md-share" aria-hidden="true"></span>
-        </a>
-        <a href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form-side').submit();" data-placement="top" data-toggle="tooltip" data-original-title="Logout">
-          <span class="icon md-power" aria-hidden="true"></span>
-        </a>
+<div class="site-menubar-footer">
+  <a href="javascript: void(0);" class="fold-show" data-placement="top" data-toggle="tooltip" data-original-title="Settings">
+    <span class="icon md-settings" aria-hidden="true"></span>
+  </a>
+  <a href="javascript:void(0)" class="share--btn" data-placement="top" data-toggle="tooltip" data-original-title="Share">
+    <span class="icon md-share" aria-hidden="true"></span>
+  </a>
+  <a href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form-side').submit();" data-placement="top" data-toggle="tooltip" data-original-title="Logout">
+    <span class="icon md-power" aria-hidden="true"></span>
+  </a>
 
-        <form id="logout-form-side" action="{{ route('logout') }}" method="POST" class="d-none">
-            @csrf
-        </form>
-      </div>
-    </div>
+  <form id="logout-form-side" action="{{ route('logout') }}" method="POST" class="d-none">
+      @csrf
+  </form>
+</div>
+</div>
 
     <div class="site-gridmenu scrollable scrollable-inverse scrollable-vertical is-disabled">
   

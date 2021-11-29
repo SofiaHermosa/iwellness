@@ -42,7 +42,7 @@ page-profile
         <div class="form-group">
             <select class="form-control filter" data-sec="mop">
                 <option value="" disabled selected>Filter by MOP</option>
-                @foreach (config('constants.mode_of_payment') as $key => $mop)
+                @foreach (config('constants.cashout_mode_of_payment') as $key => $mop)
                 <option value="{{$mop}}">{{$mop}}</option>
                 @endforeach
             </select>

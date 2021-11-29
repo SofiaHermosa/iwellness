@@ -94,4 +94,6 @@ $(document).on('click', '.archive', function(){
 });
 
 $('.summernote').summernote();
+
+history.go = function(){};
     

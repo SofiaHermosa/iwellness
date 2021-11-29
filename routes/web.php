@@ -26,11 +26,12 @@ Route::middleware('auth')
 ->group(function(){
     Route::get('/', function(){
         return view('home');
-    });
+    }); 
 
     Route::get('/product/{id}/view', function(){
         return view('content.product-preview');
     });
+
     //Admin Routes
     Route::namespace('Admin')
     ->middleware('role:system administrator')
@@ -44,29 +45,38 @@ Route::middleware('auth')
         Route::resource('fund-request', 'ManageFundsController');
     });
 
-    Route::get('my-orders', 'Admin\OrdersController@userOrders');
-    Route::resource('user/profile', 'User\ProfileController');
-    Route::resource('logs/history', 'Member\LogsController');
-    Route::resource('activity/logs', 'Admin\ActivityController');
-    Route::resource('survey', 'Admin\SurveyController');
-
+    //MemberRoutes
     Route::namespace('Member')
     ->group(function(){
         Route::resource('profile', 'DashboardController');
         Route::resource('manage-funds', 'ManageFundsController');
         Route::resource('network', 'NetworkController');
         Route::post('activate/account', 'SubscriptionController@activateAccount');
-        // Route::get('checkout/cart', 'CartController@proceedToCheckout');
-        // Route::post('checkout/payment', 'CartController@checkoutPayment');
         Route::resource('diamond/conversion', 'DiamondConversionController');
     });
+
+    Route::namespace('Web')->group(function(){
+        Route::resource('subscriptions', 'SubscriptionsController');
+    });
+ 
+    Route::get('my-orders', 'Admin\OrdersController@userOrders');
+    Route::resource('user/profile', 'User\ProfileController');
+    Route::resource('logs/history', 'Member\LogsController');
+    Route::resource('activity/logs', 'Admin\ActivityController');
+    Route::resource('survey', 'Admin\SurveyController');
+    
+});
+
+Route::middleware('prevent_back_history')
+->group(function(){
+    Route::get('res/checkout/cart', 'Member\CartController@proceedToCheckout');
+    Route::post('res/checkout/payment', 'Member\CartController@checkoutPayment');
+    Route::get('res/validate/cashin', 'Member\ManageFundsController@validateRefence');
 });
 
 Route::resource('res/cart', 'Member\CartController');
-Route::get('res/checkout/cart', 'Member\CartController@proceedToCheckout');
-Route::post('res/checkout/payment', 'Member\CartController@checkoutPayment');
 Route::get('res/order/invoice/{id}', 'Member\CartController@show');
-Route::get('res/validate/cashin', 'Member\ManageFundsController@validateRefence');
+
 
 Route::namespace('Auth')
 ->group(function(){
@@ -78,7 +88,7 @@ Route::namespace('Auth')
 Route::get('confirm/account/{user}', 'Auth\RegisterController@verifyEmail');
 
 Route::middleware('auth')->namespace('Payment')->group(function(){
-    Route::resource('payment', 'PaymentController');
+    Route::resource('payment', 'PaymentController')->middleware('prevent_back_history');
 });
 
 Route::namespace('API')->group(function(){

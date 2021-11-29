@@ -48,7 +48,9 @@ class ActivityClass
                     'logged_in'         =>  $this->retriveActivity($release_date, 'login'),
                     'profit'            =>  $this->retriveActivity($release_date, 'profit'),
                     'release'           =>  Carbon::parse($release_date)->format('m-d-Y'),
-                ];
+                    'start'             =>  Carbon::parse($release_date)->subDays(7)->format('Y-m-d'),
+                    'end'               =>  Carbon::parse($release_date)->format('Y-m-d'),  
+                ];  
     
                 $activity[] = $data;            
             }
