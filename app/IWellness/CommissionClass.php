@@ -106,7 +106,7 @@ class CommissionClass
             }
         }
 
-        foreach($diamonds as $diamond){
+        foreach($diamonds as $key => $diamond){
             if($key <= 3){
                 unset($diamond['user']);
                 Diamonds::create($diamond);
