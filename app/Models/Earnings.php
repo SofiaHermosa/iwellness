@@ -10,7 +10,7 @@ use Spatie\Activitylog\Contracts\Activity;
 
 class Earnings extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, LogsActivity;
 
     protected $table = 'earnings';
 
@@ -30,9 +30,11 @@ class Earnings extends Model
         $data   = json_decode($activity->properties)->attributes;
         $event  = $eventName == 'created' ? 'earned' : $eventName;
         $from   = $activity->causer_id == $data->user_id ? config('constants.payment_transaction_type.'.$data->from) : ($data->from == 1 ? 'referral bonus' : 'commission');
-        $member = $activity->causer_id == $data->user_id ? '' : ' from '.$activity->causer->username;
-        $description = ucfirst($event)." ".$from ." total of ".number_format($data->amount, 2, '.', ',').$member;
-        
+        $member = $activity->causer_id == $data->user_id ? '' : ' from '.$activity->causer->username;     
+        $description = ucfirst($event)." ". $from ." total of ".number_format($data->amount, 2, '.', ',').' '.$member;
+        if($activity->causer_id == $data->user_id){
+            $description = ucfirst($event)." total of ".number_format($data->amount, 2, '.', ',').' from '.$from;
+        }
         $activity->causer_id = $data->user_id;
         $activity->description = $description;
     }

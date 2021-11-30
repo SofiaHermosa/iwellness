@@ -68,9 +68,23 @@ $balance = dashboardcontent(auth()->user()->id);
     
                     <div class="col-md-12 pr-0">
                         <div class="form-group form-material floating" data-plugin="formMaterial">
-                            <input type="text" class="form-control money" name="amount">
+                            <input type="text" class="form-control money text-right cashout__amount" name="amount" autocomplete="off">
                             <label class="floating-label">Amount</label>
                         </div>
+                    </div>
+
+                    <div class="col-lg-12 text-right mb-4 px-0">
+                        <table width="50%" class="float-right">
+                            <tr>
+                                <th class="font-size-16">Maintenance Fee: </th>
+                                <td class="font-size-16  cashout-maintenance__fee">00.00</td>
+                            </tr>
+
+                            <tr>
+                                <th class="font-size-16">Grand Total: </th>
+                                <td class="font-size-16  cashout-grand__total">00.00</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>

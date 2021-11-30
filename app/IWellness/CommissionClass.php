@@ -19,18 +19,45 @@ class CommissionClass
         $this->walletClass = new WalletClass();
     }
 
-    public function getParents($id=null){
-        return auth()->check() ? ($id != auth()->user()->id ? User::where('id', $id)->get() : []) : [];
+    public function getParents($id=null, $level=0){
+        // return auth()->check() ? ($id != auth()->user()->id ?  : []) : [];
+        $user = new User;
+        
+        if(auth()->check()){
+            if($id != auth()->user()->id){
+                $user = $user->where('id', $id);
+                if($level > 4 && $level <= 9){
+                    $user = $user->whereHas('roles', function($q){
+                        $q->where('name', 'team leader')
+                        ->orWhere('name', 'manager');
+                    });
+                }else if($level > 9){
+                    $user = $user->whereHas('roles', function($q){
+                        $q->where('name', 'manager');
+                    });
+                }else{
+                    $user = $user->whereHas('roles', function($q){
+                        $q->where('name', 'team leader')
+                        ->orWhere('name', 'manager')
+                        ->orWhere('name', 'member')
+                        ->orWhere('name', 'observer');
+                    });
+                }
+                $user = $user->get();
+            }
+        }    
+
+        return $user ?? [];
     }
 
     public function disseminate($amount, $source)
     {
-        $parents = $this->getParents(auth()->check() ? auth()->user()->referer : '');
+        $level       = 0;
+        $parents     = $this->getParents(auth()->check() ? auth()->user()->referer : '', $level);
         $percentage  = $source == 2 ? ['0.03', '0.02', '0.02', '0.01'] : ['0.05', '0.02', '0.02', '0.01'];
         $commissions = [];
         $diamonds    = [];
-        $level       = 0;
-       
+
         while(!empty($parents)){
             $nextParent = [];
             foreach($parents as $key => $user){
@@ -39,14 +66,14 @@ class CommissionClass
                 $dias    = 0;
 
                 if($source == 1){
-                    $dias = $level == 0 ? 10 * $dias_percent  : 2;
+                    $dias = $level == 0 ? 10 * $dias_percent  : 2 * $dias_percent;
                 }
 
                 if($source == 2){
-                    $dias = $level == 0 ? 10 * $dias_percent : 2;
+                    $dias = $level == 0 ? 10 * $dias_percent : 2 * $dias_percent;
                 }
         
-                $commissions[$level] = [
+                $commissions[] = [
                     'user_id'       => $user->id,
                     'downline_id'   => auth()->user()->id,
                     'from'          => $source,
@@ -94,29 +121,22 @@ class CommissionClass
             ];
         }
 
-        if(auth()->user()->activated == 1){
-            foreach($commissions as $key => $commission){      
-                if($key <= 3){
-                    $this->updateUserEarning($commission);
-                }else if($key <= 9 && $commission['user']->hasanyrole('team leader|manager')){
-                    $this->updateUserEarning($commission);
-                }else if($key > 9 && $commission['user']->hasanyrole('manager')){
-                    $this->updateUserEarning($commission);
-                }
-            }
+        foreach($commissions as $key => $commission){      
+            unset($commission['user']);
+            Earnings::create($commission);
+    
+            $earning_data = [
+                'balance' => $commission['amount'],
+                'user_id' => $commission['user_id']
+            ];
+            
+            $this->walletClass->update($earning_data);
         }
+    
 
         foreach($diamonds as $key => $diamond){
-            if($key <= 3){
-                unset($diamond['user']);
-                Diamonds::create($diamond);
-            }else if($key <= 9 && $commission['user']->hasanyrole('team leader|manager')){
-                unset($diamond['user']);
-                Diamonds::create($diamond);
-            }else if($key > 9 && $commission['user']->hasanyrole('manager')){
-                unset($diamond['user']);
-                Diamonds::create($diamond);
-            }
+            unset($diamond['user']);
+            Diamonds::create($diamond);
         }
 
         return $this;
@@ -124,15 +144,7 @@ class CommissionClass
 
 
     public function updateUserEarning($commission){
-        unset($commission['user']);
-        Earnings::create($commission);
-
-        $earning_data = [
-            'balance' => $commission['amount'],
-            'user_id' => $commission['user_id']
-        ];
         
-        $this->walletClass->update($earning_data); 
     }
 }
 

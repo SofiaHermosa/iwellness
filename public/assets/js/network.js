@@ -21,12 +21,31 @@ let Network = (function () {
         ui.dataTable.DataTable( {
             "ajax": window.url,
             "columns": [
-                { "data": "" },
+                { "data": "name" },
                 { "data": "username" },
-                { "data": "activated" },
+                { "data": "subscrip_status"},
+                { "data": "level"},
+                { "data": ""},
             ],
+            'columnDefs' : [
+                {
+                    'targets' : 4,
+                    'render' : function ( url, type, full) {
+                        return `${numberFormat(full['commission'])}`;
+                    }
+                },
+            ],    
             'order' : [[3, 'asc']]
         } );
+    }
+
+    function numberFormat(number)
+    {
+        number = number.toString();
+        const actualNumber = +number.replace(/,/g, '')
+        const formatted = actualNumber.toLocaleString('en-US', {maximumFractionDigits: 2})
+
+        return formatted
     }
 
     function init() {

@@ -70,8 +70,9 @@ class SurveyController extends Controller
         if($this->surveyClass->hasSurvey()){
             return view('member.survey.index');
         }else{
-            Session::flash('error', 'Cutoff survey has been already answered');
-            return redirect('res/profile');
+
+            $back = 'window.history.back()';
+            return view('layouts.survey-success', compact('back'));
         }
     }
 
@@ -97,8 +98,10 @@ class SurveyController extends Controller
     {
         $this->surveyClass->sendEntry();
 
-        Session::flash('message', 'Thank you for your help!'); 
-        return redirect('res/');
+        Session::flash('message', 'Thank you for your help!');
+        
+        $back = 'window.location.href="'.url('res/').'"';
+        return view('layouts.survey-success', compact('back'));
     }
 
     /**

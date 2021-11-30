@@ -55,7 +55,8 @@ class User extends Authenticatable
         'wallet_balance',
         'earning_dates',
         'capital',
-        'active_subscriptions'
+        'active_subscriptions',
+        'is_active'
     ];
 
     /**
@@ -86,6 +87,20 @@ class User extends Authenticatable
         ->orderBy('created_at', 'DESC')
         ->with('capital')
         ->get();
+    }
+
+    public function getIsActiveAttribute(){
+        $subscription = $this->hasSubscription()
+        ->orderBy('created_at', 'DESC')
+        ->where('status', 1)
+        ->where('valid', 1)
+        ->first();
+
+        if(!empty($subscription) && auth()->user()->activated == 1){
+            return true;
+        }
+
+        return false;
     }
 
     public function getCapitalAttribute(){

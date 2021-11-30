@@ -9,18 +9,24 @@ Home
 @endsection
 
 @section('content')
-    @include('member.conversions.modal.request')
+    @if(auth()->user()->is_active)
+        @include('member.conversions.modal.request')
+    @endif    
 
     <div class="col-lg-12">
         <div class="nav-tabs-horizontal" data-plugin="tabs">
             <ul class="nav nav-tabs nav-tabs-line" role="tablist">
                 <li class="nav-item" role="presentation"><a class="nav-link active show" data-action="Cash-in" data-toggle="tab" href="#exampleTabsLineOne" aria-controls="exampleTabsLineOne" role="tab" aria-selected="false">Products</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" data-action="Cash-out" data-toggle="tab" href="#exampleTabsLineTwo" aria-controls="exampleTabsLineTwo" role="tab" aria-selected="true">Diamond Conversion</a></li>
+                @if(auth()->user()->is_active)
+                <li class="nav-item" role="presentation"><a class="nav-link" data-action="Cash-out" data-toggle="{{auth()->user()->is_active ? 'tab' : ''}}" href="{{auth()->user()->is_active ? '#exampleTabsLineTwo' : 'javascript:void(0)'}}" aria-controls="exampleTabsLineTwo" role="tab" aria-selected="true">Diamond Conversion</a></li>
+                @endif
                 <li class="dropdown nav-item" role="presentation" style="display: none;">
                 <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" aria-expanded="false">Dropdown </a>
                 <div class="dropdown-menu" role="menu">
                     <a class="dropdown-item" data-toggle="tab" data-action="Cash-in" href="#exampleTabsLineOne" aria-controls="exampleTabsLineOne" role="tab">Products</a>
-                    <a class="dropdown-item" data-toggle="tab" data-action="Cash-out" href="#exampleTabsLineTwo" aria-controls="exampleTabsLineTwo" role="tab">Diamond Conversion</a>
+                    @if(auth()->user()->is_active)
+                    <a class="dropdown-item" data-toggle="{{auth()->user()->is_active ? 'tab' : ''}}" href="{{auth()->user()->is_active ? '#exampleTabsLineTwo' : 'javascript:void(0)'}}" aria-controls="exampleTabsLineTwo" role="tab">Diamond Conversion</a>
+                    @endif
                 </div>
                 </li>
             </ul>
@@ -30,9 +36,12 @@ Home
                         @include('content.products')   
                     </div>
                 </div>
+
                 <div class="tab-pane" id="exampleTabsLineTwo" role="tabpanel">
                     <div class="row">
-                        @include('content.conversion-items')
+                        @if(auth()->user()->is_active)
+                            @include('content.conversion-items')
+                        @endif
                     </div>
                 </div>
             </div>

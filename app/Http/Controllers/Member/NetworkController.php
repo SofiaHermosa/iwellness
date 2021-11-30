@@ -21,8 +21,8 @@ class NetworkController extends Controller
     public function index()
     {
         try { 
-            $network = $this->networkClass->getNetwork();
             if(request()->ajax()){
+                $network = $this->networkClass->getNetwork();
                 return response()->json(['data'=> $network]);
             }
             return view('member.network.index');

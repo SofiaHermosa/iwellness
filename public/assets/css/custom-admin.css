@@ -218,3 +218,8 @@ a.avatar.avatar-lg.bg-gray img {
 textarea[name="reason"]{
     min-height: 10rem !important;
 }
+
+div.error{
+    position: absolute !important;
+    bottom: 0 !important;
+}

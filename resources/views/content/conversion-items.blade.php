@@ -7,7 +7,7 @@
                 <img class="card-img-top w-full product--cover" height="200" src="{{asset('storage/'.$item->images[0])}}" alt="Card image cap">
                 <div class="card-block p-4">
                   <h5 class="card-title mt-2">{{$item->name}}</h5>
-                  <p class="card-text price"><i class="icon fa-diamond"></i> {{ $item->price }}</p>
+                  <p class="card-text price"><i class="icon fa-diamond"></i> {{ number_format($item->price, 2, '.', ',') }}</p>
                 </div>
             </div>
         </div>

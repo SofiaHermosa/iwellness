@@ -105,7 +105,7 @@ class DashboardClass
             $this->cashin = $this->cashin->where('user_id', $this->id);
         }  
             
-        $this->cashin->where('status', '==',0)->get(); 
+        $this->cashin->whereIn('status', [0,1])->get(); 
 
         return $this;                
     }
@@ -117,7 +117,7 @@ class DashboardClass
             $this->cashout = $this->cashout->where('user_id', $this->id);
         }  
             
-        $this->cashout->where('status', '==',0)->get(); 
+        $this->cashout->whereIn('status', [0,1])->get(); 
 
         return $this;                
     }

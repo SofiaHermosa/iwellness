@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="col-lg-12 text-center">
-                  <div class="a2a_kit a2a_kit_size_40 text-center a2a_default_style">
+                  <div class="a2a_kit a2a_kit_size_40 text-center a2a_default_style" data-a2a-url="{{ url('/register?referral='.base64_encode(auth()->user()->username)) }}">
                       <a class="a2a_button_facebook"></a>
                       <a class="a2a_button_twitter"></a>
                       <a class="a2a_button_email"></a>

@@ -26,6 +26,7 @@ let ManageFunds = (function () {
         $(document).on('click', '.edit--cashin', function(){
             edit(window.cashin_details, '#cashinModal');
         });
+        $('.cashout__amount').keyup(updateTotalCashout);
         $('#CashInForm').on('submit', function(){
             let id = $(this).find('input[name="id"]').val();
 
@@ -53,6 +54,18 @@ let ManageFunds = (function () {
         }
 
     }
+
+    function updateTotalCashout(){
+        let amount = $(this).val();
+        let fee    = parseFloat(amount) * 0.02;
+        let total  = parseFloat(amount) - parseFloat(fee);
+        fee        = isNaN(fee) ? '00.00' : fee;
+        total      = isNaN(total) ? '00.00' : total;
+        
+        $('#cashoutModal').find('.cashout-maintenance__fee').html(numberFormat(fee));
+        $('#cashoutModal').find('.cashout-grand__total').html(numberFormat(total));
+    }
+
     function filterDatatable(){
         
         let array   = [];
