@@ -8,7 +8,7 @@ body: `${window.referral_link}`,
 }
 
 a2a_config.templates.facebook = {
-    redirect_uri: "https://static.addtoany.com/",
+    redirect_uri: "https://myiwellness.com",
 };
 
 a2a_config.templates.sms = {
