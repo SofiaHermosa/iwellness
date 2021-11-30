@@ -20,7 +20,7 @@ Forgot Password
     </div>
 
     <div class="form-group form-material floating" data-plugin="formMaterial">
-        <input type="text" class="form-control form-control-lg" name="answer" value="{{ old('answer') }}" required>
+        <input type="password" class="form-control form-control-lg" name="answer" value="{{ old('answer') }}" required>
         <label class="floating-label" for="inputEmail">{{config('constants.questions.'.json_decode(retriveAccountData(request()->email)->secret_question)->question)}}</label>
 
         @error('answer')

@@ -85,7 +85,7 @@ Sign Up
     </div>
 
     <div class="form-group form-material floating" data-plugin="formMaterial">
-        <input type="text" class="form-control" id="inputAnswer" name="secret_question[answer]" value="{{ old('secret_question.answer') }}" required>
+        <input type="password" class="form-control" id="inputAnswer" name="secret_question[answer]" value="{{ old('secret_question.answer') }}" required>
         <label class="floating-label" for="inputAnswer">Answer</label>
 
         @error('secret_question.answer')
