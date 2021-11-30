@@ -77,8 +77,6 @@ let Items = (function () {
         var price          = parseFloat($('#price').val());
         var discounted     = parseFloat($('#discounted').val());
 
-        console.log(current, price, discounted);
-
         ui.prodPrice.html(price * current);
         ui.discountPrice.html(discounted * current);
     }
@@ -127,7 +125,6 @@ let Items = (function () {
             confirmButtonText: 'Yes',
         }, function(result) {
             if (result) {
-                console.log(target);
                $(target).submit();
             } 
         })

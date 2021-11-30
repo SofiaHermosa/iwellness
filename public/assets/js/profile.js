@@ -51,6 +51,4 @@ let Profile = (function () {
 
 $(document).ready(function () {
     Profile.init();
-
-    console.log('asdasdasdasas');
 });

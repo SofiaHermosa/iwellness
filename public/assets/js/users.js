@@ -176,7 +176,6 @@ let Users = (function () {
             confirmButtonText: 'Save',
         }, function(result) {
             if (result) {
-                console.log(target);
                $(target).submit();
             } 
         })

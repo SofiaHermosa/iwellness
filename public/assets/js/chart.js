@@ -1,6 +1,5 @@
 (function () {
     var data = JSON.parse(atob($(document).find('#fundData').data('funds')));
-    console.log(data);
     new Chartist.Line('#fundRequestChart .ct-chart', {
         labels: data[0],
         series: [data[1], data[2]]

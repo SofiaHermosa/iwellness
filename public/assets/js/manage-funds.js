@@ -61,7 +61,7 @@ let ManageFunds = (function () {
         let total  = parseFloat(amount) - parseFloat(fee);
         fee        = isNaN(fee) ? '00.00' : fee;
         total      = isNaN(total) ? '00.00' : total;
-        
+
         $('#cashoutModal').find('.cashout-maintenance__fee').html(numberFormat(fee));
         $('#cashoutModal').find('.cashout-grand__total').html(numberFormat(total));
     }
@@ -445,7 +445,7 @@ let ManageFunds = (function () {
 
     function resetInput(){  
         var target = window.modal__tab ?? '#cashinModal';   
-        console.log(target);
+
         $(target).find('input[name="id"]').val('').removeClass('focus');
         $(target).find('input[name="details[sender_name]"]').val('').removeClass('focus');
         $(target).find('input[name="details[reference_no]"]').val('').removeClass('focus');

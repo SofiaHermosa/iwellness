@@ -300,7 +300,6 @@ let Payment = (function () {
                             sourceId,
                         type: "post",
                         success: function (response, status) {
-                            console.log(response);
                             if (response.chargeable == true) {
                                 $.ajax({
                                     url:

@@ -6,8 +6,6 @@ $.each(window.fields, function(key, val){
     messages[val] = "Please select atleast one answer"; 
 });
 
-console.log(choices, messages);
-
 $("#surveyForm").validate({
     rules: choices,
     messages: messages
