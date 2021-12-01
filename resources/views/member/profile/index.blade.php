@@ -126,7 +126,7 @@ page-profile
                     <i class="text-danger icon ti-triangle-up font-size-20">
                 </i>
                 <span class="font-size-40 font-weight-100">{{!empty($dashboard->cashout) ? number_format($dashboard->cashout->sum('amount'), 2, '.', ',') : 0}}</span>
-                <p class="blue-grey-400 font-weight-100 m-0">Last month cashout total {{!empty(monthlyRecords('cashout', auth()->user()->id)->last->first()) ? number_format(monthlyRecords('cashout', auth()->user()->id)->last()->sum('amount'), 2, '.', ',') : 0}}</p>
+                <p class="blue-grey-400 font-weight-100 m-0">Last month cashout total {{!empty(monthlyRecords('cashout', auth()->user()->id)->last->first()) ? number_format(monthlyRecords('cashout', auth()->user()->id)->last->sum('amount'), 2, '.', ',') : 0}}</p>
               </div>
             </div>
           </div>
