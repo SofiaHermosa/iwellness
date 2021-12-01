@@ -31,12 +31,14 @@
     function dashboardcontent($id=null){
         $dashboard = new DashboardClass($id);
         $dashboard->commissions()
+        ->productOrders()
         ->diamonds()
         ->earnings()
         ->capital()
         ->orders()
         ->cashin()
-        ->cashout();
+        ->cashout()
+        ->sales();
 
         return $dashboard;
     }

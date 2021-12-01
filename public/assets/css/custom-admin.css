@@ -223,3 +223,10 @@ div.error{
     position: absolute !important;
     bottom: 0 !important;
 }
+
+img.sales--avatar {
+    width: 3rem !important;
+    height: 3rem !important;
+    max-width: 3rem !important;
+    object-fit: cover;
+}

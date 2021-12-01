@@ -7,7 +7,9 @@ use App\Models\Diamonds;
 use App\Models\Capital;
 use App\Models\CashIn;
 use App\Models\CashOut;
+use App\Models\Products;
 use App\Models\Orders;
+use App\Models\User;
 use Storage;
 use Session;
 use stdClass;
@@ -17,26 +19,30 @@ class DashboardClass
 {
     public $earnings,
     $commissions,
+    $productOrders,
     $last, 
     $cashin, 
     $cashout, 
     $diamonds, 
     $orders,
+    $users,
     $content,
     $fundChart,
     $id;
 
     public function __construct($id=null)
     {
-        $this->id          = $id;
-        $this->commissions = new Earnings();
-        $this->earnings    = new Earnings();
-        $this->cashin      = new CashIn();
-        $this->cashout     = new CashOut();
-        $this->diamonds    = new Diamonds();
-        $this->orders      = new Orders();
-        $this->capital     = new Capital();
-        $this->content     = ['commissions', 'diamonds', 'orders', 'capital'];
+        $this->id                   = $id;
+        $this->commissions          = new Earnings();
+        $this->earnings             = new Earnings();
+        $this->cashin               = new CashIn();
+        $this->cashout              = new CashOut();
+        $this->diamonds             = new Diamonds();
+        $this->orders               = new Orders();
+        $this->productOrders        = new Orders();
+        $this->capital              = new Capital();
+        $this->sales                = new User();
+        $this->content              = ['commissions', 'diamonds', 'orders', 'capital'];
     }
 
     public function commissions(){
@@ -120,6 +126,44 @@ class DashboardClass
         $this->cashout->whereIn('status', [0,1])->get(); 
 
         return $this;                
+    }
+
+    public function sales(){
+        $this->sales = $this->sales;
+
+        if(!empty($this->id)){
+            $this->sales = $this->sales->where('user_id', $this->id);
+        }  
+            
+        $this->sales = $this->sales->get()
+        ->sortByDesc(function($users){
+            return $users->sales;
+        })->take(10);
+       
+        return $this;
+    }
+
+    public function productOrders(){
+        $orders = [];
+        $products = Products::all();
+        foreach($products as $product){
+            $id = $product->id;
+            $orders[$product->id]['details'] = $product;
+            $qty = [];
+            $orderPerProd = $this->productOrders
+            ->whereJsonContains('cart', [['prod_id' => $product->id]])
+            ->get();
+            
+            foreach($orderPerProd as $prod){
+                $qty[] = collect($prod->cart)->where('prod_id', $id)->first()->quantity;
+            }
+
+            $orders[$product->id]['total_qty'] = array_sum($qty);
+        }    
+
+        $this->productOrders = $orders;
+
+        return $this;
     }
 
     public function monthlyRecords($record){

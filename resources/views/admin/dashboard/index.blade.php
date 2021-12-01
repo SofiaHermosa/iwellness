@@ -66,6 +66,22 @@ data-declined="{{base64_encode(!empty($dashboard->cashout) ? $dashboard->cashout
   </div>
 </div>
 
+<div class="col-md-4">
+  <div class="card card-shadow">
+    <div class="card-block bg-white p-20">
+      <button type="button" class="btn btn-floating btn-sm btn-warning">
+        <i class="fa-bank"></i>
+          </button>
+          <span class="ml-15 font-weight-400">CAPITAL</span>
+          <div class="content-text text-center mb-0">
+            <i class="text-danger icon fa-triangle-up font-size-20">
+        </i>
+        <span class="font-size-40 font-weight-100">{{!empty($dashboard->capital) ? number_format($dashboard->capital->sum('amount'), 2, '.', ',') : 0}}</span>
+        <p class="blue-grey-400 font-weight-100 m-0">Last month capital {{!empty(monthlyRecords('capital', auth()->user()->id)->last->first()) ? number_format(monthlyRecords('capital', auth()->user()->id)->last->sum('amount'), 2, '.', ',') : 0}}</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="col-lg-12 no-space p-0">
   <div class="col-lg-12">
@@ -77,7 +93,7 @@ data-declined="{{base64_encode(!empty($dashboard->cashout) ? $dashboard->cashout
           </div>
           <div class="col-md-9 col-sm-6">
             <div class="row">
-              <div class="col-sm-6">
+              <div class="col-lg-6 col-md-12">
                 <div class="counter counter-md">
                   <div class="counter-number-group text-nowrap">
                     <span class="counter-number">{{!empty($dashboard->cashin) ? number_format($dashboard->cashin->sum('amount'), 2, '.', ',') : 0}}</span>
@@ -85,7 +101,7 @@ data-declined="{{base64_encode(!empty($dashboard->cashout) ? $dashboard->cashout
                   <div class="counter-label blue-grey-400">Cash-in</div>
                 </div>
               </div>
-              <div class="col-sm-6">
+              <div class="col-lg-6 col-md-12">
                 <div class="counter counter-md">
                   <div class="counter-number-group text-nowrap">
                     <span class="counter-number">{{!empty($dashboard->cashout) ? number_format($dashboard->cashout->sum('amount'), 2, '.', ',') : 0}}</span>
@@ -113,6 +129,84 @@ data-declined="{{base64_encode(!empty($dashboard->cashout) ? $dashboard->cashout
 </div>
 
 <div class="row p-2">
+  
+  <div class="col-lg-6">
+    <div class="panel" id="followers">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          Top Earners
+        </h3>
+      </div>
+      <div class="panel-body">
+        <ul class="list-group list-group-dividered list-group-full h-300 scrollable is-enabled scrollable-vertical" data-plugin="scrollable" style="position: relative;">
+          <div data-role="container" class="scrollable-container" style="height: 300px; width: 280px;">
+            <div data-role="content" class="scrollable-content" style="width: 263px;">
+              @forelse($dashboard->sales as $key => $user)
+              <li class="list-group-item">
+                <div class="media">
+                  <div class="pr-20">
+                    <a class="avatar avatar-online" href="javascript:void(0)">
+                      <img src="{{$user->prof_img}}" class="sales--avatar" alt="">
+                      <i></i>
+                    </a>
+                  </div>
+                  <div class="media-body w-full">
+                    <div class="float-right">
+                        <span class="font-size-20">{{number_format($user->sales, 2, '.', ',')}}</span>
+                    </div>
+                    <div>
+                      <span>{{$user->name}}</span>
+                    </div>
+                    <small>{{'@'.$user->username}}</small>
+                  </div>
+                </div>
+              </li>
+              @empty
+              @endforelse
+            </div>
+          </div>
+        <div class="scrollable-bar scrollable-bar-vertical scrollable-bar-hide" draggable="false"><div class="scrollable-bar-handle" style="height: 156.15px;"></div></div></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="panel" id="followers">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          Orders Per Products
+        </h3>
+      </div>
+      <div class="panel-body">
+        <ul class="list-group list-group-dividered list-group-full h-300 scrollable is-enabled scrollable-vertical" data-plugin="scrollable" style="position: relative;">
+          <div data-role="container" class="scrollable-container" style="height: 300px; width: 280px;">
+            <div data-role="content" class="scrollable-content" style="width: 263px;">
+              @forelse($dashboard->productOrders as $key => $order)
+              <li class="list-group-item">
+                <div class="media">
+                  <div class="pr-20">
+                    <a class="avatar avatar-online" href="javascript:void(0)">
+                      {!! $order['details']->cover !!}
+                    </a>
+                  </div>
+                  <div class="media-body w-full">
+                    <div class="float-right">
+                        <span class="font-size-20">{{number_format($order['total_qty'], 2)}}</span>
+                    </div>
+                    <div>
+                      <span>{{ucwords($order['details']->name)}}</span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              @empty
+              @endforelse
+            </div>
+          </div>
+        <div class="scrollable-bar scrollable-bar-vertical scrollable-bar-hide" draggable="false"><div class="scrollable-bar-handle" style="height: 156.15px;"></div></div></ul>
+      </div>
+    </div>
+  </div>
   <div class="col-lg-6">
     <div class="card card-shadow" id="chartPieCashin">
       <div class="card-block p-0 p-30 h-full">

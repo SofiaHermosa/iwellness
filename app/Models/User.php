@@ -14,7 +14,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 use App\Models\ActivityLogs;
 use App\Models\Subscription;
-use App\Models\CashOut;
+use App\Models\Orders;
+use App\Models\Earnings;
+use App\Models\CashIn;
 use Session;
 
 class User extends Authenticatable
@@ -56,7 +58,8 @@ class User extends Authenticatable
         'earning_dates',
         'capital',
         'active_subscriptions',
-        'is_active'
+        'is_active',
+        'sales'
     ];
 
     /**
@@ -200,7 +203,7 @@ class User extends Authenticatable
     }
 
     public function orders(){
-        return $this->hasMany('App\Models\Orders','user_id');
+        return $this->hasMany(Orders::class,'user_id');
     }
 
     public function getOrdersAttribute()
@@ -243,5 +246,14 @@ class User extends Authenticatable
         }
 
         return $releaseSched ?? [];
+    }
+
+    public function getSalesAttribute(){
+        $orders     = Orders::where('user_id', $this->id)->get()->sum('total');
+        $earnings   = Earnings::where('user_id', $this->id)->withTrashed()->get()->sum('amount');
+        $cashin     = Cashin::where('user_id', $this->id)->withTrashed()->get()->sum('amount');
+        $total      = $orders + $earnings + $cashin;
+
+        return $total;
     }
 }
