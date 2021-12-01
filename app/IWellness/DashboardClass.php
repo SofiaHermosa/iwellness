@@ -135,7 +135,11 @@ class DashboardClass
             $this->sales = $this->sales->where('user_id', $this->id);
         }  
             
-        $this->sales = $this->sales->get()
+        $this->sales = $this->sales
+        ->whereHas('roles', function($q){
+                $q->where('name', '!=','system administrator');
+        })
+        ->get()
         ->sortByDesc(function($users){
             return $users->sales;
         })->take(10);
