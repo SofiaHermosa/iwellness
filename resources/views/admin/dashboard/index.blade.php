@@ -191,7 +191,7 @@ data-declined="{{base64_encode(!empty($dashboard->cashout) ? $dashboard->cashout
                   </div>
                   <div class="media-body w-full">
                     <div class="float-right">
-                        <span class="font-size-20">{{number_format($order['total_qty'], 2)}}</span>
+                        <span class="font-size-20">{{number_format($order['total_qty'])}}</span>
                     </div>
                     <div>
                       <span>{{ucwords($order['details']->name)}}</span>
