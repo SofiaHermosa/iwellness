@@ -132,7 +132,7 @@ class DashboardClass
         $this->sales = $this->sales;
 
         if(!empty($this->id)){
-            $this->sales = $this->sales->where('user_id', $this->id);
+            $this->sales = $this->sales->where('id', $this->id);
         }  
             
         $this->sales = $this->sales
