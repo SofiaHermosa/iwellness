@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{asset('app/classic/base/assets/examples/css/tables/datatable.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/custom-guest.css')}}">
     <link rel="stylesheet" href="{{asset('app/material/global/vendor/bootstrap-sweetalert/sweetalert.css')}}">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -28,12 +29,14 @@
 </head>
 <body class="animsition">
   @include('guest.sections.cart')
+  @include('guest.sections.orphanage-account')
   @yield('content')   
 </body>
     <script src="{{asset('app/material/global/vendor/jquery/jquery.js')}}"></script>
     <script src="{{asset('app/classic/global/vendor/datatables.net/jquery.dataTables.js')}}"></script>
     <script src="{{asset('app/material/global/vendor/bootstrap-sweetalert/sweetalert.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="{{asset('app/classic/global/vendor/summernote/summernote.min.js')}}"></script>
     <script src="{{asset('app/classic/global/vendor/alertify/alertify.js')}}"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

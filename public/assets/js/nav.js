@@ -4,11 +4,11 @@ window.onscroll = function() {
     if (currentScrollPos <= 100) {
         document.querySelector(".nav").style.top = "0";
     } else {
-        if (prevScrollpos > currentScrollPos) {
-            document.querySelector(".nav").style.top = "0";
-        } else {
-            document.querySelector(".nav").style.top = "-100px";
-        }
+        // if (prevScrollpos > currentScrollPos) {
+        //     document.querySelector(".nav").style.top = "0";
+        // } else {
+        //     document.querySelector(".nav").style.top = "-100px";
+        // }
     }
 
     if (currentScrollPos >= 3600) {

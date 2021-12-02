@@ -93,6 +93,36 @@ $(document).on('click', '.archive', function(){
     });        
 });
 
+$(document).ready(function(){
+    $('.slider').slick({
+        centerMode: true,
+        centerPadding: '20px',
+        slidesToShow: 4,
+        arrows:false,
+        autoplay:true,
+        responsive: [
+          {
+            breakpoint: 769,
+            settings: {
+              arrows: false,
+              centerMode: true,
+              centerPadding: '40px',
+              slidesToShow: 2
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              arrows: false,
+              centerMode: true,
+              centerPadding: '10px',
+              slidesToShow: 1
+            }
+          }
+        ]
+    });
+});
+
 $('.summernote').summernote();
 
 history.go = function(){};
