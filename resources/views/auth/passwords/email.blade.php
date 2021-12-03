@@ -15,9 +15,19 @@ Forgot Password
         <p>{{maskEmail($user->email)}}</p>
     </div>
     <input type="hidden" class="form-control" id="inputEmail" name="email" value="{{ $user->email }}" required>
-    <button type="submit" class="btn btn-primary btn-block">
-        {{ __('Send Password Reset Link') }}
-    </button>
+    <div class="col-lg-12 mb-60">
+        <button type="submit" class="btn btn-primary btn-block">
+            {{ __('Send Password Reset Link') }}
+        </button>
+    </div>
+    <div class="col-lg-12 p-0">
+        <div class="alert dark alert-icon alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+            </button>
+            <i class="icon wb-info" aria-hidden="true"></i>Please contact admin if no longer have an access to this email.
+        </div>
+    </div>
 </form>
 @if (session('status'))
     <div class="alert alert-success" role="alert">
