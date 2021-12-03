@@ -6,7 +6,7 @@ use App\Models\Earnings;
 use App\Models\User;
 use Storage;
 use Session;
-
+use DB;
 
 class NetworkClass
 {
@@ -18,19 +18,19 @@ class NetworkClass
     }
 
     public function getEarnings($downline = null){
-        $earnings = Earnings::where('user_id', auth()->user()->id);
+        $earnings = Earnings::select('amount')->where('user_id', auth()->user()->id);
 
         if(!empty($downline)){
             $earnings = $earnings->where('downline_id', $downline);
         }
 
-        $this->earnings = $earnings->get();
+        $this->earnings = $earnings->sum('amount');
 
         return $this;
     }
 
     public function getDownlines($id=null){
-        return User::where('referer', $id)->get();
+        return User::select('id', 'name', 'username', 'referer')->where('referer', $id)->get();
     }
 
     public function getNetwork()
@@ -44,7 +44,7 @@ class NetworkClass
             $nextDownline = [];
             foreach($downline as $user){
                 $user->level = ordinal($level);
-                $user->commission = array_sum($this->getEarnings($user->id)->earnings->pluck('amount')->toArray());
+                $user->commission = $this->getEarnings($user->id)->earnings;
                 $network[] = $user->toArray();
                 foreach($this->getDownlines($user->id) as $child){
                     $nextDownline[] = $child;

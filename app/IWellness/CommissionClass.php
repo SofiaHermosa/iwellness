@@ -70,7 +70,7 @@ class CommissionClass
                 }
 
                 if($source == 2){
-                    $dias = $level == 0 ? 10 * $dias_percent : 2 * $dias_percent;
+                    $dias = $level == 0 ? 3 * $dias_percent : 2 * $dias_percent;
                 }
         
                 $commissions[] = [
@@ -101,7 +101,7 @@ class CommissionClass
                     ];
                 }
 
-                foreach($this->getParents($user->referer) as $parent){
+                foreach($this->getParents($user->referer, $level) as $parent){
                     $nextParent[] = $parent;
                 }
                 
@@ -110,13 +110,14 @@ class CommissionClass
         
             $parents = $nextParent;
         }
-
+    
         if(auth()->check()){
+            $self_dias_percent = floor($amount/700);
             $diamonds[] = [
                 'user_id'       => auth()->user()->id,
                 'downline_id'   => auth()->user()->id,
                 'from'          => $source,
-                'amount'        => 5,
+                'amount'        => 5 * $self_dias_percent,
                 'user'          => auth()->user(),
             ];
         }
@@ -140,11 +141,6 @@ class CommissionClass
         }
 
         return $this;
-    }
-
-
-    public function updateUserEarning($commission){
-        
     }
 }
 

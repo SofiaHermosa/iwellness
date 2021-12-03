@@ -25,9 +25,14 @@ class WalletController extends Controller
     public function payWithWallet(Request $request){
         try {
             if(Hash::check($request->password, auth()->user()->password)){
-                $this->wallet = $this->walletClass->payWithWallet($request->amount);
+                
+                $amountToPay    = $request->type == 2 ? $this->getTotalOrderAmount() : $request->amount;
+                $shipping_fee   = $amountToPay <= 5000 ? 120 : 200;
+                $amountToPay    = $request->type == 2 ? $amountToPay + $shipping_fee : $amountToPay;
+                $this->wallet = $this->walletClass->payWithWallet($amountToPay);
+
                 if($this->wallet){
-                    $proceedRequest = $this->proceedRequest($request->type, $request->amount);
+                    $proceedRequest = $this->proceedRequest($request->type, $amountToPay);
 
                     return response()->json([
                         'message' => 'payment successfully sent',
@@ -62,6 +67,23 @@ class WalletController extends Controller
                 return url('res/order/invoice/'.$order->id);
                 break;
         }
+    }
+
+    public function getTotalOrderAmount(){
+        $details = json_decode(base64_decode(Session::get('checkout_details')));
+        $cart    = $details->orders;
+
+        $amount = [];
+
+        foreach($cart as $checkout){
+            $id         = base64_decode($checkout);
+            $orders     = auth()->user()->cart->$id;
+            $amount[]   = $orders->price * $orders->quantity;
+        }
+
+        $amount         = array_sum($amount);
+
+        return $amount;
     }
 
     public function getOrderDetails(){

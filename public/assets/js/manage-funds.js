@@ -228,7 +228,7 @@ let ManageFunds = (function () {
                 { "data": "status_badge" },
                 { "data": "date_sent" }
             ],
-            'order' : [[4, 'desc']]
+            'order' : [[4, 'DESC']]
         });
     }
 

@@ -15,7 +15,7 @@ class LogsController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $data = auth()->user()->hasanyrole('system administrator') ? auth()->user()->logs() : auth()->user()->logs()->get();
+            $data = auth()->user()->hasanyrole('system administrator') ? auth()->user()->logs() : auth()->user()->logs();
             return response()->json(['data'=> $data]);
         } 
 

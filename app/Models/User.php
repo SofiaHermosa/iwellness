@@ -18,6 +18,7 @@ use App\Models\Orders;
 use App\Models\Earnings;
 use App\Models\CashIn;
 use Session;
+use DB;
 
 class User extends Authenticatable
 {
@@ -216,7 +217,9 @@ class User extends Authenticatable
     }
 
     public function logs(){
-        return auth()->user()->hasanyrole('system administrator') ? Activitylogs::whereNotIn('log_name', ['survey', 'login','profit', 'profile'])->whereNotIn('description', ['created', 'updated'])->with('user')->get() : $this->hasmany(Activitylogs::class,'causer_id')->whereNotIn('log_name', ['survey', 'login','profit', 'profile'])->whereNotIn('description', ['created', 'updated']);
+        // return auth()->user()->hasanyrole('system administrator') ? Activitylogs::select('description', 'causer_id', 'created_at')->whereNotIn('log_name', ['survey', 'login','profit', 'profile'])->whereNotIn('description', ['created', 'updated'])->with('user')->get() : $this->hasmany(Activitylogs::class,'causer_id')->select('description', 'causer_id', 'created_at')->whereNotIn('log_name', ['survey', 'login','profit', 'profile'])->whereNotIn('description', ['created', 'updated']);
+
+        return auth()->user()->hasanyrole('system administrator') ? DB::select('SELECT activity_log.description, activity_log.causer_id, DATE_FORMAT(activity_log.created_at, "%M %d, %Y %r") as date_sent, users.username from activity_log LEFT JOIN users ON users.id = activity_log.causer_id WHERE log_name NOT IN ("survey", "login", "profit", "profile") AND description NOT IN ("created", "updated") ') : DB::select('SELECT activity_log.description, activity_log.causer_id, DATE_FORMAT(activity_log.created_at, "%M %d, %Y %r") as date_sent, users.username from activity_log LEFT JOIN users ON users.id = activity_log.causer_id WHERE log_name NOT IN ("survey", "login", "profit", "profile") AND description NOT IN ("created", "updated") AND causer_id='.auth()->user()->id);
     }
 
     public function getWalletBalanceAttribute(){

@@ -145,6 +145,7 @@
     <script src="{{asset('app/material/global/js/Plugin/material.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
     <script src="{{asset('assets/js/register.js')}}"></script>
+    <script src="{{asset('assets/js/validate-pass.js')}}"></script>
     
     <script>
       (function(document, window, $){

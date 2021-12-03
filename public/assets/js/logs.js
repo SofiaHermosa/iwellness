@@ -24,7 +24,7 @@ let ActivityLogs = (function () {
         let sorting = [1, 'desc'];             
 
         if(window.table == "#adminLogsDataTable"){
-            logs = [ { "data": "user.name" },
+            logs = [ { "data": "username" },
                      { "data": "description" },
                      { "data": "date_sent" }];
             sorting = [2, 'desc'];         

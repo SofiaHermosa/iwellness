@@ -81,6 +81,7 @@ Route::get('res/order/invoice/{id}', 'Member\CartController@show');
 Route::namespace('Auth')
 ->group(function(){
     Route::post('retrive/account', 'ForgotPasswordController@retriveAccountUsingSecretQuestion');
+    Route::post('verify/new/password', 'ForgotPasswordController@setNewPassword');
     Route::any('find/account', 'ForgotPasswordController@retriveAccount');
     Route::get('forget-password', 'ForgotPasswordController@forgetPasswordPage');
 });

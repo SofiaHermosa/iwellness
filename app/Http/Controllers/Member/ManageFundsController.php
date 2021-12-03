@@ -127,7 +127,7 @@ class ManageFundsController extends Controller
 
     public function validateRefence(Request $request){
         $ref_no =  preg_replace('/[^A-Za-z0-9\-]/', '', $request->details['reference_no']);
-        $cashIn = CashIn::whereJsonContains('details', ['reference_no' => $ref_no])->first();
+        $cashIn = CashIn::whereJsonContains('details', ['reference_no' => $ref_no])->where('status', '!=', 2)->first();
 
         if(!empty($cashIn)){
             return json_encode(false);

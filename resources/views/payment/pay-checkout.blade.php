@@ -36,8 +36,8 @@ $total_amount = [];
     <div class="panel nav-tabs-horizontal" data-plugin="tabs">
         @if(auth()->check())
         <ul class="nav nav-tabs nav-tabs-line" role="tablist">
-            <li class="nav-item tab--payment" data-target=".paymongo--cont"><a class="nav-link active show" data-toggle="tab" href="#exampleTopHome" aria-controls="exampleTopHome" role="tab" aria-expanded="true" aria-selected="true"><i class="icon fa-credit-card" aria-hidden="true"></i>Online Payment</a></li>
-            <li class="nav-item tab--payment" data-target=".wallet--cont"><a class="nav-link" data-toggle="tab" href="#exampleTopComponents" aria-controls="exampleTopComponents" role="tab" aria-selected="false"><i class="icon md-balance-wallet" aria-hidden="true"></i>Wallet</a></li>
+            <li class="nav-item tab--payment" data-target=".paymongo--cont"><a class="nav-link" data-toggle="tab" href="#exampleTopHome" aria-controls="exampleTopHome" role="tab" aria-expanded="true" aria-selected="true"><i class="icon fa-credit-card" aria-hidden="true"></i>Online Payment</a></li>
+            <li class="nav-item tab--payment" data-target=".wallet--cont"><a class="nav-link  active show" data-toggle="tab" href="#exampleTopComponents" aria-controls="exampleTopComponents" role="tab" aria-selected="false"><i class="icon md-balance-wallet" aria-hidden="true"></i>Wallet</a></li>
             <li class="dropdown nav-item" style="display: none;">
             <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Dropdown </a>
             <div class="dropdown-menu" role="menu">
@@ -49,8 +49,15 @@ $total_amount = [];
         @endif
         <div class="panel-body">
             <div class="tab-content">
-                <div class="tab-pane active show" id="exampleTopHome" role="tabpanel">
+                <div class="tab-pane" id="exampleTopHome" role="tabpanel">
                     <div class="row">
+                        <div class="col-lg-12">
+                            <div class="container text-center py-60">
+                                <h1 class="font-weight-400 text-muted">Coming Soon</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
                         <div class="payment-error-message col-lg-12"></div>
                     </div>
         
@@ -103,10 +110,10 @@ $total_amount = [];
                                 Proceed Payment
                             </a>
                         </div>
-                    </form>
+                    </form> -->
                 </div>
                 @if(auth()->check())
-                <div class="tab-pane" id="exampleTopComponents" role="tabpanel">
+                <div class="tab-pane active show" id="exampleTopComponents" role="tabpanel">
                     <div class="row">
                         <div class="col-lg-12 px-4 text-center">
                             <div class="card">

@@ -55,7 +55,6 @@ class ManageFundsClass
         }
 
         if($this->request->type != 1 && auth()->user()->wallet_balance < request()->amount){
-            dd(auth()->user()->wallet_balance.request()->amount);
             Session::flash('invalid_ref_no', 'Insufficient balance');
             return back();
         }

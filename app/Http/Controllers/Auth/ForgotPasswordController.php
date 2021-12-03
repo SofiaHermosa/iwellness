@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use App\Http\Requests\VerifyNewPass;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -68,10 +69,21 @@ class ForgotPasswordController extends Controller
         $user = User::where('username', $request->username)->where('email', $request->email)->first();
         if (strtoupper($user->secret_question->answer  ?? '') == strtoupper($request->answer)) {
                 Auth::login(User::findOrFail($user->id));
-                DB::table('password_resets')->where('email', $request->email)->delete();
-                return redirect('res/profile');
+                
+                return view('auth.passwords.new-password');
         }
 
         return back()->withInput()->with('error', 'Incorrect answer');
+    }
+
+    public function setNewPassword(VerifyNewPass $request){
+        $user = auth()->user();
+
+        $user->password = $request->password;
+        $user->save();
+
+        DB::table('password_resets')->where('email', auth()->user()->email)->delete();
+
+        return redirect('res/profile');
     }
 }

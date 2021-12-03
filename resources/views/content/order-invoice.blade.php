@@ -83,9 +83,11 @@ Order Invoice
                   <p class="font-size-16">Sub - Total amount:
                     <span>₱ {{number_format($order->total, 2, '.', ',')}}</span>
                   </p>
+                  @if($order->payment_charge != 0)
                   <p class="font-size-16">Payment Charge:
                     <span>₱ {{number_format($order->payment_charge, 2, '.', ',')}}</span>
                   </p>
+                  @endif
                   <p class="font-size-16">Shipping Fee:
                     <span>₱ {{number_format($order->shipping_fee, 2, '.', ',')}}</span>
                   </p>
