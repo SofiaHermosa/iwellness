@@ -134,7 +134,7 @@ class ManageFundsClass
         $userDetails    = User::FindOrFail($user_id);
 
         if ($userDetails->real_wallet_balance >= $amount) {
-            $this->wallet->deductTobalance($cashoutRequest->amount, $user_id); 
+            $this->wallet->deductTobalance($cashoutRequest->amount, $cashoutRequest->user); 
             if ($cashoutRequest->status == 0) {
                 $new_balance = $earnings->sum('amount') - $amount;
                 foreach($earnings as $earning){
