@@ -39,6 +39,8 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="{{asset('app/classic/global/vendor/summernote/summernote.min.js')}}"></script>
     <script src="{{asset('app/classic/global/vendor/alertify/alertify.js')}}"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7867618143009870"
+     crossorigin="anonymous"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script type="text/javascript">
       AOS.init();
