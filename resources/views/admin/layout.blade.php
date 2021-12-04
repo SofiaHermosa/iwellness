@@ -62,7 +62,7 @@
     <link rel="stylesheet" href="{{asset('app/classic/global/fonts/font-awesome/font-awesome.css')}}">
     <link rel="stylesheet" href="{{asset('app/classic/global/fonts/web-icons/web-icons.min.css')}}">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
-    @if(auth()->check() && auth()->user()->hasanyrole('system administrator'))
+    @if(auth()->check() && !auth()->user()->hasanyrole('system administrator'))
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7867618143009870"
      crossorigin="anonymous"></script>
     @endif 
