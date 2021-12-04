@@ -60,7 +60,7 @@ class WalletClass
     }
 
     public function deductTobalance($amount, $user){
-        $current_balance = $user->wallet_balance;
+        $current_balance = $user->real_wallet_balance;
 
         if($current_balance >= $amount){
             $new_balance     = $current_balance - $amount;
