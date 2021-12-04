@@ -101,11 +101,11 @@ class CommissionClass
                     ];
                 }
 
+                $level++;
+                
                 foreach($this->getParents($user->referer, $level) as $parent){
                     $nextParent[] = $parent;
                 }
-                
-                $level++;
             }
         
             $parents = $nextParent;
