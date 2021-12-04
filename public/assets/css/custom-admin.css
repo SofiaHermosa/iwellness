@@ -34,7 +34,8 @@
     font-size: medium !important;
 }
 .product--description{
-    font-weight: lighter !important;
+    font-weight: 400 !important;
+    font-size: initial !important;
 }
 
 
