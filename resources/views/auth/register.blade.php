@@ -107,7 +107,7 @@ Sign Up
         <input type="checkbox" id="inputCheckbox" name="term" value="true" required>
         <label for="inputCheckbox"></label>
       </div>
-      <p class="ml-35">By clicking Sign Up, you agree to our <a href="#">Terms</a>.</p>
+      <p class="ml-35">By clicking Sign Up, you agree to our terms.</p>
     </div>
     <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
   </form>

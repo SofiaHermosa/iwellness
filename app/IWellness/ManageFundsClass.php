@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\CashIn;
 use App\Models\CashOut;
 use App\Models\Earnings;
+use App\Models\User;
 use Carbon\Carbon;
 use Storage;
 use Session;
@@ -129,10 +130,11 @@ class ManageFundsClass
 
     public function approveCashOut($id, $user_id,$amount){
         $cashoutRequest = CashOut::with('user')->findOrFail($id);
-        $earnings = Earnings::where('user_id', $user_id)->get();
+        $earnings       = Earnings::where('user_id', $user_id)->get();
+        $userDetails    = User::FindOrFail($user_id);
 
-        $this->wallet->deductTobalance($cashoutRequest->amount, $cashoutRequest->user); 
-        if (auth()->user()->wallet_balance >= $amount) {
+        if ($userDetails->real_wallet_balance >= $amount) {
+            $this->wallet->deductTobalance($cashoutRequest->amount, $cashoutRequest->user); 
             if ($cashoutRequest->status == 0) {
                 $new_balance = $earnings->sum('amount') - $amount;
                 foreach($earnings as $earning){

@@ -27,9 +27,9 @@ Product
                 <h2 class="text-center">{{ucwords($product->name)}}</h2>
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="py-4 product--description">
+                        <p class="py-4 product--description">
                             {!! base64_decode($product->description) !!}
-                        </h3>
+                        </p>
                     </div>
     
                     <div class="col-md-5">

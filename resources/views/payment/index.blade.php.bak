@@ -41,6 +41,54 @@
                             </div>
                         </div>
                     </div>
+                    <!-- <div class="row">
+                        <div class="payment-error-message col-lg-12"></div>
+                    </div>
+        
+                    <div class="row">
+                        <div class="error-message col-lg-12"></div>
+                    </div>
+                    <form action="" class="checkout-payment-form row" method="POST">
+                        @csrf
+                        
+                        <div class="col-lg-12">
+                            <div class="form-group form-material floating" data-plugin="formMaterial">
+                                <input type="text" class="form-control pay__with__card card_number_reqs empty" name="details[card_number]" data-mask="0000-0000-0000-0000" required autocomplete="current-password" id="inputCardNo">
+                                <label class="floating-label" for="inputCardNo">Credit / Debit Number</label>
+                            </div>
+                        </div>
+        
+                        <div class="col-lg-4">
+                            <div class="form-group form-material floating" data-plugin="formMaterial">
+                                <input type="text" class="form-control pay__with__card month_reqs empty" name="details[exp_month]" data-mask="00" required autocomplete="current-password" id="inputMM">
+                                <label class="floating-label" for="inputMM">MM</label>
+                            </div>
+                        </div>
+        
+                        <div class="col-lg-4">
+                            <div class="form-group form-material floating" data-plugin="formMaterial">
+                                <input type="text" class="form-control pay__with__card year_reqs empty" name="details[exp_year]" data-mask="00" required autocomplete="current-password" id="inputYY">
+                                <label class="floating-label" for="inputYY">YY</label>
+                            </div>
+                        </div>
+        
+                        <div class="col-lg-4">
+                            <div class="form-group form-material floating" data-plugin="formMaterial">
+                                <input type="text" class="form-control pay__with__card cvc_reqs empty" name="details[cvc]" data-mask="000" required autocomplete="current-password" id="inputCVC">
+                                <label class="floating-label" for="inputCVC">CVC</label>
+                            </div>
+                        </div>
+                        <input type="hidden" id="paymongo_method" name="paymongo_method" value="card">
+                        <input type="hidden" name="amount" value="{{request()->amount}}">
+                        <input type="hidden" name="service_charge" value="{{$bat}}">
+                        <input type="hidden" name="transaction_type" value="{{request()->transaction_type}}">
+        
+                        <div class="col-lg-12 mt-4 text-right">
+                            <a href="javascript:void(0)" class="btn btn-primary m-0 btn-place-order wt__disable_on_submit_no_form_change" data-text="Processing..."s>
+                                Proceed Payment
+                            </a>
+                        </div>
+                    </form> -->
                 </div>
                 <div class="tab-pane active show" id="exampleTopComponents" role="tabpanel">
                     <div class="row">
@@ -86,7 +134,24 @@
                             <h5>₱ {{number_format(request()->amount)}}</h5>
                         </td>
                     </tr>  
-                    <tr class="wallet--cont">
+                    <!-- <tr class="paymongo--cont pay__cont">
+                        <td colspan="2" class="text-left">
+                            <h5>Payment Charge:</h5>
+                        </td>
+                        <td colspan="2" class="text-right">
+                            <h5>₱ {{number_format($payment_charge, 2, '.', ',')}}</h5>
+                        </td>
+                    </tr>
+                    <tr class="paymongo--cont pay__cont">
+                        <td colspan="2" class="text-left">
+                            <h3>Total:</h3>
+                        </td>
+                        <td colspan="2" class="text-right">
+                            <h3>₱ {{number_format(request()->amount + $payment_charge, 2, '.', ',')}}</h3>
+                        </td>
+                    </tr>     -->
+
+                    <tr class="wallet--cont pay__cont">
                         <td colspan="2" class="text-left">
                             <h3>Total:</h3>
                         </td>

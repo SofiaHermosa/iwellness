@@ -56,6 +56,7 @@ class User extends Authenticatable
         'cart',
         'orders',
         'wallet_balance',
+        'real_wallet_balance',
         'earning_dates',
         'capital',
         'active_subscriptions',
@@ -229,6 +230,12 @@ class User extends Authenticatable
         $balance = $balance < 0 ? 0 : $balance;
 
         return  $balance;
+    }
+
+    public function getRealWalletBalanceAttribute(){
+        $wallet  = $this->wallets()->first()->balance ?? 0;
+
+        return  $wallet;
     }
 
     public function getProfImgAttribute($value){

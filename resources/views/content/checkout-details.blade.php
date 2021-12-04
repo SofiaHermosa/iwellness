@@ -149,20 +149,20 @@ Checkout Information
                             </td>
                         </tr>
 
-                        <tr>
+                        <!-- <tr>
                             <td colspan="2" class="text-left">
                                 <h5>Payment Charge:</h5>
                             </td>
                             <td colspan="2" class="text-right">
                                 <h5>₱ {{number_format($payment_charge, 2, '.', ',')}}</h5>
                             </td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td colspan="2" class="text-left">
                                 <h3>Total:</h3>
                             </td>
                             <td colspan="2" class="text-right">
-                                <h3>₱ {{number_format(array_sum($total) + $payment_charge + $shipping_fee, 2, '.', ',')}}</h3>
+                                <h3>₱ {{number_format(array_sum($total) + $shipping_fee, 2, '.', ',')}}</h3>
                             </td>
                         </tr>    
                     </table>
