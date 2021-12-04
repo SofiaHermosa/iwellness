@@ -65,6 +65,7 @@
     @if(auth()->check() && auth()->user()->hasanyrole('system administrator'))
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7867618143009870"
      crossorigin="anonymous"></script>
+    @endif 
     @yield('style')
     <script src="{{asset('app/classic/global/vendor/breakpoints/breakpoints.js')}}"></script>
     <script>
