@@ -26,7 +26,7 @@ class CommissionClass
         if(auth()->check()){
             if($id != auth()->user()->id){
                 $user = $user->where('id', $id);
-                if($level > 4 && $level <= 9){
+                if($level > 3 && $level <= 9){
                     $user = $user->whereHas('roles', function($q){
                         $q->where('name', 'team leader')
                         ->orWhere('name', 'manager');
