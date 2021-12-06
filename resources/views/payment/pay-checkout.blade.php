@@ -35,7 +35,6 @@ $total_amount = [];
 
 @php
     $shipping_fee   = array_sum($total_amount) <= 5000 ? 120 : 200;
-    $payment_charge = (array_sum($total_amount) + $shipping_fee) * 0.03;
 @endphp
 <div class="col-lg-8">
     <div class="panel nav-tabs-horizontal" data-plugin="tabs">
@@ -170,7 +169,7 @@ $total_amount = [];
 @push('scripts')
 <script>
     window.balance = '{!! base64_encode(str_replace('0','$',auth()->check() ? auth()->user()->wallet_balance : 0)) !!}';
-    window.amount  = '{!! base64_encode(str_replace('0','$',array_sum($total_amount) + $payment_charge + $shipping_fee)) !!}';
+    window.amount  = '{!! base64_encode(str_replace('0','$',array_sum($total_amount) + $shipping_fee)) !!}';
     window.type    = 2;
 </script>
 
