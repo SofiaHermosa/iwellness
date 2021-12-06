@@ -28,8 +28,8 @@ class Earnings extends Model
     public function tapActivity(Activity $activity, string $eventName)
     {
         $data   = json_decode($activity->properties)->attributes;
-        $event  = $eventName == 'created' ? 'earned' : $eventName;
-        $from   = $activity->causer_id == $data->user_id ? config('constants.payment_transaction_type.'.$data->from) : ($data->from == 1 ? 'referral bonus' : 'commission');
+        $event  = $eventName == 'created' ? 'earned' : 'used';
+        $from   = $activity->causer_id == $data->user_id ? config('constants.payment_transaction_type.'.$data->from) : ($data->from == 1 ? 'referral bonus' : ($data->from == 4 ? 'change' : 'commission'));
         $member = $activity->causer_id == $data->user_id ? '' : ' from '.$activity->causer->username;     
         $description = ucfirst($event)." ". $from ." total of ".number_format($data->amount, 2, '.', ',').' '.$member;
         if($activity->causer_id == $data->user_id){

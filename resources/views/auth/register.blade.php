@@ -5,6 +5,7 @@ Sign Up
 @endsection
 
 @section('content')
+@include('auth.modal.terms-condition')
 
 <form method="post" role="form" action="{{ route('register') }}" id="createUserForm" autocomplete="off">
     @csrf
@@ -94,7 +95,7 @@ Sign Up
     </div>
 
     <div class="form-group form-material floating" data-plugin="formMaterial">
-        <input type="text" class="form-control" id="inputUsername" name="referer" value="{{isset(request()->referral) ? base64_decode(request()->referral) : ''}}"  {{isset(request()->referral) ? 'readonly="true"' : ''}}">
+        <input type="text" class="form-control" id="inputReferrer" name="referer" value="{{isset(request()->referral) ? base64_decode(request()->referral) : ''}}"  {{isset(request()->referral) ? 'readonly="true"' : ''}}">
         <label class="floating-label" for="inputUsername">Referrer Username</label>
 
         @error('referer')

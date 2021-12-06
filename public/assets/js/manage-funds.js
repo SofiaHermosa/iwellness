@@ -210,7 +210,7 @@ let ManageFunds = (function () {
                             return `<center><a data-fancybox="image" href="${full['attachments']}"><img height="50" width="50" class="img rounded cover" src="${full['attachments']}"></a></center>`;
                         }
 
-                        return `<center><button data-cashin="${btoa(JSON.stringify(full))}" class="btn btn-dark btn-xs upload--attachments">Upload Receipt</button></center>`;
+                        return `<center><button data-cashin="${window.btoa(unescape(encodeURIComponent(JSON.stringify(full))))}" class="btn btn-dark btn-xs upload--attachments">Upload Receipt</button></center>`;
                     }
                 }
             ],

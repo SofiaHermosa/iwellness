@@ -57,3 +57,19 @@ $("#createUserForm").validate({
         $(element).removeClass('is-invalid');
     }
 });
+
+$(document).on('click', '.btn--terms', function(){
+    $('input[name="term"]').prop('checked', $(this).data('checkbox'));
+
+    $('#termsConditionModal').modal('hide');
+});
+
+$(document).on('click', 'input[name="term"]', function(){
+    $(this).prop('checked', false);
+
+    $('#termsConditionModal').modal({
+        show:true,
+        backdrop: 'static',
+        keyboard: false
+    });
+});
