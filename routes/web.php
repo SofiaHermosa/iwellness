@@ -21,7 +21,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::middleware('auth')
+Route::middleware(['auth', 'watched_ads'])
 ->prefix('res')
 ->group(function(){
     Route::get('/', function(){
@@ -64,6 +64,7 @@ Route::middleware('auth')
     Route::resource('logs/history', 'Member\LogsController');
     Route::resource('activity/logs', 'Admin\ActivityController');
     Route::resource('survey', 'Admin\SurveyController');
+    Route::get('has/ads/{action}', 'Admin\SurveyController@watchAds');
     
 });
 

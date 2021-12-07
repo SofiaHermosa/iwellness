@@ -33,6 +33,5 @@
     window.url = "{!! url('res/diamond/conversion/items') !!}";
 </script>
 <script src="{{asset('assets/js/jquery.mask.min.js')}}"></script>
-<script src="{{asset('assets/js/config.js')}}"></script>
 <script src="{{asset('assets/js/items.js')}}"></script>
 @endpush        

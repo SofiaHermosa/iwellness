@@ -62,6 +62,8 @@
     <link rel="stylesheet" href="{{asset('app/classic/global/fonts/font-awesome/font-awesome.css')}}">
     <link rel="stylesheet" href="{{asset('app/classic/global/fonts/web-icons/web-icons.min.css')}}">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css"/>
     @yield('style')
     <script src="{{asset('app/classic/global/vendor/breakpoints/breakpoints.js')}}"></script>
 
@@ -98,7 +100,7 @@
       @if(auth()->check())   
         @include('content.share-modal')
       @endif  
-      
+      @include('content.play-ads')
       <footer class="site-footer">
         <div class="site-footer-right">© {{date('Y')}} IWellness</div>
       </footer>
@@ -121,7 +123,7 @@
     <script src="{{asset('app/classic/global/vendor/switchery/switchery.js')}}"></script>
     <script src="{{asset('app/classic/global/vendor/intro-js/intro.js')}}"></script>
     <script src="{{asset('app/classic/global/vendor/alertify/alertify.js')}}"></script>
-    <script src="{{asset('app/classic/global/vendor/screenfull/screenfull.js')}}"></script>
+    <!-- <script src="{{asset('app/classic/global/vendor/screenfull/screenfull.js')}}"></script> -->
     <script src="{{asset('app/classic/global/vendor/slidepanel/jquery-slidePanel.js')}}"></script>
     <script src="{{asset('app/classic/global/vendor/matchheight/jquery.matchHeight-min.js')}}"></script>
     <script src="{{asset('app/classic/global/vendor/peity/jquery.peity.min.js')}}"></script>
@@ -172,13 +174,16 @@
     <script src="{{asset('app/classic/global/vendor/datatables.net-buttons/buttons.colVis.js')}}"></script>
     <script src="{{asset('app/classic/global/vendor/datatables.net-buttons-bs4/buttons.bootstrap4.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     <script async src="https://static.addtoany.com/menu/page.js"></script>
     @if(auth()->check())
       <script>
         window.referral_link = '{!! url('/register?referral='.base64_encode(auth()->user()->username)) !!}';
       </script>
+      <script src="{{asset('assets/js/config.js')}}"></script>
       <script src="{{asset('assets/js/share.js')}}"></script>
       <script src="{{asset('assets/js/edit-profile.js')}}"></script>
+      <script src="{{asset('assets/js/play-ads.js')}}"></script>
     @endif
   
     @stack('scripts')

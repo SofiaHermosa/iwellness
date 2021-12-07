@@ -174,7 +174,6 @@ $total_amount = [];
 </script>
 
 <script src="{{asset('assets/js/jquery.mask.min.js')}}"></script>
-<script src="{{asset('assets/js/config.js')}}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{asset('assets/js/payment.js')}}"></script>
 <script src="{{asset('assets/js/e-wallet.js')}}"></script>

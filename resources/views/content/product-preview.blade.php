@@ -70,6 +70,5 @@ Product
 
 @push('scripts')
 <script src="{{asset('assets/js/jquery.mask.min.js')}}"></script>
-<script src="{{asset('assets/js/config.js')}}"></script>
 <script src="{{asset('assets/js/products.js')}}"></script>
 @endpush        

@@ -33,6 +33,5 @@
     window.url = "{!! url('res/users') !!}";
 </script>
 <script src="{{asset('assets/js/jquery.mask.min.js')}}"></script>
-<script src="{{asset('assets/js/config.js')}}"></script>
 <script src="{{asset('assets/js/users.js')}}"></script>
 @endpush        

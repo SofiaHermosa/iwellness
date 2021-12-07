@@ -1,1 +1,1 @@
-const baseURL = "//localhost/iwellness/public/";
+const baseURL = "//local.iwellness/";

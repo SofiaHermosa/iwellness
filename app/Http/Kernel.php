@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         'account.activated' => \App\Http\Middleware\ActiveSubscription::class,
         'prevent_back_history' => \App\Http\Middleware\PreventBackHistory::class,
+        'watched_ads' => \App\Http\Middleware\WatchedAds::class,
     ];
 }

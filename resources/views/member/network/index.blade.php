@@ -38,6 +38,5 @@ Network
     window.url = "{!! url('res/network') !!}";
 </script>
 <script src="{{asset('assets/js/jquery.mask.min.js')}}"></script>
-<script src="{{asset('assets/js/config.js')}}"></script>
 <script src="{{asset('assets/js/network.js')}}"></script>
 @endpush        

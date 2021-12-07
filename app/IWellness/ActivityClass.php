@@ -20,7 +20,8 @@ class ActivityClass
         $this->desc = [
             'profit'   => 'Earned cutoff profit',
             'login'    => 'Login',
-            'survey'   => 'Answered scheduled survey'
+            'survey'   => 'Answered scheduled survey',
+            'ads'     => 'Watched Ads'
         ];
     }
 
@@ -46,6 +47,7 @@ class ActivityClass
                     'sched'             =>  Carbon::parse($release_date)->subDays(7)->format('m/d') . ' - ' . Carbon::parse($release_date)->format('m/d'), 
                     'survey'            =>  $this->hasSurvey($release_date),
                     'logged_in'         =>  $this->retriveActivity($release_date, 'login'),
+                    'ads'               =>  $this->retriveActivity($release_date, 'ads'),
                     'profit'            =>  $this->retriveActivity($release_date, 'profit'),
                     'release'           =>  Carbon::parse($release_date)->format('m-d-Y'),
                     'start'             =>  Carbon::parse($release_date)->subDays(7)->format('Y-m-d'),
@@ -75,6 +77,10 @@ class ActivityClass
         $activity = new ActivityLogs;
         
         if($type == 'login'){
+            $activity = $activity->whereBetween('created_at', [$start, $end]);
+        }
+
+        if($type == 'ads'){
             $activity = $activity->whereBetween('created_at', [$start, $end]);
         }
 

@@ -47,6 +47,5 @@ page-profile
 <script>
     window.url = "{!! url('res/survey') !!}";
 </script>
-<script src="{{asset('assets/js/config.js')}}"></script>
 <script src="{{asset('assets/js/survey.js')}}"></script>
 @endpush        

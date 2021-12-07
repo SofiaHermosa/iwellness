@@ -70,15 +70,38 @@ class SurveyClass
     public function hasSurvey(){
         $pending = [];
         $now     = Carbon::now()->format('Y-m-d');
-        $survey  = !empty($this->activityClass->get()) ? 
+        $ads  = !empty($this->activityClass->get()) ? 
         $this->activityClass
         ->get()
         ->where('survey', '===', []) : 
         [];
 
-        foreach($survey as $entry){
-            if(($now >= $entry['start']) && ($now <= $entry['end'])){
-                $pending[] = $entry;
+        foreach($ads as $ad){
+            if(($now >= $ad['start']) && ($now <= $ad['end'])){
+                $pending[] = $ad;
+            }
+        }
+
+        
+        if(count($pending) == 0){
+            return false;
+        }
+
+        return true;
+    }
+
+    public function watchedAds(){
+        $pending = [];
+        $now     = Carbon::now()->format('Y-m-d');
+        $ads  = !empty($this->activityClass->get()) ? 
+        $this->activityClass
+        ->get()
+        ->where('ads', '===', []) : 
+        [];
+
+        foreach($ads as $ad){
+            if(($now >= $ad['start']) && ($now <= $ad['end'])){
+                $pending[] = $ad;
             }
         }
 

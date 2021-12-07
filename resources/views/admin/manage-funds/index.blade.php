@@ -89,7 +89,5 @@ page-profile
 <script src="{{asset('assets/js/jquery.mask.min.js')}}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{asset('app/classic/global/vendor/dropify/dropify.min.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
-<script src="{{asset('assets/js/config.js')}}"></script>
 <script src="{{asset('assets/js/funds-request.js')}}"></script>
 @endpush        
