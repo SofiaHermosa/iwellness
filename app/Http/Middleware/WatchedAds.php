@@ -31,7 +31,7 @@ class WatchedAds
             ->inRandomOrder()
             ->first();
 
-            session()->put('play_ads', $ads->link);
+            session()->put('play_ads', $ads->link ?? null);
         }else{
             session()->has('play_ads') ? session()->forget('play_ads') : ''; 
         }
