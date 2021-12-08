@@ -231,3 +231,27 @@ img.sales--avatar {
     max-width: 3rem !important;
     object-fit: cover;
 }
+
+.modal-fullscreen{
+    max-width: 100% !important;
+    margin: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 100vh !important;
+    display: flex !important;
+    overflow: hidden !important;
+}
+
+.modal-full {
+    overflow: hidden !important;
+}
+
+.modal-fullscreen.modal-content{
+    overflow: hidden !important;
+}
+
+.modal-fullscreen.modal-body{
+    overflow: hidden !important;
+}

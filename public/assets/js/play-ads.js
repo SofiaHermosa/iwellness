@@ -22,7 +22,7 @@ let Ads = (function () {
 
     function onYouTubeIframeAPIReady(id) {
         player = new YT.Player('player', {
-            height: '500',
+            height: '100%',
             width: '100%',
             videoId: id,
             playerVars: { autoplay: 1, rel: 0, controls: 0, showinfo: 0, ecver: 2},

@@ -126,7 +126,7 @@ class SurveyController extends Controller
             if(session()->has('play_ads')){
                 session()->forget('play_ads');
 
-                $this->activityClass->logActivity('ads', auth()->user()->id);
+                // $this->activityClass->logActivity('ads', auth()->user()->id);
             }
         }
     }
