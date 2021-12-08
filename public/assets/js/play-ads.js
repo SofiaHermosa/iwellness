@@ -25,7 +25,7 @@ let Ads = (function () {
             height: '500',
             width: '100%',
             videoId: id,
-            playerVars: { autoplay: 1, rel: 0, showinfo: 0, ecver: 2},
+            playerVars: { autoplay: 1, rel: 0, controls: 0, showinfo: 0, ecver: 2},
             events: {
                 'onReady': onPlayerReady,
                 'onStateChange': onPlayerStateChange
