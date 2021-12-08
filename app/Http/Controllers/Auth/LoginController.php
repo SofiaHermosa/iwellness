@@ -60,6 +60,7 @@ class LoginController extends Controller
             return '/res/dashboard/';
         }else{
             $this->activityClass->logActivity('login', auth()->user()->id);
+            Session::flash('has_logged_in', 'Recently logged in');
             return '/res/profile/';
         }
 

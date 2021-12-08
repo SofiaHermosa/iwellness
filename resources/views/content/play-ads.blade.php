@@ -1,3 +1,12 @@
-@if(Session::has('play_ads'))
-    <a data-fancybox data-fancybox-type="iframe"  class="hidden play--ads_link" href="{{ Session::get('play_ads') }}"></a>
-@endif    
+@if(Session::has('play_ads') && !Session::has('has_logged_in'))
+    <!-- Modal -->
+<div class="modal fade" id="playAdsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content bg-transparent">
+        <div class="modal-body p-0">
+            <div id="player"></div>
+        </div>
+      </div>
+    </div>
+</div>
+@endif

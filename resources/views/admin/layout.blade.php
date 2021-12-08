@@ -176,6 +176,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     <script async src="https://static.addtoany.com/menu/page.js"></script>
+    <script src="//www.youtube.com/iframe_api"></script>
     @if(auth()->check())
       <script>
         window.referral_link = '{!! url('/register?referral='.base64_encode(auth()->user()->username)) !!}';

@@ -2,7 +2,6 @@ let Ads = (function () {
     let ui = {};
     let link;
     let player;
-    let done = false;
 
     function bindUi() {
         this._ui = {
@@ -20,45 +19,10 @@ let Ads = (function () {
         checkForAds();
     }
 
-    function onYouTubeIframeAPIReady(id) {
-        player = new YT.Player('player', {
-            height: '500',
-            width: '100%',
-            videoId: id,
-            playerVars: { autoplay: 1, rel: 0, showinfo: 0, ecver: 2},
-            events: {
-                'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
-            }
-        });
-    }
-
-    function onPlayerStateChange(event) {
-        if (player.getPlayerState() == 0) {
-            deleteSessionAds();
-            $('#playAdsModal').modal('hide');
-        }
-    }
-    
-    function stopVideo() {
-        player.stopVideo();
-    }
-
-    function onPlayerReady(event) {
-        event.target.playVideo();
-        player.playVideo();
-    }
-
     function checkForAds(){
        $.get(`${baseURL}res/has/ads/get`).done(function(res){
           if(res !== null){
-            let videoID = res.split('/');
-            $('#playAdsModal').modal({
-                show:true,
-                backdrop: 'static',
-                keyboard: false
-            });
-            onYouTubeIframeAPIReady(videoID[4]);
+            playAds(res);
           }
        });
     }
@@ -80,7 +44,7 @@ let Ads = (function () {
     function deleteSessionAds(){
         $.get(`${baseURL}res/has/ads/remove`).done(function(res){
     
-        });
+         });
     }
 
     function init() {
