@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use App\IWellness\SurveyClass;
+use App\IWellness\AdsClass;
 use Session;
 use DB;
 
@@ -17,24 +17,16 @@ class WatchedAds
      * @param  \Closure  $next
      * @return mixed
      */
-    public $surveyClass;
+    public $AdsClass;
 
     public function __construct()
     {
-        $this->surveyClass   = new SurveyClass;
+        $this->AdsClass   = new AdsClass;
     }
 
     public function handle(Request $request, Closure $next)
     {
-        if($this->surveyClass->watchedAds() && !auth()->user()->hasanyrole('system administrator')){
-            $ads = DB::table('ads_videos')
-            ->inRandomOrder()
-            ->first();
-
-            session()->put('play_ads', $ads->link ?? null);
-        }else{
-            session()->has('play_ads') ? session()->forget('play_ads') : ''; 
-        }
+        $this->AdsClass->releaseAds();
         
         return $next($request);
     }

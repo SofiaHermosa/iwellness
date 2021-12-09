@@ -21,21 +21,24 @@ let Ads = (function () {
     }
 
     function onYouTubeIframeAPIReady(id) {
-        player = new YT.Player('player', {
-            height: '100%',
-            width: '100%',
-            videoId: id,
-            playerVars: { autoplay: 1, rel: 0, controls: 0, showinfo: 0, ecver: 2},
-            events: {
-                'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
-            }
-        });
+        try {
+            player = new YT.Player('player', {
+                height: '100%',
+                width: '100%',
+                videoId: id,
+                playerVars: { autoplay: 1, rel: 0, controls: 0, showinfo: 0, ecver: 2},
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        } catch (error) {
+            $('#playAdsModal').modal('hide');
+        }
     }
 
     function onPlayerStateChange(event) {
         if (player.getPlayerState() == 0) {
-            deleteSessionAds();
             $('#playAdsModal').modal('hide');
         }
     }
@@ -45,14 +48,17 @@ let Ads = (function () {
     }
 
     function onPlayerReady(event) {
+        deleteSessionAds();
         event.target.playVideo();
         player.playVideo();
     }
 
     function checkForAds(){
        $.get(`${baseURL}res/has/ads/get`).done(function(res){
-          if(res !== null){
-            let videoID = res.split('/');
+          let play = [1,2];
+          let rand_play = play[Math.floor(Math.random()*play.length)];
+          if(res !== null && rand_play == res['play']){
+            let videoID = res['ads'].split('/');
             $('#playAdsModal').modal({
                 show:true,
                 backdrop: 'static',

@@ -119,14 +119,16 @@ class SurveyController extends Controller
         if($action == 'get' && request()->ajax()){
             $ads = session()->has('play_ads') ? session()->get('play_ads') : null;
 
-            return $ads;
+            return $ads ?? null;
         }
 
         if($action == 'remove' && request()->ajax()){
             if(session()->has('play_ads')){
+                $ads = session()->has('play_ads') ? session()->get('play_ads') : null;
+                session()->put('activity_type', $ads['key']);
+                $this->activityClass->logActivity('ads', auth()->user()->id, $ads['sub_id']);
                 session()->forget('play_ads');
-
-                // $this->activityClass->logActivity('ads', auth()->user()->id);
+                session()->forget('activity_type');
             }
         }
     }

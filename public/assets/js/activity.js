@@ -40,7 +40,7 @@ let Logs = (function () {
                 {
                     'targets' : 3,
                     'render' : function ( url, type, full) {
-                        return full['logged_in'].length == 0 || full['ads'].length == 0 ? `` : `<i class="text-success wb-check text-center w-full"></i>`;
+                        return full['logged_in'].length != 0 || full['ads'].length != 0 ? `<i class="text-success wb-check text-center w-full"></i>` : `` ;
                     }
                 },
 
