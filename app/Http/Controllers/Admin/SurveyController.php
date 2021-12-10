@@ -56,6 +56,7 @@ class SurveyController extends Controller
         $this->surveyClass->manageSurvey();
 
         Session::flash('message', 'New survey question was successfully added'); 
+
         return back();
     }
 
@@ -67,7 +68,7 @@ class SurveyController extends Controller
      */
     public function show($id)
     {
-        if($this->surveyClass->hasSurvey()){
+        if(!empty($this->surveyClass->monthlyEntries())){
             return view('member.survey.index');
         }else{
 
@@ -101,6 +102,12 @@ class SurveyController extends Controller
         Session::flash('message', 'Thank you for your help!');
         
         $back = 'window.location.href="'.url('res/').'"';
+
+        if(!empty($this->surveyClass->monthlyEntries())){
+            $next = 'Next Survey';
+            return view('layouts.survey-success', compact('next'));
+        }
+
         return view('layouts.survey-success', compact('back'));
     }
 

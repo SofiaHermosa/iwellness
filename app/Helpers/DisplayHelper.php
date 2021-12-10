@@ -91,8 +91,6 @@
     function monthlySurvey(){
         $survey = new SurveyClass();
 
-        return $survey
-        ->monthlyEntries()
-        ->survey();
+        return !empty($survey->monthlyEntries()) ? $survey->monthlyEntries()[0] : [];
     }
 ?>

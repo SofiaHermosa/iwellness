@@ -14,7 +14,9 @@ class SurveyEntries extends Model
     protected $fillable = [
         'user_id',
         'answer',
-        'month'
+        'month',
+        'subs_id',
+        'key'
     ];
 
     public function setMonthAttribute($value)

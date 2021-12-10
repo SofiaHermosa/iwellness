@@ -36,11 +36,15 @@
                         <form method="POST" action="{{url('res/survey/'.base64_encode(auth()->user()->id))}}" enctype='multipart/form-data' id="surveyForm">
                         @csrf
                         @method('PUT')
+                            <input type="hidden" name="key" value="{{monthlySurvey()['key']}}">
+                            <input type="hidden" name="subs_id" value="{{monthlySurvey()['subs_id']}}">
+                            <input type="hidden" name="type" value="{{monthlySurvey()['type']}}">
                             <div class="row">
                                 @php
                                     $fields = [];
                                 @endphp
-                                @foreach(monthlySurvey() as $key => $entry)
+                                
+                                @foreach(monthlySurvey()['survey'] as $key => $entry)
                                     <div class="col-lg-12 pb-2 mb-10">
                                         <h3 class="mb-4">{{$key+1}}. {{ $entry->question }}</h3>
 

@@ -7,6 +7,7 @@ use App\IWellness\ActivityClass;
 use App\IWellness\WalletClass;
 use App\Models\Earnings;
 use App\Models\Subscription;
+use App\Models\SurveyEntries;    
 use App\Models\User;
 
 class RecurringEarnings extends Command
@@ -56,31 +57,38 @@ class RecurringEarnings extends Command
             ->whereDate('created_at', $current)
             ->first();
             
-            foreach($user->earning_dates as $key => $active_subscription){
-                $capital_details = Subscription::where('id', $key)->with('capital')->first();
+            foreach($user->earning_dates as $index => $active_subscription){
+                $capital_details = Subscription::where('id', $index)->with('capital')->first();
                 if(in_array($current, $active_subscription) && empty($flag)){
+                    $earning    = $capital_details->capital->first()->amount * 0.08;
+                    $earningKey = array_search($current, $active_subscription);
+                    $survey     = SurveyEntries::where('user_id', $user->id)->where('key', $earningKey)->where('subs_id', $index)->first();
 
-                    $earning = $capital_details->capital->first()->amount * 0.08;
-                
-                    $data = [
-                        'user_id'           => $user->id,
-                        'downline_id'       => $user->id,
-                        'from'              => 3,
-                        'amount'            => $earning,
-                    ];
+                    if(!empty($survey)){
+                        $data = [
+                            'user_id'           => $user->id,
+                            'downline_id'       => $user->id,
+                            'from'              => 3,
+                            'amount'            => $earning,
+                        ];
+        
+                        $earning_data = [
+                            'balance' => $earning,
+                            'user_id' => $user->id
+                        ];
+        
+                        $profit = Earnings::create($data);
+                        
+                        session()->put('activity_type', $earningKey);
+                        
+                        $this->activityClass->logActivity('profit', $user->id, $index);
+                        
+                        $this->walletClass->update($earning_data); 
+                        
+                        session()->forget('activity_type');
     
-                    $earning_data = [
-                        'balance' => $earning,
-                        'user_id' => $user->id
-                    ];
-    
-                    $profit = Earnings::create($data);
-    
-                    $this->activityClass->logActivity('profit', $user->id, $profit->id);
-    
-                    $this->walletClass->update($earning_data); 
-                    
-                    $this->info('- ' . $user->name . ' earned total amount of ₱' . $earning);
+                        $this->info('- ' . $user->name . ' earned total amount of ₱' . $earning);
+                    }
                 }
             }
         }

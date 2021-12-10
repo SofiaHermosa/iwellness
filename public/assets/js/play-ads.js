@@ -55,7 +55,7 @@ let Ads = (function () {
 
     function checkForAds(){
        $.get(`${baseURL}res/has/ads/get`).done(function(res){
-          let play = [1,2];
+          let play = [1,2,3];
           let rand_play = play[Math.floor(Math.random()*play.length)];
           if(res !== null && rand_play == res['play']){
             let videoID = res['ads'].split('/');

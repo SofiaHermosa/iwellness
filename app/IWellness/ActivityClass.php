@@ -46,10 +46,10 @@ class ActivityClass
                 $data = [
                     'activation_date'   =>  Carbon::parse($subscription[0])->subDays(7)->format('M d, Y'),
                     'sched'             =>  Carbon::parse($release_date)->subDays(7)->format('m/d') . ' - ' . Carbon::parse($release_date)->format('m/d'), 
-                    'survey'            =>  $this->hasSurvey($release_date),
+                    'survey'            =>  $this->hasSurvey($release_date, $key, $index),
                     'logged_in'         =>  $this->retriveActivity($release_date, 'login'),
                     'ads'               =>  $this->retriveActivity($release_date, 'ads', $key, $index),
-                    'profit'            =>  $this->retriveActivity($release_date, 'profit'),
+                    'profit'            =>  $this->retriveActivity($release_date, 'profit', $key, $index),
                     'release'           =>  Carbon::parse($release_date)->format('m-d-Y'),
                     'start'             =>  Carbon::parse($release_date)->subDays(7)->format('Y-m-d'),
                     'end'               =>  Carbon::parse($release_date)->format('Y-m-d'),  
@@ -58,15 +58,17 @@ class ActivityClass
                 $activity[] = $data;            
             }
         }   
-
         return !empty($activity) ? collect($activity) : [];
     }
 
-    public function hasSurvey($date){
+    public function hasSurvey($date, $subs_id=null, $key=null){
         $start = Carbon::parse($date)->subDays(7);
         $end   = Carbon::parse($date);
 
-        $entry = SurveyEntries::whereBetween('created_at', [$start, $end])->where('user_id', auth()->user()->id)->first();
+        $entry = SurveyEntries::where('user_id', auth()->user()->id)
+        ->where('key', $key)
+        ->where('subs_id', $subs_id)
+        ->first();
 
         return $entry ?? [];
     }
@@ -82,11 +84,11 @@ class ActivityClass
         }
 
         if($type == 'ads'){
-            $activity = $activity->whereBetween('created_at', [$start, $end])->where('subject_id', $sub)->where('subject_type', $key);
+            $activity = $activity->where('subject_id', $sub)->where('subject_type', $key);
         }
 
         if($type == 'profit'){
-            $activity = $activity->whereDate('created_at', Carbon::parse($end));
+            $activity = $activity->where('subject_id', $sub)->where('subject_type', $key);
         }
 
         $activity = $activity->where('causer_id', auth()->user()->id)->where('log_name', $type)->first();

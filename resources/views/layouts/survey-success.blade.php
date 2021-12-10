@@ -27,10 +27,15 @@
                 <div class="w-full text-center">
                     <i class="icon md-check-circle text-success animation-slide-top" style="font-size: 5rem !important;"></i><br/>
                     <h1 class="font-size-30 animation-slide-bottom text-white">Your done with the survey, pls come back next cut off.</h1>
-
-                    <a href="javascript:void(0)" onclick="{{$back}}" class="btn btn-dark btn-lg mt-40 animation-fade">
-                        Back
-                    </a>
+                    @if(isset($next))
+                        <a href="{{url('res/survey/'.base64_encode(auth()->user()->id))}}" class="btn btn-dark btn-lg mt-40 animation-fade">
+                            {{$next}}
+                        </a>
+                    @else
+                        <a href="javascript:void(0)" onclick="{{$back}}" class="btn btn-dark btn-lg mt-40 animation-fade">
+                            Back
+                        </a>
+                    @endif  
                 </div>
             </div>
         </div>

@@ -32,9 +32,9 @@ class AdsClass
                 $end   = Carbon::parse($release_date);
                 $weeksAgo = Carbon::now()->subWeeks(2);
                 $now = Carbon::now()->format('Y-m-d');
-                if(Carbon::now()->between($start,$end)){
+                if(Carbon::now()->between($start,$end)  || $end->between($weeksAgo, $now)){
                     $activity = ActivityLogs::select('id')->where('log_name', 'ads')->where('causer_id', auth()->user()->id)->where('subject_id', $key)->where('subject_type', $index)->first();
-                    $play = [1,2];
+                    $play = [1,2,3];
                     $random_play = (int)array_rand($play, 1);
                     if(empty($activity)){
                         $ads = DB::table('ads_videos')
@@ -52,7 +52,6 @@ class AdsClass
                 }
             }
         }
-
         if(!empty($releaseAds)){
             session()->put('play_ads', $releaseAds[0]);
         }else{
