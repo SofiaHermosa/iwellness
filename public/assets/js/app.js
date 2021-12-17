@@ -121,6 +121,37 @@ $(document).ready(function(){
           }
         ]
     });
+
+    $('.testimonial-slider').slick({
+        centerPadding: '20px',
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        arrows:false,
+        autoplay:true,
+        speed: 300,
+        responsive: [
+          {
+            breakpoint: 769,
+            settings: {
+              arrows: false,
+              centerMode: true,
+              centerPadding: '40px',
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              arrows: false,
+              centerMode: true,
+              centerPadding: '10px',
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            }
+          }
+        ]
+    });
 });
 
 $('.summernote').summernote();

@@ -34,7 +34,9 @@
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-900 hover:bg-yellow-300 hover:text-white" -->
             <a href="#productSection" class="nav--link text-gray-900 hover:bg-yellow-300 hover:text-white px-3 py-2 rounded-md text-sm font-bold" aria-current="page">Products</a>
 
-            <a href="#" class="nav--link text-gray-900 hover:bg-yellow-300 hover:text-white px-3 py-2 rounded-md text-sm font-bold">About Us</a>
+            <a href="#aboutSection" class="nav--link text-gray-900 hover:bg-yellow-300 hover:text-white px-3 py-2 rounded-md text-sm font-bold">About Us</a>
+
+            <a href="#testimonialSection" class="nav--link text-gray-900 hover:bg-yellow-300 hover:text-white px-3 py-2 rounded-md text-sm font-bold">Testimonial</a>
 
           </div>
         </div>
@@ -70,7 +72,9 @@
       <!-- Current: "bg-gray-900 text-white", Default: "text-gray-900 hover:bg-yellow-300 hover:text-white" -->
       <a href="#productSection" class="nav--link text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded text-base font-medium" aria-current="page">Products</a>
 
-      <a href="#" class="text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded text-base font-medium">About Us</a>
+      <a href="#aboutSection" class="text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded text-base font-medium">About Us</a>
+
+      <a href="#testimonialSection" class="text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded text-base font-medium">Testimonial</a>
 
       <a href="javascript:void(0)" class="text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded text-base font-medium toggle-menu" data-toggle="#viewCart">Cart</a>
 
