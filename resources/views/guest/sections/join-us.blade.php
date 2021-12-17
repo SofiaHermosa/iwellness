@@ -1,5 +1,5 @@
 <div class="block">
-    <div data-aos="fade-right" data-aos-duration="1000" class="grid grid-cols-2 gap-0">
+    <div class="grid grid-cols-2 gap-0">
         <div class="bg-gradient-to-br from-yellow-100 via-yellow-200 to-yellow-300 col-span-2 md:col-span-1 py-20 md:py-0 shadow-lg">
             <div class="text-center relative top-1/2 transform -translate-y-1/2 m-auto mt-4">
                 <h1 class="text-gray-900 font-extrabold text-xl md:text-3xl mb-4">Be part of us</h1>
@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="hidden md:block shadow-lg">
-            <img data-aos="fade-left" data-aos-duration="1000" src="{{asset('assets/images/guest/product-banner.jpg')}}" class="h-full object-cover" alt="">
+            <img src="{{asset('assets/images/guest/product-banner.jpg')}}" class="h-full object-cover" alt="">
         </div>
     </div>
 </div>

@@ -2,7 +2,7 @@
     <h1 data-aos="fade-down" data-aos-duration="700" class="text-lg text-gray-900 font-black text-center py-10">PRODUCTS</h1>
     <div class="grid grid-cols-4 gap-6">
         @forelse (getProducts()->data as $key => $product)
-            <div class="col-span-4 md:col-span-2 lg:col-span-1" data-aos="fade-up" data-aos-duration="{{700 + ($key * 10)}}">
+            <div class="col-span-4 md:col-span-2 lg:col-span-1">
                 <a class="btn-block" href="{{url('res/product/'.$product->id.'/view')}}">
                     <div class="flex-col h-full p-6 rounded-md">
                         <div class="w-full">

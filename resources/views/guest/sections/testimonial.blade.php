@@ -1,6 +1,6 @@
 <div class="block w-full pt-10 pb-2 lg:mt-0 md:mt-20 sm:mt-4 bg-yellow-300 py-4" id="testimonialSection">
-<h1 class="text-lg text-gray-100 font-black text-center pb-10">TESTIMONIAL</h1>
-    <div class="testimonial-slider">
+<h1 class="text-lg text-gray-100 font-black text-center pb-10" data-aos="fade-down" data-aos-duration="700">TESTIMONIAL</h1>
+    <div class="testimonial-slider" data-aos="fade-down" data-aos-duration="700">
         <div class="px-3">
             <div class="w-full rounded-lg shadow-lg bg-white p-3 my-6 h-60">
                 <div class="flex spacing-x-4">
