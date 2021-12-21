@@ -24,7 +24,7 @@
         <div class="order-3 md:order-2">
             <div class="text-center p-2 flex flex-col space-y-0 md:space-y-2 w-full md:w-44 m-auto">
                 <p class="text-gray-700 block px-3 py-2 rounded-md text-md font-extrabold">About Us</p>
-                <a href="" class="text-gray-700 hover:bg-white hover:text-gray-800 block px-3 py-1 md:py-2 rounded-md text-xs md:text-base font-semibold">History</a>
+                <a href="#aboutSection" class="nav--link text-gray-700 hover:bg-white hover:text-gray-800 block px-3 py-1 md:py-2 rounded-md text-xs md:text-base font-semibold">About</a>
                 <a href="{{url('storage/certifications/Business-Permit.jpg')}}" target="_blank" class="text-gray-700 hover:bg-white hover:text-gray-800 block px-3 py-1 md:py-2 rounded-md text-xs md:text-base font-semibold">Bussiness Permit</a>
                 <a href="{{url('storage/certifications/DTI-Certification.pdf')}}"  target="_blank" class="text-gray-700 hover:bg-white hover:text-gray-800 block px-3 py-1 md:py-2 rounded-md text-xs md:text-base font-semibold">DTI License</a>
             </div>
@@ -33,7 +33,7 @@
         <div class="order-1 md:order-3">
             <div class="text-center p-2 flex flex-col space-y-0 md:space-y-2 w-full m-auto">
                 <p class="w-full text-gray-700 block px-3 py-2 rounded-md text-md font-extrabold">Contact Details</p>
-                <p class="w-full text-gray-700 block px-3 py-1 md:py-2 rounded-md text-xs md:text-base font-semibold">+123 456</p>
+                <!-- <p class="w-full text-gray-700 block px-3 py-1 md:py-2 rounded-md text-xs md:text-base font-semibold">+123 456</p> -->
                 <p class="w-full text-gray-700 block px-3 py-1 md:py-2 rounded-md text-xs md:text-base font-semibold">rahimajanep785@gmail.com</p>
                 <p class="w-full text-gray-700 block px-3 py-1 md:py-2 rounded-md text-xs md:text-base font-semibold">2nd Flr. 200 Pilar Road, Almanza Uno, Las Pinas City</p>
             </div>
