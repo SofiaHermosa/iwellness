@@ -60,7 +60,7 @@ class RecurringEarnings extends Command
             foreach($user->earning_dates as $index => $active_subscription){
                 $capital_details = Subscription::where('id', $index)->with('capital')->first();
                 if(in_array($current, $active_subscription) && empty($flag)){
-                    $earning    = $capital_details->capital->first()->amount * 0.08;
+                    $earning    = $capital_details->capital->first()->amount * 0.12;
                     $earningKey = array_search($current, $active_subscription);
                     $survey     = SurveyEntries::where('user_id', $user->id)->where('key', $earningKey)->where('subs_id', $index)->first();
 
