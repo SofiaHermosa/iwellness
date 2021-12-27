@@ -24,7 +24,7 @@ class NetworkClass
             $earnings = $earnings->where('downline_id', $downline);
         }
 
-        $this->earnings = $earnings->sum('amount');
+        $this->earnings = $earnings->withTrashed()->sum('amount');
 
         return $this;
     }

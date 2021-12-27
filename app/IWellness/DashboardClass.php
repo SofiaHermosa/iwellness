@@ -52,7 +52,7 @@ class DashboardClass
             $this->commissions = $this->commissions->where('user_id', $this->id);
         }  
 
-        $this->commissions->get();
+        $this->commissions->withTrashed()->get();
         
         return $this;                     
     }
@@ -182,7 +182,7 @@ class DashboardClass
         }
 
         if($record == 'commissions' && !empty($this->$record)){
-            $records = $records->whereIn('from', [1,2]);
+            $records = $records->whereIn('from', [1,2])->withTrashed();
         }
 
         if(!empty($this->$record)){

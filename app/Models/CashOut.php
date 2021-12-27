@@ -36,9 +36,15 @@ class CashOut extends Model
     public function tapActivity(Activity $activity, string $eventName)
     {
         $data = json_decode($activity->properties)->attributes;
-
+        $old  = json_decode($activity->properties)->old ?? [];
         $description = ucfirst($eventName)." cash-out request amounting ₱ ".number_format($data->amount, 2, '.', ',').' with transaction # '.$activity->subject->transac_id;
+        
+        if($eventName == 'updated' && $data->status == 1 && $old->status == 0){
+            $description = "Cash-out request amounting ₱ ".number_format($data->amount, 2, '.', ',').' with transaction # '.$activity->subject->transac_id . ' has been approved.';
+        }
+
         $activity->description = $description;
+        $activity->causer_id   = $data->user_id ?? auth()->user()->id;
     }
 
     public function getTransacIdAttribute(){

@@ -21,7 +21,7 @@ class ActivityClass
             'profit'   => 'Earned cutoff profit',
             'login'    => 'Login',
             'survey'   => 'Answered scheduled survey',
-            'ads'     => 'Watched Ads'
+            'ads'      => 'Watched Ads'
         ];
     }
 
