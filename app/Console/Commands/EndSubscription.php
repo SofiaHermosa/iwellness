@@ -45,23 +45,25 @@ class EndSubscription extends Command
 
         foreach($subscriptions as $subscription){
             //Deactivate user accunt
-            $user = $subscription->user;
-            if(!empty($user)){
-                $user->update(['activated' => 0]);
+            if(Carbon::now()->format('Y-m-d') == Carbon::parse($subscription->end)->format('Y-m-d')){
+                $user = $subscription->user;
+                if(!empty($user)){
+                    $user->update(['activated' => 0]);
+                }
+    
+                //Delete Capital
+                $capitals = $subscription->capital;
+                foreach($capitals as $capital){
+                    $capital->update(['status' => 0]);
+                    $capital->delete();
+                }
+    
+                //Delete Subscription
+                $subscription->update(['status' => 0, 'valid' => 0]);
+                $subscription->delete();
+    
+                $this->info('- ' . $subscription->user->name.' subscription has been deactivated.');
             }
-
-            //Delete Capital
-            $capitals = $subscription->capital;
-            foreach($capitals as $capital){
-                $capital->update(['status' => 0]);
-                $capital->delete();
-            }
-
-            //Delete Subscription
-            $subscription->update(['status' => 0, 'valid' => 0]);
-            $subscription->delete();
-
-            $this->info('- ' . $subscription->user->name.' subscription has been deactivated.');
         }
 
         $this->info('Listed subscriptions has been successfully deactivated.');

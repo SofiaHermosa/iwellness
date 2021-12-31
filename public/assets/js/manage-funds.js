@@ -110,7 +110,7 @@ let ManageFunds = (function () {
             rules: {
                 'amount' : {
                     required : true,
-                    min: 700,
+                    min: 500,
                     number: true
                 },
                 'details[sender_name]' : {
@@ -128,7 +128,7 @@ let ManageFunds = (function () {
             messages: {
                 'amount' : {
                     required : "Please enter your cash-in amount",
-                    min: "Amount can't be less than 700 digits",
+                    min: "Amount can't be less than 500",
                     number: "Please enter a valid amount"
                 },
                 'details[sender_name]' : {
@@ -149,7 +149,7 @@ let ManageFunds = (function () {
             rules: {
                 'amount' : {
                     required : true,
-                    min: 700,
+                    min: 500,
                     max: 500000,
                     number: true
                 },
@@ -167,8 +167,8 @@ let ManageFunds = (function () {
             messages: {
                 'amount' : {
                     required : "Please enter your cash-in amount",
-                    min: "Amount can't be less than 700 digits",
-                    max: "Amount can't be greater than 500,000 digits",
+                    min: "Amount can't be less than 500",
+                    max: "Amount can't be greater than 500,000",
                     number: "Please enter a valid amount"
                 },
                 'details[receivers_name]' : {
