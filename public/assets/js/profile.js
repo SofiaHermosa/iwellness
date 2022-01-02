@@ -23,14 +23,14 @@ let Profile = (function () {
             rules: {
                 'amount' : {
                     required : true,
-                    min: 700,
+                    min: 500,
                     number: true
                 }
             },
             messages: {
                 'amount' : {
                     required : "Please enter your activation capital",
-                    min: "Amount can't be less than 700",
+                    min: "Amount can't be less than 500",
                     number: "Please enter a valid amount"
                 }
             }    

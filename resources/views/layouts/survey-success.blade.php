@@ -18,8 +18,10 @@
     <title>Survey</title>
 </head>
 <body>
+    @include('member.account-activation.modal.activate')
     <div class="container">
-        <div class="row">
+        @if(auth()->user()->is_active)
+            <div class="row">
             <div class="col-lg-12 px-10 mt-40 d-flex justify-content-center">
                 <img src="{{asset('assets/images/iwellness_logo_text.png')}}" width="15%" class="m-auto" alt="">
             </div>
@@ -39,7 +41,27 @@
                 </div>
             </div>
         </div>
+        @else
+        <div class="row">
+            <div class="col-lg-12 px-10 mt-40 d-flex justify-content-center">
+                <img src="{{asset('assets/images/iwellness_logo_text.png')}}" width="15%" class="m-auto" alt="">
+            </div>
+            <div class="col-lg-12 px-60 mt-60">
+                <div class="w-full text-center">
+                    <i class="icon md-alert-circle text-success animation-slide-top" style="font-size: 5rem !important;"></i><br/>
+                    <h1 class="font-size-30 animation-slide-bottom text-white">Can't proceed with the survey you need activate/re-activate your account.</h1>
+                        <button data-toggle="modal" data-target="#activateAccountModal" class="btn btn-dark btn-lg mt-40 animation-fade">
+                            Activate Account
+                        </button> 
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
 </body>
+<script src="{{asset('app/classic/global/vendor/jquery/jquery.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="{{asset('app/classic/global/vendor/bootstrap/bootstrap.js')}}"></script>
 <script src="{{asset('app/classic/global/vendor/animsition/animsition.js')}}"></script>
+<script src="{{asset('assets/js/profile.js')}}"></script>
 </html>

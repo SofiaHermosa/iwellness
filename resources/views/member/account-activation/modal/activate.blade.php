@@ -16,7 +16,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Amount</label>
-                        <small>(Minimum of 700 pesos)</small>
+                        <small>(Minimum of 500 pesos)</small>
                         <input type="number" class="form-control" name="amount">
                     </div>
                 </div>

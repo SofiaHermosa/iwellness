@@ -123,7 +123,7 @@
                 </ul>
               </li>
               @endcan
-              @if(!auth()->user()->hasanyrole('system administrator') && auth()->user()->is_active)
+              @if(!auth()->user()->hasanyrole('system administrator'))
               <li class="site-menu-item">
                 <a class="animsition-link waves-effect waves-classic" href="{{url('res/survey/'.base64_encode(auth()->user()->id))}}">
                       <i class="site-menu-icon fa-tasks" aria-hidden="true"></i>

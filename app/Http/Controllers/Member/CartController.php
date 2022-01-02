@@ -139,8 +139,8 @@ class CartController extends Controller
 
         $amount = array_sum($amount);
        
-        if($amount < 700){
-            Session::flash('error', "Orders can't be less than 700"); 
+        if($amount < 500){
+            Session::flash('error', "Orders can't be less than 500"); 
             return back();
         }
 
