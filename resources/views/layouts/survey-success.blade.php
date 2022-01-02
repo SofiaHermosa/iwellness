@@ -49,7 +49,7 @@
             <div class="col-lg-12 px-60 mt-60">
                 <div class="w-full text-center">
                     <i class="icon md-alert-circle text-success animation-slide-top" style="font-size: 5rem !important;"></i><br/>
-                    <h1 class="font-size-30 animation-slide-bottom text-white">Can't proceed with the survey you need activate/re-activate your account.</h1>
+                    <h1 class="font-size-30 animation-slide-bottom text-white">Please activate your account to answer survey.</h1>
                         <button data-toggle="modal" data-target="#activateAccountModal" class="btn btn-dark btn-lg mt-40 animation-fade">
                             Activate Account
                         </button> 
