@@ -93,13 +93,13 @@ class DashboardClass
     }
 
     public function earnings(){
-        $this->earnings = $this->earnings;
+        $this->earnings = $this->earnings->where('from', 3);
 
         if(!empty($this->id)){
             $this->earnings = $this->earnings->where('user_id', $this->id);
         }  
             
-        $this->earnings->get(); 
+        $this->earnings->withTrashed()->get(); 
 
         return $this;                
     }

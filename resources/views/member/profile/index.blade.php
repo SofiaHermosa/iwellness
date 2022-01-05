@@ -40,6 +40,7 @@ page-profile
             </a>
           
             <h4 class="profile-user">{{auth()->user()->name}}</h4>
+            <h6 class="profile-user_type">{{strtoupper(auth()->user()->position)}}</h6>
             @if(!empty(auth()->user()->subscription()->first()) && !empty(auth()->user()->subscription()->where('valid', 1)->where('status', 1)->first()))
               <span class="badge badge-lg badge-success">Active</span>
 
@@ -93,6 +94,23 @@ page-profile
                 </i>
                 <span class="font-size-40 font-weight-100">{{!empty($dashboard->commissions) ? number_format($dashboard->commissions->sum('amount'), 2, '.', ',') : 0}}</span>
                 <p class="blue-grey-400 font-weight-100 m-0">Last month commissions {{!empty(monthlyRecords('commissions', auth()->user()->id)->last->first()) ? number_format(monthlyRecords('commissions', auth()->user()->id)->last->sum('amount'), 2, '.', ',') : 0}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card card-shadow">
+            <div class="card-block bg-white p-20">
+              <button type="button" class="btn btn-floating btn-sm btn-primary">
+                <i class="icon fa-dollar"></i>
+                  </button>
+                  <span class="ml-15 font-weight-400">EARNINGS</span>
+                  <div class="content-text text-center mb-0">
+                    <i class="text-danger icon ti-triangle-up font-size-20">
+                </i>
+                <span class="font-size-40 font-weight-100">{{!empty($dashboard->earnings) ? number_format($dashboard->earnings->sum('amount'), 2, '.', ',') : 0}}</span>
+                <p class="blue-grey-400 font-weight-100 m-0">Last month earnings {{!empty(monthlyRecords('earnings', auth()->user()->id)->last->first()) ? number_format(monthlyRecords('earnings', auth()->user()->id)->last->sum('amount'), 2, '.', ',') : 0}}</p>
               </div>
             </div>
           </div>

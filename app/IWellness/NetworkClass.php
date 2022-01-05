@@ -33,11 +33,16 @@ class NetworkClass
         return User::select('id', 'name', 'username', 'referer')->where('referer', $id)->get();
     }
 
-    public function getNetwork()
+    public function getUplines($id=null){
+        return User::select('id', 'name', 'username', 'referer')->where('id', $id)->get();
+    }
+
+    public function getNetwork($user_id=null)
     {
+        $user_id = !empty($user_id) ? $user_id : auth()->user()->id;
         $network = [];
         $childs = [];
-        $downline = $this->getDownlines(auth()->user()->id);
+        $downline = $this->getDownlines($user_id);
         $level = 2;
        
         while(!empty($downline)){

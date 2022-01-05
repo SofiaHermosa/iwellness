@@ -255,3 +255,29 @@ img.sales--avatar {
 .modal-fullscreen.modal-body{
     overflow: hidden !important;
 }
+
+h6.profile-user_type {
+    transform: translateY(-10px) !important;
+    color: #000000a8 !important;
+    font-weight: bold !important;
+}
+
+.avatar-team img{
+    width: 5rem !important;
+    height: 5rem !important;
+    object-fit: cover !important;
+    border-radius: 100% !important;
+}
+
+.avatar-team{
+    display: inline-block !important;
+}
+
+.team-avatars{
+    width: 3rem !important;
+    height: 3rem !important;
+    object-fit: cover !important;
+    border-radius: 100%;
+    display: inline-block;
+    padding: 0 2px;
+}

@@ -74,6 +74,13 @@
                 </a>
               </li>
 
+              <li class="site-menu-item">
+                <a class="animsition-link waves-effect waves-classic" href="{{url('res/sales')}}">
+                  <i class="site-menu-icon fa-bar-chart-o" aria-hidden="true"></i>
+                  <span class="site-menu-title">Sales Analytics</span>
+                </a>
+              </li>
+
               <li class="site-menu-item has-sub">
                 <a href="javascript:void(0)">
                         <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>

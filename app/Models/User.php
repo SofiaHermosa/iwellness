@@ -114,6 +114,10 @@ class User extends Authenticatable
         ->sum('amount');
     }
 
+    public function getNameAttribute($value){
+        return ucwords(strtolower($value));
+    }
+
     public function setSecretQuestionAttribute($value)
     {
         $this->attributes['secret_question'] = json_encode($value);

@@ -42,6 +42,7 @@ Route::middleware(['auth', 'watched_ads'])
         Route::resource('dashboard', 'DashboardController')->middleware('can:access reports');
         Route::resource('users', 'UsersController')->middleware('can:access users');
         Route::resource('orders', 'OrdersController')->middleware('can:access products');
+        Route::resource('sales', 'SalesController');
         Route::resource('fund-request', 'ManageFundsController');
     });
 
