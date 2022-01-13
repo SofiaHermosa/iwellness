@@ -28,7 +28,7 @@ class AdsClass
     
         foreach($this->cutoffs as $key => $subscription){
             foreach($subscription as $index => $release_date){
-                $start = Carbon::parse($release_date)->subDays(7);
+                $start = Carbon::parse($release_date)->subDays(8);
                 $end   = Carbon::parse($release_date);
                 $weeksAgo = Carbon::now()->subWeeks(2);
                 $now = Carbon::now()->format('Y-m-d');

@@ -52,10 +52,10 @@ class Subscription extends Model
 
     public function getReleaseDatesAttribute(){        
         $releaseSched = array(
-            $this->created_at->addDays(7)->format('M d'),
-            $this->created_at->addDays(15)->format('M d'),
-            $this->created_at->addDays(22)->format('M d'),
-            $this->created_at->addDays(29)->format('M d')
+            $this->created_at->addDays(8)->format('M d'),
+            $this->created_at->addDays(16)->format('M d'),
+            $this->created_at->addDays(24)->format('M d'),
+            $this->created_at->addDays(32)->format('M d')
         );
 
         return $releaseSched ?? [];
@@ -66,6 +66,6 @@ class Subscription extends Model
     }
 
     public function getValidUntilAttribute(){
-        return Carbon::parse($this->created_at)->addMonth()->format('M d, Y g:ia');
+        return Carbon::parse($this->created_at)->addDays(32)->format('M d, Y g:ia');
     }
 }

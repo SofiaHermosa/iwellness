@@ -44,14 +44,14 @@ class ActivityClass
         foreach($subscriptions as $key => $subscription){
             foreach($subscription as $index => $release_date){
                 $data = [
-                    'activation_date'   =>  Carbon::parse($subscription[0])->subDays(7)->format('M d, Y'),
-                    'sched'             =>  Carbon::parse($release_date)->subDays(7)->format('m/d') . ' - ' . Carbon::parse($release_date)->format('m/d'), 
+                    'activation_date'   =>  Carbon::parse($subscription[0])->subDays(8)->format('M d, Y'),
+                    'sched'             =>  Carbon::parse($release_date)->subDays(8)->format('m/d') . ' - ' . Carbon::parse($release_date)->format('m/d'), 
                     'survey'            =>  $this->hasSurvey($release_date, $key, $index),
                     'logged_in'         =>  $this->retriveActivity($release_date, 'login'),
                     'ads'               =>  $this->retriveActivity($release_date, 'ads', $key, $index),
                     'profit'            =>  $this->retriveActivity($release_date, 'profit', $key, $index),
                     'release'           =>  Carbon::parse($release_date)->format('m-d-Y'),
-                    'start'             =>  Carbon::parse($release_date)->subDays(7)->format('Y-m-d'),
+                    'start'             =>  Carbon::parse($release_date)->subDays(8)->format('Y-m-d'),
                     'end'               =>  Carbon::parse($release_date)->format('Y-m-d'),  
                 ];  
     
@@ -62,7 +62,7 @@ class ActivityClass
     }
 
     public function hasSurvey($date, $subs_id=null, $key=null){
-        $start = Carbon::parse($date)->subDays(7);
+        $start = Carbon::parse($date)->subDays(8);
         $end   = Carbon::parse($date);
 
         $entry = SurveyEntries::where('user_id', auth()->user()->id)
@@ -74,7 +74,7 @@ class ActivityClass
     }
 
     public function retriveActivity($date, $type, $sub=null, $key=null){
-        $start = Carbon::parse($date)->subDays(7);
+        $start = Carbon::parse($date)->subDays(8);
         $end   = Carbon::parse($date);
 
         $activity = new ActivityLogs;
