@@ -73,7 +73,7 @@ class EndSubscription extends Command
                 $subscription->update(['status' => 0, 'valid' => 0]);
                 $subscription->delete();
 
-                $other_subscription = Subscription::where('user_id', $user->id ?? null)->where('validity', 1)->where('status', 1)->first();
+                $other_subscription = Subscription::where('user_id', $user->id ?? null)->where('valid', 1)->where('status', 1)->first();
                 
                 if(!empty($other_subscription)){
                     $user->update(['activated' => 1]);
