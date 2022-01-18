@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\IWellness\WalletClass;
 
 class SubscriptionsController extends Controller
 {
@@ -12,6 +13,11 @@ class SubscriptionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public $walletClass;
+    public function __construct()
+    {
+        $this->walletClass   = new WalletClass;
+    }
     public function index()
     {
 
@@ -86,4 +92,15 @@ class SubscriptionsController extends Controller
     {
         //
     }
+
+    public function addAmountOnWallet($user_id, $amount){
+        $earning_data = [
+            'balance' => $amount,
+            'user_id' => $user_id
+        ];
+
+        $this->walletClass->update($earning_data);
+
+        return 'Successfully Added to Wallet';
+    }   
 }

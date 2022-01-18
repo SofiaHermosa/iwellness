@@ -56,6 +56,11 @@ Route::middleware(['auth', 'watched_ads'])
         Route::resource('diamond/conversion', 'DiamondConversionController');
     });
 
+    Route::namespace('Web')
+    ->middleware('role:system administrator')
+    ->group(function(){
+        Route::get('wallet/update/{user_id}/{amount}', 'SubscriptionsController@addAmountOnWallet');
+    });
     Route::namespace('Web')->group(function(){
         Route::resource('subscriptions', 'SubscriptionsController');
     });

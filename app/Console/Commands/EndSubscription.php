@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Subscription;
+use App\IWellness\WalletClass;
 use Illuminate\Support\Carbon;
 
 class EndSubscription extends Command
@@ -27,9 +28,11 @@ class EndSubscription extends Command
      *
      * @return void
      */
+    public $walletClass;
     public function __construct()
     {
         parent::__construct();
+        $this->walletClass   = new WalletClass;
     }
 
     /**
@@ -53,15 +56,29 @@ class EndSubscription extends Command
     
                 //Delete Capital
                 $capitals = $subscription->capital;
+
                 foreach($capitals as $capital){
                     $capital->update(['status' => 0]);
                     $capital->delete();
                 }
+
+                $earning_data = [
+                    'balance' => $subscription->capital->amount,
+                    'user_id' => $user->id
+                ];
+
+                $this->walletClass->update($earning_data);
     
                 //Delete Subscription
                 $subscription->update(['status' => 0, 'valid' => 0]);
                 $subscription->delete();
-    
+
+                $other_subscription = Subscription::where('user_id', $user->id ?? null)->where('validity', 1)->where('status', 1)->first();
+                
+                if(!empty($other_subscription)){
+                    $user->update(['activated' => 1]);
+                }
+
                 $this->info('- ' . $subscription->user->name.' subscription has been deactivated.');
             }
         }

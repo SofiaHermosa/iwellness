@@ -1,6 +1,8 @@
 /node_modules
 /public/hot
 /public/storage
+/public/assets/js/config.js
+/app/Http/Controllers/API/PayMongoController.php
 /storage/*.key
 /vendor
 .env
