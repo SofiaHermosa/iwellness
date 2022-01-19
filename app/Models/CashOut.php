@@ -70,7 +70,9 @@ class CashOut extends Model
     }
 
     public function getAmountNumberFormatAttribute(){
-        return preg_replace('/(\.0+|0+)$/', '',number_format(round($this->amount, 2), 2, '.', ','));
+        $percent  = $this->amount * 0.02;
+        $amount   = $this->amount - $percent; 
+        return preg_replace('/(\.0+|0+)$/', '',number_format(round($amount, 2), 2, '.', ','));
     }
 
     public function getStatusBadgeAttribute(){
