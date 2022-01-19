@@ -48,11 +48,14 @@ class EndSubscription extends Command
 
         foreach($subscriptions as $subscription){
             //Deactivate user accunt
+            $subscription->capital;
             if(Carbon::now()->format('Y-m-d') == Carbon::parse($subscription->created_at)->addDays(33)->format('Y-m-d')){
                 $user = $subscription->user;
                 if(!empty($user)){
                     $user->update(['activated' => 0]);
                 }
+
+                $capital_amount = $subscription->capital->amount;
     
                 //Delete Capital
                 $capitals = $subscription->capital;
@@ -63,7 +66,7 @@ class EndSubscription extends Command
                 }
 
                 $earning_data = [
-                    'balance' => $subscription->capital->amount,
+                    'balance' => $capital_amount,
                     'user_id' => $user->id
                 ];
 
