@@ -59,8 +59,8 @@ class ManageFundsClass
             Session::flash('invalid_ref_no', 'Insufficient balance');
             return back();
         }
-
-        if($this->request->type != 1 && $this->request->id == null && !in_array(date('w'), [6,7,1,2])){
+        
+        if($this->request->type != 1 && $this->request->id == null && !in_array(date('w'), [6,7,1,2,0])){
             Session::flash('invalid_ref_no', 'Request failed, Cash-out request can only be made every Saturday to Tuesday.');
             return back();
         }

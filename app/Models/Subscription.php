@@ -55,7 +55,7 @@ class Subscription extends Model
             $this->created_at->addDays(8)->format('M d'),
             $this->created_at->addDays(16)->format('M d'),
             $this->created_at->addDays(24)->format('M d'),
-            $this->created_at->addDays(32)->format('M d')
+            $this->created_at->addDays(31)->format('M d')
         );
 
         return $releaseSched ?? [];
