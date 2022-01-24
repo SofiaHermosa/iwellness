@@ -42,6 +42,9 @@ class ActivityClass
         $activity      = [];
 
         foreach($subscriptions as $key => $subscription){
+            $complan = Subscription::where('id', $key)->first();
+            $plan = strtoupper(config('constants.complans.'.$complan->complan.'.name'));
+            $plan_class = config('constants.complans.'.$complan->complan.'.class');
             foreach($subscription as $index => $release_date){
                 $data = [
                     'activation_date'   =>  Carbon::parse($subscription[0])->subDays(8)->format('M d, Y'),
@@ -53,6 +56,8 @@ class ActivityClass
                     'release'           =>  Carbon::parse($release_date)->format('m-d-Y'),
                     'start'             =>  Carbon::parse($release_date)->subDays(8)->format('Y-m-d'),
                     'end'               =>  Carbon::parse($release_date)->format('Y-m-d'),  
+                    'plan'              =>  $plan,
+                    'plan_class'        =>  $plan_class
                 ];  
     
                 $activity[] = $data;            

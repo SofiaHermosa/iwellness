@@ -7,7 +7,8 @@ use App\IWellness\ActivityClass;
 use App\IWellness\WalletClass;
 use App\Models\Earnings;
 use App\Models\Subscription;
-use App\Models\SurveyEntries;    
+use App\Models\SurveyEntries; 
+use App\Models\ActivityLogs;    
 use App\Models\User;
 
 class RecurringEarnings extends Command
@@ -51,20 +52,28 @@ class RecurringEarnings extends Command
         $users   = User::where('user_type', 2)->where('activated', 1)->get();
 
         foreach($users as $key => $user){
-            $flag = Earnings::select('id')
-            ->where('user_id', $user->id)
-            ->where('from', 3)
-            ->whereDate('created_at', $current)
-            ->first();
+            // $flag = Earnings::select('id')
+            // ->where('user_id', $user->id)
+            // ->where('from', 3)
+            // ->whereDate('created_at', $current)
+            // ->first();
             
             foreach($user->earning_dates as $index => $active_subscription){
                 $capital_details = Subscription::where('id', $index)->with('capital')->first();
-                if(in_array($current, $active_subscription) && empty($flag)){
-                    $earning    = $capital_details->capital->first()->amount * 0.12;
-                    $earningKey = array_search($current, $active_subscription);
+                $plan_earnings   = $capital_details->complan == 1 ? 0.12 : 0.2;
+                
+                if(in_array($current, $active_subscription)){
+                    $earningKey = array_search($current, $active_subscription) ?? null;
+                    $earning    = $capital_details->capital->first()->amount * $plan_earnings;
                     $survey     = SurveyEntries::where('user_id', $user->id)->where('key', $earningKey)->where('subs_id', $index)->first();
+                    $checker    = ActivityLogs::select('id')
+                                  ->where('log_name', 'profit')
+                                  ->where('causer_id', $user->id)
+                                  ->where('subject_type', $earningKey)
+                                  ->where('subject_id', $index)
+                                  ->first();
 
-                    if(!empty($survey)){
+                    if(!empty($survey) && empty($checker)){
                         $data = [
                             'user_id'           => $user->id,
                             'downline_id'       => $user->id,

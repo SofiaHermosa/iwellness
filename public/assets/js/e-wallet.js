@@ -45,7 +45,8 @@ let EWallet = (function () {
                         password : result.value,
                         amount   : price,
                         type     : type,
-                        _token  :  $('meta[name="csrf-token"]').attr('content'),
+                        _token   :  $('meta[name="csrf-token"]').attr('content'),
+                        complan  : window.complan ?? 1
                     };
 
                     $.ajaxSetup({

@@ -24,8 +24,7 @@ class WalletController extends Controller
 
     public function payWithWallet(Request $request){
         try {
-            if(Hash::check($request->password, auth()->user()->password)){
-                
+            if(Hash::check($request->password, auth()->user()->password)){   
                 $amountToPay    = $request->type == 2 ? $this->getTotalOrderAmount() : $request->amount;
                 $shipping_fee   = $amountToPay <= 5000 ? 120 : 200;
                 $amountToPay    = $request->type == 2 ? $amountToPay + $shipping_fee : $amountToPay;

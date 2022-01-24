@@ -107,6 +107,7 @@
     window.balance = '{!! base64_encode(str_replace('0','$',auth()->user()->wallet_balance)) !!}';
     window.amount  = '{!! base64_encode(str_replace('0','$',request()->amount)) !!}';
     window.type    = 1;
+    window.complan = {!! request()->complan ?? 1 !!};
 </script>
 <script src="{{asset('assets/js/jquery.mask.min.js')}}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

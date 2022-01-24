@@ -11,7 +11,7 @@ let Profile = (function () {
     }
 
     function bindEvents() {
-
+        $(document).on('change', 'select[name="complan"]', updateComplan);
     } 
 
     function onLoad() {
@@ -35,6 +35,28 @@ let Profile = (function () {
                 }
             }    
         });
+    }
+
+    function updateComplan(){
+        let desc = $(this).find(':selected').attr('data-desc');
+        let sub  = $(this).find(':selected').attr('data-sub');
+        let min  = $(this).find(':selected').attr('data-min');
+
+        $('input[name="amount"]').rules('remove');
+        $('input[name="amount"]').rules('add', {
+            required : true,
+            min: parseInt(min),
+            number: true,
+            messages: {
+                required : "Please enter your activation capital",
+                min: "Amount can't be less than "+min,
+                number: "Please enter a valid amount"
+            }
+        });
+
+        $('.complan-desc_cont').find('span.complan__desc').html(desc);
+        $('small.complan__sub').text(sub);
+        $('.complan-desc_cont').fadeIn();
     }
 
     function init() {

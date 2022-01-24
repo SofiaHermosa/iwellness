@@ -3,6 +3,7 @@
         <thead>
             <tr>
                 <th>Date Account Activated</th>
+                <th>Plan</th>
                 <th>Cut-off Date</th>
                 <th>Survey</th>
                 <th>Watched Ads/Logged In</th>

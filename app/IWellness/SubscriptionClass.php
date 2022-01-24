@@ -30,7 +30,8 @@ class SubscriptionClass
             'end'       => Carbon::now()->addMonth(),
             'validity'  => 1, 
             'valid'     => 1,
-            'status'    => 1
+            'status'    => 1,
+            'complan'   => $this->request['complan']
         ];
 
         $subscription = Subscription::create($sub_data);

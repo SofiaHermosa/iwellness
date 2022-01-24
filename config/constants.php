@@ -13,12 +13,18 @@ return [
     ],
     'complans' => [
         1 => [
-            'name' => 'basic',
-            'desc' => 'minimum capital of 500 and 12% interest every 8 days with lock in period of 32 days'
+            'name'  => 'basic',
+            'desc'  => '- Earn 48% total profit <br> - 32 days lock-in period',
+            'sub'   => '(Minimum of 500 pesos)',
+            'class' => 'badge-info',
+            'min'   => 500
         ],
         2 => [
-            'name' => 'luxury',
-            'desc' => 'minimum capital of 2000 and 20% interest every 8 days with lock in period of 40 days'
+            'name'  => 'luxury',
+            'desc'  => '- Earn 100% total profit <br> - 40 days lock-in period',
+            'sub'   => '(Minimum of 2000 pesos)',
+            'class' => 'badge-warning',
+            'min'   => 2000
         ]
     ],
     'payment_transaction_type' => [
