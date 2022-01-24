@@ -42,8 +42,10 @@ let Profile = (function () {
         let sub  = $(this).find(':selected').attr('data-sub');
         let min  = $(this).find(':selected').attr('data-min');
 
-        $('input[name="amount"]').rules('remove');
-        $('input[name="amount"]').rules('add', {
+        console.log(min);
+
+        $('#activateAccount').find('input[name="amount"]').rules('remove');
+        $('#activateAccount').find('input[name="amount"]').rules('add', {
             required : true,
             min: parseInt(min),
             number: true,
