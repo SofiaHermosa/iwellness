@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{{asset('app/material/base/assets/examples/css/dashboard/v1.css')}}">
 <link rel="stylesheet" href="{{asset('app/material/base/assets/examples/css/dashboard/ecommerce.css')}}">
 <link rel="stylesheet" href="{{asset('app/classic/global/vendor/chartist/chartist.css')}}">
-<link rel="stylesheet" href="{{asset('app/classic/global/vendor/bootstrap-datepicker/bootstrap-datepicker.css')}}">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 @endsection
 
 @section('page_title')
@@ -21,7 +21,7 @@
                         <i class="icon wb-calendar" aria-hidden="true"></i>
                     </span>
                 </div>
-                <input type="text" class="form-control date-filter" data-plugin="datepicker">
+                <input type="text" class="form-control date-filter" value="">
             </div>
         </div>
     </div>
@@ -46,7 +46,9 @@ page-profile
 <script>
     window.sales_url = '{!! url("res/sales") !!}';
 </script>
-<script src="{{asset('app/classic/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js')}}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="{{asset('assets/js/jquery.mask.min.js')}}"></script>
 <script src="{{asset('assets/js/sales.js')}}"></script>
 @endpush        

@@ -103,6 +103,25 @@ class User extends Authenticatable
 
         if(!empty($subscription) && auth()->user()->activated == 1){
             return true;
+        }else{
+            $subEnded = Subscription::where('user_id', auth()->user()->id)
+            ->where('status', 0)
+            ->where('valid', 0)
+            ->whereNotNull('deleted_at')
+            ->orderBy('deleted_at', 'DESC')
+            ->withTrashed()
+            ->first();
+
+            $now = date('Y-m-d');
+            $dateEnded = !empty($subEnded) ? $subEnded->deleted_at->format('Y-m-d') : $now;
+            $gracePeriod = !empty($subEnded) ? $subEnded->deleted_at->addDays(20)->format('Y-m-d') : $now;
+           
+            if ((!empty($subEnded)) && ($now >= $dateEnded) && ($now <= $gracePeriod)){
+                return true;
+            }
+
+            return false;
+
         }
 
         return false;

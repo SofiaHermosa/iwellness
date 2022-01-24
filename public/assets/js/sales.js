@@ -16,6 +16,11 @@ let Sales = (function () {
 
     function onLoad() {
         getSales();
+        initializeDatepicker();
+    }
+
+    function initializeDatepicker(){
+        $('.date-filter').daterangepicker();
     }
 
     function filterSales(){

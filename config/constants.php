@@ -11,6 +11,16 @@ return [
         'manager',
         'observer'
     ],
+    'complans' => [
+        1 => [
+            'name' => 'basic',
+            'desc' => 'minimum capital of 500 and 12% interest every 8 days with lock in period of 32 days'
+        ],
+        2 => [
+            'name' => 'luxury',
+            'desc' => 'minimum capital of 2000 and 20% interest every 8 days with lock in period of 40 days'
+        ]
+    ],
     'payment_transaction_type' => [
         1 => 'account activation',
         2 => 'ordered product',

@@ -58,8 +58,8 @@ class SalesClass
 
         foreach ($supervisiors as $key => $supervisior) {
             $networks  = $this->networkClass->getNetwork($supervisior->id);
-            $upline    = $this->getUpline($supervisior->referer);
-            $networks  = array_merge($networks, $upline);
+            // $upline    = $this->getUpline($supervisior->referer);
+            // $networks  = array_merge($networks, $upline);
 
             $capital  = [];
             $orders   = [];
@@ -100,11 +100,12 @@ class SalesClass
         $earnings   = Earnings::where('user_id', $user['id'])->whereIn('from', [1,2]);
 
         if (!empty($date) && $date != '') {
-            $date       = date("Y-m-d", strtotime($date));
-            $orders     = $orders->whereDate('created_at', $date);
-            $capital    = $capital->whereDate('created_at', $date);
-            $cashin     = $cashin->whereDate('created_at', $date);
-            $earnings   = $earnings->whereDate('created_at', $date);
+            // $date       = date("Y-m-d", strtotime($date));
+            $date       = explode(' - ', $date);
+            $orders     = $orders->whereBetween('created_at', [date("Y-m-d", strtotime($date[0])), date("Y-m-d", strtotime($date[1]))]);
+            $capital    = $capital->whereBetween('created_at', [date("Y-m-d", strtotime($date[0])), date("Y-m-d", strtotime($date[1]))]);
+            $cashin     = $cashin->whereBetween('created_at', [date("Y-m-d", strtotime($date[0])), date("Y-m-d", strtotime($date[1]))]);
+            $earnings   = $earnings->whereBetween('created_at', [date("Y-m-d", strtotime($date[0])), date("Y-m-d", strtotime($date[1]))]);
         }
 
         $orders     = $orders->withTrashed()->get()->sum('total');
