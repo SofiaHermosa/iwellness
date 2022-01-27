@@ -18,7 +18,7 @@ class NetworkClass
     }
 
     public function getEarnings($downline = null){
-        $earnings = Earnings::select('amount')->where('user_id', auth()->user()->id);
+        $earnings = Earnings::select('amount')->where('user_id', auth()->user()->id)->where('from', '!=', 4);
 
         if(!empty($downline)){
             $earnings = $earnings->where('downline_id', $downline);
