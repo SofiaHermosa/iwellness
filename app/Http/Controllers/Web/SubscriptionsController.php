@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\IWellness\WalletClass;
+use App\Models\Wallets;
+use App\Models\User;
 
 class SubscriptionsController extends Controller
 {
@@ -102,5 +104,28 @@ class SubscriptionsController extends Controller
         $this->walletClass->update($earning_data);
 
         return 'Successfully Added to Wallet';
-    }   
+    }  
+    
+    public function deductAmountOnWallet($user_id, $amount){
+        $user = User::where('id', $user_id)->first();
+
+        if (empty($user)) {
+            $user = User::where('username', $user_id)->first();
+        }
+
+        $balance = $user->wallet_balance ?? 0;
+
+        if($balance == 0 || $balance < $amount){
+            return 'insufficient balance. '.$user->username ?? 'user'.' current balance: '. $balance;
+        }
+
+        $balance = $balance - $amount;
+
+        $wallet = Wallets::where('user_id', $user->id)->first();
+        $wallet->balance = $balance;
+        
+        if($wallet->save()){
+            return $user->username.' new balance '.$balance;
+        }
+    }
 }
