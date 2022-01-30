@@ -59,9 +59,6 @@ class SalesClass
 
         foreach ($supervisiors as $key => $supervisior) {
             $networks  = $this->getNetwork($supervisior->id);
-            // $upline    = $this->getUpline($supervisior->referer);
-            // $networks  = array_merge($networks, $upline);
-
             $capital  = [];
             $orders   = [];
             $earnings = [];
