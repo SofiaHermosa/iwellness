@@ -29,6 +29,7 @@ let ManageFunds = (function () {
         $('.cashout__amount').keyup(updateTotalCashout);
         $('#CashInForm').on('submit', function(){
             let id = $(this).find('input[name="id"]').val();
+            $(this).find('button[type="submit"]').attr('disabled', true);
 
             if(id != ''){
                 $("#CashInForm")[0].submit();

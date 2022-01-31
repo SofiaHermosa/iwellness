@@ -10,6 +10,7 @@ use App\Models\Orders;
 use App\Models\User;
 use Storage;
 use Session;
+use DB;
 
 
 class SalesClass
@@ -57,10 +58,7 @@ class SalesClass
         $checker = [];
 
         foreach ($supervisiors as $key => $supervisior) {
-            $networks  = $this->networkClass->getNetwork($supervisior->id);
-            // $upline    = $this->getUpline($supervisior->referer);
-            // $networks  = array_merge($networks, $upline);
-
+            $networks  = $this->getNetwork($supervisior->id);
             $capital  = [];
             $orders   = [];
             $earnings = [];
@@ -68,11 +66,11 @@ class SalesClass
 
             foreach($networks as $index => $network){
                 $network    = $this->getIndividualSales($network, $date);
-                $capital  []= $network['individual_sales']['capital'];
-                $earnings []= $network['individual_sales']['earnings'];
-                $orders   []= $network['individual_sales']['orders'];
-                $cashin   []= $network['individual_sales']['cashin'];
-                $checker  []= $network['individual_sales'];
+                $capital  []= $network->individual_sales['capital'];
+                $earnings []= $network->individual_sales['earnings'];
+                $orders   []= $network->individual_sales['orders'];
+                $cashin   []= $network->individual_sales['cashin'];
+                $checker  []= $network->individual_sales;
             }
             $capital  = array_sum($capital);
             $earnings = array_sum($earnings);
@@ -93,25 +91,53 @@ class SalesClass
         return $sups_sales;
     }
 
-    public function getIndividualSales($user, $date){
-        $orders     = Orders::where('user_id', $user['id']);
-        $capital    = Capital::where('user_id', $user['id']);
-        $cashin     = Cashin::where('user_id', $user['id']);
-        $earnings   = Earnings::where('user_id', $user['id'])->whereIn('from', [1,2]);
+    public function getDownlines($id=null){
+        return DB::select("SELECT id, name, username, referer FROM users WHERE referer = ".$id);
+    }
 
+    public function getNetwork($user_id=null)
+    {
+        $user_id = !empty($user_id) ? $user_id : auth()->user()->id;
+        $network = [];
+        $childs = [];
+        $downline = $this->getDownlines($user_id);
+        $level = 2;
+       
+        while(!empty($downline)){
+            $nextDownline = [];
+            foreach($downline as $user){
+                $user->level = ordinal($level);
+                $network[] = $user;
+                foreach($this->getDownlines($user->id) as $child){
+                    $nextDownline[] = $child;
+                }
+            }
+
+            $downline = $nextDownline;
+            $level++;
+        }
+        return $network;
+    }
+
+    public function getIndividualSales($user, $date){
+        $capital   = 0;
+        $orders    = 0;
+        $cashin    = 0;
+        $earnings  = 0;
+    
         if (!empty($date) && $date != '') {
-            // $date       = date("Y-m-d", strtotime($date));
             $date       = explode(' - ', $date);
-            $orders     = $orders->whereBetween('created_at', [date("Y-m-d", strtotime($date[0])), date("Y-m-d", strtotime($date[1]))]);
-            $capital    = $capital->whereBetween('created_at', [date("Y-m-d", strtotime($date[0])), date("Y-m-d", strtotime($date[1]))]);
-            $cashin     = $cashin->whereBetween('created_at', [date("Y-m-d", strtotime($date[0])), date("Y-m-d", strtotime($date[1]))]);
-            $earnings   = $earnings->whereBetween('created_at', [date("Y-m-d", strtotime($date[0])), date("Y-m-d", strtotime($date[1]))]);
+            $capital    = DB::table('capital')->where('user_id', $user->id)->whereBetween('created_at', [date("Y-m-d", strtotime($date[0])), date("Y-m-d", strtotime($date[1]))])->sum('amount');
+            $orders     = DB::table('orders')->where('user_id', $user->id)->whereBetween('created_at', [date("Y-m-d", strtotime($date[0])), date("Y-m-d", strtotime($date[1]))])->sum('total');
+        }else{
+            $capital    = DB::table('capital')->where('user_id', $user->id)->sum('amount');
+            $orders     = DB::table('orders')->where('user_id', $user->id)->sum('total');
         }
 
-        $orders     = $orders->withTrashed()->get()->sum('total');
-        $capital    = $capital->withTrashed()->get()->sum('amount');
-        $cashin     = $cashin->withTrashed()->get()->sum('amount');
-        $earnings   = $earnings->withTrashed()->get()->sum('amount');
+        $orders     = $orders ?? 0;
+        $capital    = $capital ?? 0;
+        $cashin     = $cashin ?? 0;
+        $earnings   = $earnings ?? 0;
 
         $individual_sales = array(
             'orders'     => $orders,
@@ -120,7 +146,7 @@ class SalesClass
             'earnings'   => $earnings
         );
 
-        $user['individual_sales'] = $individual_sales;
+        $user->individual_sales = $individual_sales;
 
         return $user;     
     }
