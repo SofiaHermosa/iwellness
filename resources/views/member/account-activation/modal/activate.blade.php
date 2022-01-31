@@ -15,10 +15,31 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
+                        <label>Subscription Type</label>
+                        <select name="complan" class="form-control">
+                            <option value="" selected disabled>Select Subscription</option>
+
+                            @foreach(config('constants.complans') as $key => $complan)
+                                <option value="{{$key}}" data-desc="{{$complan['desc']}}" data-sub="{{$complan['sub']}}" data-min="{{$complan['min']}}">{{ucwords($complan['name'])}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
                         <label>Amount</label>
-                        <small>(Minimum of 500 pesos)</small>
+                        <small class="complan__sub"></small>
                         <input type="number" class="form-control" name="amount">
                     </div>
+                </div>
+
+                <div class="col-md-12 complan-desc_cont hidden">
+                  <div class="alert dark alert-icon alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                        </button>
+                        <span class="complan__desc">Reference numbers should be the same in the receipt.</span>
+                  </div>
                 </div>
             </div>
         </div>

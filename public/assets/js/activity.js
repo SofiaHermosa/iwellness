@@ -23,6 +23,7 @@ let Logs = (function () {
             "ajax": window.url,
             "columns":  [
                 { "data": "activation_date"},
+                { "data": ""},
                 { "data": "sched" },
                 { "data": "" },
                 { "data": "" },
@@ -31,27 +32,33 @@ let Logs = (function () {
             ],
             'columnDefs' : [
                 {
-                    'targets' : 2,
+                    'targets' : 1,
+                    'render' : function ( url, type, full) {
+                        return `<badge class="badge badge-lg ${full['plan_class']}">${full['plan']}</badge>`;
+                    }
+                },
+                {
+                    'targets' : 3,
                     'render' : function ( url, type, full) {
                         return full['survey'].length == 0 ? `` : `<i class="text-success wb-check text-center w--full"></i>`;
                     }
                 },
 
                 {
-                    'targets' : 3,
+                    'targets' : 4,
                     'render' : function ( url, type, full) {
                         return full['logged_in'].length != 0 || full['ads'].length != 0 ? `<i class="text-success wb-check text-center w-full"></i>` : `` ;
                     }
                 },
 
                 {
-                    'targets' : 5,
+                    'targets' : 6,
                     'render' : function ( url, type, full) {
                         return full['profit'].length == 0 ? `<span class='badge badge-lg badge-default'>Pending</span>` : `<span class='badge badge-lg badge-success'>Released</span>`;
                     }
                 }
             ],   
-            'order' : [[0, 'desc'], [4, 'asc']]
+            'order' : [[0, 'desc'], [1, 'desc'], [5, 'asc']]
         } );
     }
 

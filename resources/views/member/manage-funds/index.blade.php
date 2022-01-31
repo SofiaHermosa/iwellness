@@ -118,4 +118,5 @@ page-profile
 <script src="{{asset('assets/js/jquery.mask.min.js')}}"></script>
 <script src="{{asset('app/classic/global/vendor/dropify/dropify.min.js')}}"></script>
 <script src="{{asset('assets/js/manage-funds.js')}}"></script>
+<script src="{{asset('assets/js/profile.js')}}"></script>
 @endpush        

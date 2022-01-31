@@ -48,7 +48,8 @@ class EndSubscription extends Command
 
         foreach($subscriptions as $subscription){
             //Deactivate user accunt
-            if(Carbon::now()->format('Y-m-d') == Carbon::parse($subscription->created_at)->addDays(32)->format('Y-m-d')){
+            $lockInDays = $subscription->complan == 1 ? 32 : 40;
+            if(Carbon::now()->format('Y-m-d') == Carbon::parse($subscription->created_at)->addDays($lockInDays)->format('Y-m-d')){
                 $user = $subscription->user;
                 if(!empty($user)){
                     $user->update(['activated' => 0]);

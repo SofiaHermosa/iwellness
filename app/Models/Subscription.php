@@ -24,6 +24,7 @@ class Subscription extends Model
         'validity',
         'status',
         'valid',
+        'complan'
     ];
 
     protected $appends = [
