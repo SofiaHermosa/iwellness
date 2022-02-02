@@ -34,8 +34,8 @@ class ManageFundsController extends Controller
             return view('admin.manage-funds.index');
 
         } catch (\Throwable $th) {
-            
-        }
+            dd($th);
+        }   
     }
 
     /**

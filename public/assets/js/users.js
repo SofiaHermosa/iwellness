@@ -32,6 +32,13 @@ let Users = (function () {
     function initializeDatatable(){
         table = ui.dataTable.DataTable( {
             "ajax": window.url,
+            "data": function(){
+                var info = $('#propertyTable').DataTable().page.info();
+          
+                $('#propertyTable').DataTable().ajax.url(
+                    window.url+(info.page + 1)+"/"+10
+                );
+             },
             "columns": [
                 { "data": "name" },
                 { "data": "username" },
@@ -40,6 +47,17 @@ let Users = (function () {
                 { "data": "position" },
                 { "data": "referrer_uname" },
             ],
+            'columnDefs' : [
+                {
+                    'targets' : 3,
+                    'render' : function ( url, type, full) {
+                        if(full['activated'] == 1){
+                            return '<center><span class="badge badge-lg badge-success">Active</span><center>';
+                        }
+                        return '<center><span class="badge badge-lg badge-default">Inactive</span></center>';
+                    }
+                }
+            ]    
         } );
     }
 

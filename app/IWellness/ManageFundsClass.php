@@ -40,6 +40,10 @@ class ManageFundsClass
             $this->funds = $this->funds->whereJsonContains('details', ['mop' => request()->mop]);
         }
 
+        if(!request()->has('mop') && !request()->has('status')){
+            $this->funds = $this->funds->where('created_at', '>', now()->subDays(30)->endOfDay());
+        }
+
         $this->funds = $this->funds
         ->with('user')
         ->orderBy('created_at', 'DESC')

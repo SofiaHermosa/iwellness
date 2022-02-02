@@ -1,8 +1,19 @@
 @extends('admin.layout')
 
+@section('body-class')
+page-profile
+@endsection
+
+@section('style')
+<link rel="stylesheet" href="{{asset('app/material/base/assets/examples/css/pages/profile.css')}}">
+<link rel="stylesheet" href="{{asset('app/material/base/assets/examples/css/dashboard/v1.css')}}">
+<link rel="stylesheet" href="{{asset('app/material/base/assets/examples/css/dashboard/ecommerce.css')}}">
+<link rel="stylesheet" href="{{asset('app/classic/global/vendor/chartist/chartist.css')}}">
+@endsection
+
 @section('page_title')
 <div class="page-header">
-    <h1 class="page-title">{{!empty($product) ? 'Edit' : 'New'}} User</h1>
+    <h1 class="page-title">{{!empty($user) ? ucwords($user->username) : 'New User'}}</h1>
 </div>
 @endsection
 
@@ -110,6 +121,9 @@
             </div>
         </div>
     </div>
+    @if(!empty($user))
+        @include('admin.components.user-details')    
+    @endif
 @endsection
 
 @push('scripts')

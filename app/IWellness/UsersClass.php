@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Storage;
 use Session;
+use DB;
 
 
 class UsersClass
@@ -16,14 +17,22 @@ class UsersClass
     }
 
     public function get($id=null){
-        $users = new User;
-
         if(!empty($id)){
-            $users = $users->where('id', $id);
+            $this->users = User::where('id', $id)->get();
+            return $this;
         }
 
-        $users = $users->orderBy('created_at')->where('id', '!=', 1)->get();
-        $this->users = $users;
+        $users = DB::table('users')->orderBy('created_at')->where('id', '!=', 1)->get();
+   
+        foreach($users as $keys => $user){
+            $referer  =  DB::table('users')->where('id', $user->referer)->first();
+            $position =  DB::table('model_has_roles')->where('model_id', $user->id)->leftJoin('roles', function($join) {
+                $join->on('model_has_roles.role_id', '=', 'roles.id');
+            })->first();
+            $user->position        = ucwords($position->name);
+            $user->referrer_uname  = $referer->username ?? null;
+            $this->users[] = $user;
+        }
         
         return $this;
     }

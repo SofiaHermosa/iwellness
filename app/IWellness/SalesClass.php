@@ -29,7 +29,7 @@ class SalesClass
         $childs = [];
         $downline = $this->networkClass->getUplines($user_id);
         $level = 2;
-       
+
         while(!empty($downline)){
             $nextDownline = [];
             foreach($downline as $user){
@@ -92,7 +92,7 @@ class SalesClass
     }
 
     public function getDownlines($id=null){
-        return DB::select("SELECT id, name, username, referer FROM users WHERE referer = ".$id);
+        return DB::select("SELECT id, name, username, referer, prof_img FROM users WHERE referer = ".$id);
     }
 
     public function getNetwork($user_id=null)
@@ -109,7 +109,9 @@ class SalesClass
                 $user->level = ordinal($level);
                 $network[] = $user;
                 foreach($this->getDownlines($user->id) as $child){
-                    $nextDownline[] = $child;
+                    if($level <= 10){
+                        $nextDownline[] = $child;    
+                    }
                 }
             }
 
@@ -127,11 +129,19 @@ class SalesClass
     
         if (!empty($date) && $date != '') {
             $date       = explode(' - ', $date);
-            $capital    = DB::table('capital')->where('user_id', $user->id)->whereBetween('created_at', [date("Y-m-d", strtotime($date[0])), date("Y-m-d", strtotime($date[1]))])->sum('amount');
-            $orders     = DB::table('orders')->where('user_id', $user->id)->whereBetween('created_at', [date("Y-m-d", strtotime($date[0])), date("Y-m-d", strtotime($date[1]))])->sum('total');
+            $capital    = DB::table('capital')->where('user_id', $user->id)->where(function($q){
+                return $q->whereNull('deleted_at')->orWhereNotNull('deleted_at');
+            })->whereBetween('created_at', [date("Y-m-d", strtotime($date[0])), date("Y-m-d", strtotime($date[1]))])->sum('amount');
+            $orders     = DB::table('orders')->where('user_id', $user->id)->where(function($q){
+                return $q->whereNull('deleted_at')->orWhereNotNull('deleted_at');
+            })->whereBetween('created_at', [date("Y-m-d", strtotime($date[0])), date("Y-m-d", strtotime($date[1]))])->sum('total');
         }else{
-            $capital    = DB::table('capital')->where('user_id', $user->id)->sum('amount');
-            $orders     = DB::table('orders')->where('user_id', $user->id)->sum('total');
+            $capital    = DB::table('capital')->where('user_id', $user->id)->where(function($q){
+                return $q->whereNull('deleted_at')->orWhereNotNull('deleted_at');
+            })->sum('amount');
+            $orders     = DB::table('orders')->where('user_id', $user->id)->where(function($q){
+                return $q->whereNull('deleted_at')->orWhereNotNull('deleted_at');
+            })->sum('total');
         }
 
         $orders     = $orders ?? 0;

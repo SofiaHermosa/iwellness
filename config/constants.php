@@ -11,6 +11,13 @@ return [
         'manager',
         'observer'
     ],
+    'positions' => [
+        1 => 'system administrator',
+        2 => 'manager',
+        3 => 'team leader',
+        4 => 'observer',
+        5 => 'member'
+    ],
     'complans' => [
         1 => [
             'name'  => 'basic',
@@ -21,7 +28,7 @@ return [
         ],
         2 => [
             'name'  => 'luxury',
-            'desc'  => '- Earn 100% total profit <br> - 40 days lock-in period',
+            'desc'  => '- Earn 85% total profit <br> - 40 days lock-in period',
             'sub'   => '(Minimum of 2000 pesos)',
             'class' => 'badge-warning',
             'min'   => 2000
