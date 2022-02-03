@@ -15,7 +15,6 @@ let Sales = (function () {
     } 
 
     function onLoad() {
-        getSales();
         initializeDatepicker();
     }
 
@@ -26,7 +25,9 @@ let Sales = (function () {
     function filterSales(){
         var date = $(this).val();
         showLoading();
-        getSales(date);
+        if(date != ''){
+            getSales(date);
+        }
     }
 
     function getSales(date = null){

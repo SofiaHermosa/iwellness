@@ -8,6 +8,7 @@ use App\Models\Capital;
 use App\Models\Cashin;
 use App\Models\Orders;
 use App\Models\User;
+use Carbon\Carbon;
 use Storage;
 use Session;
 use DB;
@@ -126,22 +127,22 @@ class SalesClass
         $orders    = 0;
         $cashin    = 0;
         $earnings  = 0;
-    
+
         if (!empty($date) && $date != '') {
             $date       = explode(' - ', $date);
             $capital    = DB::table('capital')->where('user_id', $user->id)->where(function($q){
                 return $q->whereNull('deleted_at')->orWhereNotNull('deleted_at');
-            })->whereBetween('created_at', [date("Y-m-d", strtotime($date[0])), date("Y-m-d", strtotime($date[1]))])->sum('amount');
+            })->whereBetween('created_at', [Carbon::parse($date[0])->startOfDay()->format('Y-m-d H:s:i'), Carbon::parse($date[1])->endOfDay()->format('Y-m-d H:s:i')])->get()->sum('amount');
             $orders     = DB::table('orders')->where('user_id', $user->id)->where(function($q){
                 return $q->whereNull('deleted_at')->orWhereNotNull('deleted_at');
-            })->whereBetween('created_at', [date("Y-m-d", strtotime($date[0])), date("Y-m-d", strtotime($date[1]))])->sum('total');
+            })->whereBetween('created_at', [Carbon::parse($date[0])->startOfDay()->format('Y-m-d H:s:i'), Carbon::parse($date[1])->endOfDay()->format('Y-m-d H:s:i')])->get()->sum('total');
         }else{
             $capital    = DB::table('capital')->where('user_id', $user->id)->where(function($q){
                 return $q->whereNull('deleted_at')->orWhereNotNull('deleted_at');
-            })->sum('amount');
+            })->get()->sum('amount');
             $orders     = DB::table('orders')->where('user_id', $user->id)->where(function($q){
                 return $q->whereNull('deleted_at')->orWhereNotNull('deleted_at');
-            })->sum('total');
+            })->get()->sum('total');
         }
 
         $orders     = $orders ?? 0;
