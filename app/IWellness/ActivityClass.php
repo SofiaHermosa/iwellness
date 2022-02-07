@@ -38,7 +38,7 @@ class ActivityClass
     }
 
     public function get(){
-        $subscriptions = auth()->user()->earning_dates;
+        $subscriptions = auth()->user()->activity_earning_dates;
         $activity      = [];
 
         foreach($subscriptions as $key => $subscription){

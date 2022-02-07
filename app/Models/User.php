@@ -58,6 +58,7 @@ class User extends Authenticatable
         'wallet_balance',
         'real_wallet_balance',
         'earning_dates',
+        'activity_earning_dates',
         'capital',
         'active_subscriptions',
         'is_active',
@@ -275,11 +276,33 @@ class User extends Authenticatable
             $releaseSched[$subscription->id][] = $subscription->created_at->addDays(8)->format('Y-m-d');
             $releaseSched[$subscription->id][] = $subscription->created_at->addDays(16)->format('Y-m-d');
             $releaseSched[$subscription->id][] = $subscription->created_at->addDays(24)->format('Y-m-d');
-            $releaseSched[$subscription->id][] = $subscription->created_at->addDays(31)->format('Y-m-d');
+            $releaseSched[$subscription->id][] = $subscription->created_at->addDays($subscription->complan == 2 ? 32 : 31)->format('Y-m-d');
 
             if($subscription->complan == 2){
                 $releaseSched[$subscription->id][] = $subscription->created_at->addDays(39)->format('Y-m-d');
             }
+        }
+
+        return $releaseSched ?? [];
+    }
+
+    public function getActivityEarningDatesAttribute(){
+        $releaseSched = [];
+        $subscriptions = Subscription::where('user_id', $this->id)
+        ->orderBy('created_at', 'DESC')
+        ->get() ?? '';
+
+        foreach($subscriptions as $subscription){
+            $releaseSched[$subscription->id][] = $subscription->created_at->addDays(8)->format('Y-m-d');
+            $releaseSched[$subscription->id][] = $subscription->created_at->addDays(16)->format('Y-m-d');
+            $releaseSched[$subscription->id][] = $subscription->created_at->addDays(24)->format('Y-m-d');
+            $releaseSched[$subscription->id][] = $subscription->created_at->addDays(32)->format('Y-m-d');
+
+            if($subscription->complan == 2){
+                $releaseSched[$subscription->id][] = $subscription->created_at->addDays(40)->format('Y-m-d');
+            }
+
+            $releaseSched[$subscription->id][] = $subscription->created_at->addDays($this->complan == 2 ? 40 : 32)->format('Y-m-d');
         }
 
         return $releaseSched ?? [];
