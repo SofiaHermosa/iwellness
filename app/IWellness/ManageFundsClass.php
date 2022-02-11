@@ -33,7 +33,7 @@ class ManageFundsClass
         }
 
         if(auth()->user()->hasanyrole('system administrator') && !request()->has('mop') && !request()->has('status')){
-            $this->funds = $this->funds->whereBetween('created_at', [now()->startOfDay()->format('Y-m-d H:s:i'), now()->addDays(46)->endOfDay()->format('Y-m-d H:s:i')]);    
+            $this->funds = $this->funds->whereBetween('created_at', [now()->subDays(30)->startOfDay()->format('Y-m-d H:s:i'), now()->addDays(1)->endOfDay()->format('Y-m-d H:s:i')]);    
         }
 
         if(request()->has('status')){
