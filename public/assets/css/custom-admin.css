@@ -281,3 +281,14 @@ h6.profile-user_type {
     display: inline-block;
     padding: 0 2px;
 }
+
+.swal-wide{
+    width:850px !important;
+}
+
+.swal-wide .lead{
+    max-height: 400px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    margin: 2em 0.5em 1em 0.5em !important;
+}

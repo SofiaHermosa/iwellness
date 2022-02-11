@@ -12,6 +12,7 @@ let Sales = (function () {
 
     function bindEvents() {
         $(document).on('change', '.date-filter', filterSales);
+        $(document).on('click', '.previewSales', previewSales);
     } 
 
     function onLoad() {
@@ -20,6 +21,38 @@ let Sales = (function () {
 
     function initializeDatepicker(){
         $('.date-filter').daterangepicker();
+    }
+
+    function previewSales(){
+        let data = JSON.parse(atob($(this).data('sales')));
+      
+        console.log(data);
+        swal({
+            title: 'Sales Analytics',
+            html: true,
+            text: `
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table">
+                        <thead>
+                            <th class="text-left">User</th>
+                            <th class="text-center">Level</th>
+                            <th class="text-right">Activation</th>
+                            <th class="text-right">Product Purchase</th>
+                            <th class="text-right">Total</th>
+                        </thead>
+                        <tbody>
+                            ${data}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            `,
+            showConfirmButton: false,
+            showCancelButton: true,
+            cancelButtonText: 'Close',
+            customClass: 'swal-wide',
+        });
     }
 
     function filterSales(){
@@ -38,9 +71,27 @@ let Sales = (function () {
 
     function displayCards(data){
         cards = '';
+        modal = '';
 
         $.each(data, function(key, data){
             var total = parseFloat(data['sales']['capital']) + parseFloat(data['sales']['orders']);
+            var teams = '';
+            var dataTeams = data.teams;
+            dataTeams.sort(function(a,b){
+                if(a.individual_sales.capital > b.individual_sales.capital){ return -1}
+                if(a.individual_sales.capital < b.individual_sales.capital){ return 1}
+                   return 0;
+            });
+            $.each(dataTeams, function(index, team){
+                teams += `<tr>
+                    <td class="text-left">${team.username}</td>
+                    <td class="text-center">${team.level}</td>
+                    <td class="text-right">${team.individual_sales.capital}</td>
+                    <td class="text-right">${team.individual_sales.orders}</td>
+                    <td class="text-right">${parseFloat(team.individual_sales.capital) + parseFloat(team.individual_sales.orders)}</td>
+                </tr>`;
+            })
+
             cards += `
             <div class="col-xxl-3 col-lg-6">
                 <!-- Widget Linepoint -->
@@ -81,7 +132,9 @@ let Sales = (function () {
                     </div>
                     </div>
                 </div>
-                <!-- End Widget Linepoint -->
+                <div class="col-lg-12 p-4 text-right">
+                    <a href="javascript:void(0)" class="previewSales text-primary" data-sales="${btoa(JSON.stringify(teams))}">View Details <i class="icon fa-angle-right ml-1" aria-hidden="true"></i></a>
+                </div>
                 </div>
             </div>
             `;

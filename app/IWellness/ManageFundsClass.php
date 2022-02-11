@@ -32,16 +32,16 @@ class ManageFundsClass
             $this->funds = $this->funds->where('user_id', $user);
         }
 
+        if(auth()->user()->hasanyrole('system administrator') && !request()->has('mop') && !request()->has('status')){
+            $this->funds = $this->funds->whereBetween('created_at', [now()->startOfDay()->format('Y-m-d H:s:i'), now()->addDays(46)->endOfDay()->format('Y-m-d H:s:i')]);    
+        }
+
         if(request()->has('status')){
             $this->funds = $this->funds->where('status', request()->status);
         }
 
         if(request()->has('mop')){
             $this->funds = $this->funds->whereJsonContains('details', ['mop' => request()->mop]);
-        }
-
-        if(!request()->has('mop') && !request()->has('status')){
-            $this->funds = $this->funds->where('created_at', '>', now()->subDays(30)->endOfDay());
         }
 
         $this->funds = $this->funds
