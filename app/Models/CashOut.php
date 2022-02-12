@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Contracts\Activity;
+use DB;
 
 class CashOut extends Model
 {
@@ -30,7 +31,9 @@ class CashOut extends Model
         'status_badge',
         'date_sent',
         'amount_number_format',
-        'transac_id'
+        'transac_id',
+        'username',
+        'name_user'
     ];
 
     public function tapActivity(Activity $activity, string $eventName)
@@ -67,6 +70,18 @@ class CashOut extends Model
 
     public function user() {
         return $this->belongsTo('App\Models\User', 'user_id');
+    }
+
+    public function getUsernameAttribute(){
+        $user = DB::table('users')->select('username')->where('id', $this->user_id)->first();
+
+        return $user->username;
+    }
+
+    public function getNameUserAttribute(){
+        $user = DB::table('users')->select('name')->where('id', $this->user_id)->first();
+
+        return $user->name;
     }
 
     public function getAmountNumberFormatAttribute(){

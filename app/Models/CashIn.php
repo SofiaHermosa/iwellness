@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\Contracts\Activity;
+use DB;
 
 class CashIn extends Model
 {
@@ -32,7 +33,9 @@ class CashIn extends Model
         'date_sent',
         'amount_number_format',
         'prop',
-        'transac_id'
+        'transac_id',
+        'username',
+        'name_user'
     ];
 
     public function tapActivity(Activity $activity, string $eventName)
@@ -51,6 +54,18 @@ class CashIn extends Model
 
     public function getTransacIdAttribute(){
         return generateIDs('CI', $this->id);
+    }
+
+    public function getUsernameAttribute(){
+        $user = DB::table('users')->select('username')->where('id', $this->user_id)->first();
+
+        return $user->username;
+    }
+
+    public function getNameUserAttribute(){
+        $user = DB::table('users')->select('name')->where('id', $this->user_id)->first();
+
+        return $user->name;
     }
 
     public function getDetailsAttribute($value)
@@ -94,7 +109,13 @@ class CashIn extends Model
     }
 
     public function getAttachmentsAttribute(){
-        return !empty($this->details->attachments[0]) ? asset('storage/'.$this->details->attachments[0]) : null;
+        $attachment = !empty($this->details->attachments[0]) ? asset('storage/'.$this->details->attachments[0]) : null;
+    
+        if (file_exists(storage_path('app/'.$this->details->attachments[0]))) {
+            return $attachment;
+        }else{
+            return null;
+        }   
     }
 
     public function getDateSentAttribute(){

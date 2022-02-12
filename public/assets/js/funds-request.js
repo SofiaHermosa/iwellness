@@ -111,7 +111,7 @@ let FundsRequest = (function () {
                 {
                     'targets' : 0,
                     'render' : function ( url, type, full) {
-                        return full['user']['username'];
+                        return full['username'];
                     }
                 },
                 {
@@ -151,7 +151,7 @@ let FundsRequest = (function () {
                 {
                     'targets' : 0,
                     'render' : function ( url, type, full) {
-                        return full['user']['username'];
+                        return full['username'];
                     }
                 },
             ]    
@@ -162,7 +162,7 @@ let FundsRequest = (function () {
         let col = $(this).parent().children().index($(this));
         if(col != 5){
             let data = cashInTable.row($(this).parent()).data();
-            $('#cashinModal').find('input[name="user"]').val(data.user.name);
+            $('#cashinModal').find('input[name="user"]').val(data.name_user);
             $('#cashinModal').find('input[name="details[sender_name]"]').val(data.details.sender_name);
             $('#cashinModal').find('input[name="details[reference_no]"]').val(data.details.reference_no);
             $('#cashinModal').find('input[name="amount"]').val(data.amount_number_format);
@@ -173,7 +173,7 @@ let FundsRequest = (function () {
             window.user_cashin = {
                 type    : 'cashin',
                 id      : data.id,
-                user_id : data.user.id,
+                user_id : data.user_id,
                 amount  : data.amount,
                 _token  :  $('meta[name="csrf-token"]').attr('content'),
                 _method : 'PUT'
@@ -187,7 +187,7 @@ let FundsRequest = (function () {
 
     function editCashOut(){     
         let data = cashOutTable.row($(this).parent()).data();
-        $('#cashoutModal').find('input[name="user"]').val(data.user.name);
+        $('#cashoutModal').find('input[name="user"]').val(data.name_user);
         $('#cashoutModal').find('input[name="details[receivers_name]"]').val(data.details.receivers_name);
         $('#cashoutModal').find('input[name="details[account_no]"]').val(data.details.account_no);
         $('#cashoutModal').find('input[name="amount"]').val(data.amount_number_format);
@@ -200,7 +200,7 @@ let FundsRequest = (function () {
         window.user_cashout = {
             type    : 'cashout',
             id      : data.id,
-            user_id : data.user.id,
+            user_id : data.user_id,
             amount  : data.amount,
             _token  :  $('meta[name="csrf-token"]').attr('content'),
             _method : 'PUT'

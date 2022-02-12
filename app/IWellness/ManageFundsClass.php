@@ -45,7 +45,6 @@ class ManageFundsClass
         }
 
         $this->funds = $this->funds
-        ->with('user')
         ->orderBy('created_at', 'DESC')
         ->orderBy('status', 'ASC')
         ->get();
