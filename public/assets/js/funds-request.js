@@ -130,6 +130,10 @@ let FundsRequest = (function () {
                         return `<center><p class="text-muted">No Attachment</p></center>`;
                     }
                 },
+                {
+                    'targets':7,
+                    'type': 'date' 
+                },
             ],
             'order' : [[7, 'desc']]
         });
@@ -154,7 +158,12 @@ let FundsRequest = (function () {
                         return full['username'];
                     }
                 },
-            ]    
+                {
+                    'targets':6,
+                    'type': 'date' 
+                },
+            ],
+            'order' : [[6, 'desc']]    
         } );
     }
 

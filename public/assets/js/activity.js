@@ -28,14 +28,22 @@ let Logs = (function () {
                 { "data": "" },
                 { "data": "" },
                 { "data": "release" },
-                { "data": "" },
             ],
             'columnDefs' : [
+                {
+                    'targets':0,
+                    'type': 'date' 
+                },
+                {
+                    'targets':5,
+                    'type': 'date' 
+                },
                 {
                     'targets' : 1,
                     'render' : function ( url, type, full) {
                         return `<badge class="badge badge-lg ${full['plan_class']}">${full['plan']}</badge>`;
-                    }
+                    },
+                    'type': 'date' 
                 },
                 {
                     'targets' : 3,
@@ -56,9 +64,16 @@ let Logs = (function () {
                     'render' : function ( url, type, full) {
                         return full['profit'].length == 0 ? `<span class='badge badge-lg badge-default'>Pending</span>` : `<span class='badge badge-lg badge-success'>Released</span>`;
                     }
+                },
+            ], 
+            'createdRow': function( row, data, dataIndex ) {
+                // Set the data-status attribute, and add a class
+                if(data.capital_release == true){
+                    $( row ).find('td:eq(5)').addClass('release--date');
+                    $( row ).addClass('release--date');
                 }
-            ],   
-            'order' : [[0, 'desc'], [1, 'desc'], [5, 'asc']]
+            },  
+            'order' : [[0, 'asc'], [1, 'asc'], [5, 'asc']]
         } );
     }
 

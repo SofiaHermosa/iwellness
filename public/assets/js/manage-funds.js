@@ -213,7 +213,11 @@ let ManageFunds = (function () {
 
                         return `<center><button data-cashin="${window.btoa(unescape(encodeURIComponent(JSON.stringify(full))))}" class="btn btn-dark btn-xs upload--attachments">Upload Receipt</button></center>`;
                     }
-                }
+                },
+                {
+                    'targets':5,
+                    'type': 'date' 
+                },
             ],
             'order' : [[5, 'desc']]
         });
@@ -228,6 +232,12 @@ let ManageFunds = (function () {
                 { "data": "amount_number_format" },
                 { "data": "status_badge" },
                 { "data": "date_sent" }
+            ],
+            'columnDefs': [
+                {
+                    'targets':4,
+                    'type': 'date' 
+                },
             ],
             'order' : [[4, 'DESC']]
         });
@@ -254,6 +264,10 @@ let ManageFunds = (function () {
                     'render' : function ( url, type, full) {
                         return full['release_dates'].join(', ');
                     }
+                },
+                {
+                    'targets':2,
+                    'type': 'date' 
                 },
             ], 
             'order' : [[2, 'DESC']]
