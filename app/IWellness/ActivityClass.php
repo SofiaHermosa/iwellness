@@ -18,14 +18,21 @@ class ActivityClass
 
     public function __construct(){
         $this->desc = [
-            'profit'   => 'Earned cutoff profit',
-            'login'    => 'Login',
-            'survey'   => 'Answered scheduled survey',
-            'ads'      => 'Watched Ads'
+            'profit'            => 'Earned cutoff profit',
+            'login'             => 'Login',
+            'survey'            => 'Answered scheduled survey',
+            'ads'               => 'Watched Ads',
+            'capital_released'  => 'Capital has been released'
         ];
     }
 
     public function logActivity($type, $causer, $subject = null){
+        
+        if($type == 'capital_released'){
+            $amount = session()->has('activity_type') ? session()->get('activity_type') : 0;
+            $this->desc[$type] = 'Capital amounting '.number_format($amount, 2, '.', ',').' has been released';
+        }
+
         $data = [
             'causer_id'     => $causer,
             'log_name'      => $type,

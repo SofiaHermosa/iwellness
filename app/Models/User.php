@@ -302,7 +302,7 @@ class User extends Authenticatable
                 $releaseSched[$subscription->id][] = $subscription->created_at->addDays(40)->format('Y-m-d');
             }
 
-            $releaseSched[$subscription->id][] = $subscription->created_at->addDays($this->complan == 2 ? 40 : 32)->format('Y-m-d');
+            // $releaseSched[$subscription->id][] = $subscription->created_at->addDays($this->complan == 2 ? 40 : 32)->format('Y-m-d');
         }
 
         return $releaseSched ?? [];

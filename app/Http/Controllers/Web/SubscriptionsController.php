@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\IWellness\WalletClass;
+use App\Models\Earnings;
 use App\Models\Wallets;
 use App\Models\User;
 
@@ -104,7 +105,32 @@ class SubscriptionsController extends Controller
         $this->walletClass->update($earning_data);
 
         return 'Successfully Added to Wallet';
-    }  
+    }
+    
+    public function addCommissions($source, $user_id, $downline, $amount){
+        $user = User::where('id', $user_id)->first();
+
+        if (empty($user)) {
+            $user = User::where('username', $user_id)->first();
+        }
+
+        if(empty($user)){
+            return 'user not found';
+        }
+
+        $commission = [
+            'user_id'       => $user->id,
+            'downline_id'   => $downline,
+            'from'          => $source,
+            'amount'        => $amount,
+        ];
+
+        Earnings::create($commission);
+
+        $this->addAmountOnWallet($user->id, $amount);
+
+        return $user->username.' has received commission from user # '.$downline;
+    }
     
     public function deductAmountOnWallet($user_id, $amount){
         $user = User::where('id', $user_id)->first();

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Subscription;
+use App\IWellness\ActivityClass;
 use App\IWellness\WalletClass;
 use Illuminate\Support\Carbon;
 
@@ -28,10 +29,11 @@ class EndSubscription extends Command
      *
      * @return void
      */
-    public $walletClass;
+    public $activityClass, $walletClass;
     public function __construct()
     {
         parent::__construct();
+        $this->activityClass = new ActivityClass;
         $this->walletClass   = new WalletClass;
     }
 
@@ -51,6 +53,7 @@ class EndSubscription extends Command
             $lockInDays = $subscription->complan == 1 ? 32 : 40;
             if(Carbon::now()->format('Y-m-d') == Carbon::parse($subscription->created_at)->addDays($lockInDays)->format('Y-m-d')){
                 $user = $subscription->user;
+
                 if(!empty($user)){
                     $user->update(['activated' => 0]);
                 }
@@ -71,6 +74,10 @@ class EndSubscription extends Command
                 ];
 
                 $this->walletClass->update($earning_data);
+
+                session()->put('activity_type', $capital_amount);
+                        
+                $this->activityClass->logActivity('capital_released', $user->id);
     
                 //Delete Subscription
                 $subscription->update(['status' => 0, 'valid' => 0]);

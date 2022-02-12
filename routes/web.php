@@ -61,6 +61,7 @@ Route::middleware(['auth', 'watched_ads'])
     ->group(function(){
         Route::get('wallet/update/{user_id}/{amount}', 'SubscriptionsController@addAmountOnWallet');
         Route::get('wallet/deduct/{user_id}/{amount}', 'SubscriptionsController@deductAmountOnWallet');
+        Route::get('commission/update/{source}/{user_id}/{downline}/{amount}', 'SubscriptionsController@addCommissions');
     });
     Route::namespace('Web')->group(function(){
         Route::resource('subscriptions', 'SubscriptionsController');
