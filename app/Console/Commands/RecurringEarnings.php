@@ -10,6 +10,7 @@ use App\Models\Subscription;
 use App\Models\SurveyEntries; 
 use App\Models\ActivityLogs;    
 use App\Models\User;
+use Carbon\Carbon;
 
 class RecurringEarnings extends Command
 {
@@ -102,6 +103,6 @@ class RecurringEarnings extends Command
             }
         }
 
-        $this->info('Dissemination of quarterly earnigns succeeded');
+        $this->info('Dissemination of quarterly earnigns succeeded ('.now()->format('M d, Y g:ia').')');
     }
 }

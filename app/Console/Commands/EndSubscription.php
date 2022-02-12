@@ -93,6 +93,6 @@ class EndSubscription extends Command
             }
         }
 
-        $this->info('Listed subscriptions has been successfully deactivated.');
+        $this->info('Listed subscriptions has been successfully deactivated. ('.now()->format('M d, Y g:ia').')');
     }
 }
