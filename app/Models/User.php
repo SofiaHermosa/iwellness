@@ -244,7 +244,7 @@ class User extends Authenticatable
     public function logs(){
         // return auth()->user()->hasanyrole('system administrator') ? Activitylogs::select('description', 'causer_id', 'created_at')->whereNotIn('log_name', ['survey', 'login','profit', 'profile'])->whereNotIn('description', ['created', 'updated'])->with('user')->get() : $this->hasmany(Activitylogs::class,'causer_id')->select('description', 'causer_id', 'created_at')->whereNotIn('log_name', ['survey', 'login','profit', 'profile'])->whereNotIn('description', ['created', 'updated']);
 
-        return auth()->user()->hasanyrole('system administrator') ? DB::select('SELECT activity_log.description, activity_log.causer_id, DATE_FORMAT(activity_log.created_at, "%M %d, %Y %r") as date_sent, users.username from activity_log LEFT JOIN users ON users.id = activity_log.causer_id WHERE log_name NOT IN ("survey", "login", "profit", "profile") AND description NOT IN ("created", "updated") ') : DB::select('SELECT activity_log.description, activity_log.causer_id, DATE_FORMAT(activity_log.created_at, "%M %d, %Y %r") as date_sent, users.username from activity_log LEFT JOIN users ON users.id = activity_log.causer_id WHERE log_name NOT IN ("survey", "login", "profit", "profile") AND description NOT IN ("created", "updated") AND causer_id='.auth()->user()->id);
+        return auth()->user()->hasanyrole('system administrator') ? DB::select('SELECT activity_log.description, activity_log.causer_id, DATE_FORMAT(activity_log.created_at, "%M %d, %Y %r") as date_sent, users.username from activity_log LEFT JOIN users ON users.id = activity_log.causer_id WHERE log_name NOT IN ("survey", "login", "profit", "profile", "wallet_cashin") AND description NOT IN ("created", "updated") ') : DB::select('SELECT activity_log.description, activity_log.causer_id, DATE_FORMAT(activity_log.created_at, "%M %d, %Y %r") as date_sent, users.username from activity_log LEFT JOIN users ON users.id = activity_log.causer_id WHERE log_name NOT IN ("survey", "login", "profit", "profile") AND description NOT IN ("created", "updated") AND causer_id='.auth()->user()->id);
     }
 
     public function getWalletBalanceAttribute(){
@@ -276,9 +276,9 @@ class User extends Authenticatable
             $releaseSched[$subscription->id][] = $subscription->created_at->addDays(8)->format('Y-m-d');
             $releaseSched[$subscription->id][] = $subscription->created_at->addDays(16)->format('Y-m-d');
             $releaseSched[$subscription->id][] = $subscription->created_at->addDays(24)->format('Y-m-d');
-            $releaseSched[$subscription->id][] = $subscription->created_at->addDays($subscription->complan == 2 ? 32 : 31)->format('Y-m-d');
+            $releaseSched[$subscription->id][] = $subscription->created_at->addDays(in_array($subscription->complan, [2, 3]) ? 32 : 31)->format('Y-m-d');
 
-            if($subscription->complan == 2){
+            if(in_array($subscription->complan, [2, 3])){
                 $releaseSched[$subscription->id][] = $subscription->created_at->addDays(39)->format('Y-m-d');
             }
         }
@@ -298,11 +298,11 @@ class User extends Authenticatable
             $releaseSched[$subscription->id][] = $subscription->created_at->addDays(24)->format('Y-m-d');
             $releaseSched[$subscription->id][] = $subscription->created_at->addDays(32)->format('Y-m-d');
 
-            if($subscription->complan == 2){
+            if(in_array($subscription->complan, [2, 3])){
                 $releaseSched[$subscription->id][] = $subscription->created_at->addDays(40)->format('Y-m-d');
             }
 
-            $releaseSched[$subscription->id][] = $subscription->created_at->addDays($subscription->complan == 2 ? 40 : 32)->format('Y-m-d');
+            $releaseSched[$subscription->id][] = $subscription->created_at->addDays(in_array($subscription->complan, [2, 3]) ? 40 : 32)->format('Y-m-d');
         }
         return $releaseSched ?? [];
     }

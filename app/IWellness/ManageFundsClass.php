@@ -3,6 +3,7 @@
 namespace App\IWellness;
 use Illuminate\Http\Request;
 use App\IWellness\WalletClass;
+use App\IWellness\ActivityClass;
 use App\Mail\FundRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Models\CashIn;
@@ -16,12 +17,13 @@ use Session;
 
 class ManageFundsClass
 {
-    public $request,$funds,$wallet, $wallet_balance;
+    public $request, $funds, $wallet, $wallet_balance, $activityClass;
 
     public function __construct()
     {
         $this->request          = request();
         $this->wallet           = new WalletClass();
+        $this->activityClass    = new ActivityClass;
     }
 
     public function get($type, $user = null){
@@ -124,8 +126,14 @@ class ManageFundsClass
                 'user_id' => $user_id,
                 'balance' => $amount
             ];
+
+            session()->put('activity_type', $cashinRequest->amount);
+                        
+            $this->activityClass->logActivity('wallet_cashin', $cashinRequest->user_id, $cashinRequest->id);
     
             $this->wallet->update($data); 
+
+            session()->forget('activity_type');
 
             Mail::to($cashinRequest->user->email)->send(new FundRequest($cashinRequest, 'cash-in'));
         }

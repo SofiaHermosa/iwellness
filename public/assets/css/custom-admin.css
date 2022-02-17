@@ -326,3 +326,7 @@ tr.release--date > td{
     background: #586b6e14 !important;
 }
 
+.badge-majestic{
+    background-color: #8913eb !important;
+    color: #fff !important;
+}

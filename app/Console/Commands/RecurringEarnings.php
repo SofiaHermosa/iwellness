@@ -61,7 +61,7 @@ class RecurringEarnings extends Command
             
             foreach($user->earning_dates as $index => $active_subscription){
                 $capital_details = Subscription::where('id', $index)->with('capital')->first();
-                $plan_earnings   = $capital_details->complan == 1 ? 0.12 : 0.17;
+                $plan_earnings   = config('constants.complans.'.$capital_details->complan.'.profit');
                 
                 if(in_array($current, $active_subscription)){
                     $earningKey = array_search($current, $active_subscription) ?? null;
