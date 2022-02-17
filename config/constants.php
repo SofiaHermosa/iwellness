@@ -32,7 +32,7 @@ return [
             'sub'   => '(Minimum of 2000 pesos)',
             'class' => 'badge-warning',
             'min'   => 2000
-        ]
+        ],
     ],
     'payment_transaction_type' => [
         1 => 'account activation',

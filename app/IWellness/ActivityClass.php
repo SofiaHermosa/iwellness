@@ -55,13 +55,14 @@ class ActivityClass
             end($subscription);
             $endDate = key($subscription);
             foreach($subscription as $index => $release_date){
+
                 $data = [
                     'activation_date'   =>  Carbon::parse($subscription[0])->subDays(8)->format('M d, Y'),
                     'sched'             =>  Carbon::parse($release_date)->subDays(8)->format('m/d') . ' - ' . Carbon::parse($release_date)->format('m/d'), 
-                    'survey'            =>  $this->hasSurvey($release_date, $key, $index),
+                    'survey'            =>  $this->hasSurvey($release_date, $key, $index == $endDate ? $endDate - 1 : $index),
                     'logged_in'         =>  $this->retriveActivity($release_date, 'login'),
-                    'ads'               =>  $this->retriveActivity($release_date, 'ads', $key, $index),
-                    'profit'            =>  $this->retriveActivity($release_date, 'profit', $key, $index),
+                    'ads'               =>  $this->retriveActivity($release_date, 'ads', $key, $index == $endDate ? $endDate - 1 : $index),
+                    'profit'            =>  $this->retriveActivity($release_date, 'profit', $key, $index == $endDate ? $endDate - 1 : $index),
                     'release'           =>  Carbon::parse($release_date)->format('m-d-Y'),
                     'start'             =>  Carbon::parse($release_date)->subDays(8)->format('Y-m-d'),
                     'end'               =>  Carbon::parse($release_date)->format('Y-m-d'),  
