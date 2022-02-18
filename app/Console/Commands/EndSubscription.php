@@ -50,7 +50,7 @@ class EndSubscription extends Command
 
         foreach($subscriptions as $subscription){
             //Deactivate user accunt
-            $lockInDays = $subscription->complan == 1 ? 32 : 40;
+            $lockInDays = config('constants.complans.'.$subscription->complan.'.locked_in');
             if(Carbon::now()->format('Y-m-d') == Carbon::parse($subscription->created_at)->addDays($lockInDays)->format('Y-m-d')){
                 $user = $subscription->user;
 

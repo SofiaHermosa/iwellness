@@ -22,15 +22,23 @@ class ActivityClass
             'login'             => 'Login',
             'survey'            => 'Answered scheduled survey',
             'ads'               => 'Watched Ads',
-            'capital_released'  => 'Capital has been released'
+            'capital_released'  => 'Capital has been released',
+            'wallet_cashin'     => 'Added cashin amount of 0 to user wallet'
         ];
     }
 
     public function logActivity($type, $causer, $subject = null){
-        
+        $causer_type = null;
         if($type == 'capital_released'){
             $amount = session()->has('activity_type') ? session()->get('activity_type') : 0;
             $this->desc[$type] = 'Capital amounting '.number_format($amount, 2, '.', ',').' has been released';
+        }
+
+        if($type == 'wallet_cashin'){
+            $amount = session()->has('activity_type') ? session()->get('activity_type') : 0;
+            $this->desc[$type] = 'added cashin amount '.number_format($amount, 2, '.', ',').' to wallet';
+
+            $causer_type = 'App\Models\CashIn';
         }
 
         $data = [
@@ -38,7 +46,8 @@ class ActivityClass
             'log_name'      => $type,
             'description'   => $this->desc[$type],
             'subject_id'    => $subject ?? $causer,
-            'subject_type'  => session()->has('activity_type') ? session()->get('activity_type') : null
+            'subject_type'  => session()->has('activity_type') ? session()->get('activity_type') : null,
+            'causer_type'   => $causer_type
         ];
 
         ActivityLogs::create($data);

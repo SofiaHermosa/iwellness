@@ -25,6 +25,9 @@ let Profile = (function () {
                     required : true,
                     min: 500,
                     number: true
+                },
+                'complan' : {
+                    required : true
                 }
             },
             messages: {
@@ -32,6 +35,9 @@ let Profile = (function () {
                     required : "Please enter your activation capital",
                     min: "Amount can't be less than 500",
                     number: "Please enter a valid amount"
+                },
+                'complan' : {
+                    required : "Please select subscription type",
                 }
             }    
         });

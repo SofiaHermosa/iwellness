@@ -25,6 +25,7 @@ class ActivateAccountRequest extends FormRequest
     {
         return [
             'amount'   => 'required|numeric|min:700',
+            'complan'  => 'required',
         ];
     }
 }

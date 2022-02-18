@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Payment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\IWellness\NetworkClass;
+use App\Http\Requests\ActivateAccountRequest;
 
 class PaymentController extends Controller
 {
@@ -34,7 +35,7 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ActivateAccountRequest $request)
     {
         return view("payment.index");
     }
