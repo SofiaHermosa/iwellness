@@ -41,6 +41,17 @@ let EWallet = (function () {
                 },
             }).then((result) => {
                 if (result.isConfirmed) {
+
+                    Swal.fire({
+                        title: 'Loading...',
+                        html: `Please wait don't close or reload the page...`,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                          Swal.showLoading()
+                        }
+                    });
+
                     const data = {
                         password : result.value,
                         amount   : price,
@@ -59,9 +70,11 @@ let EWallet = (function () {
                         type: "POST",
                         data: data,
                         success: function (response, status) {
+                            Swal.close();
                             showSuccess(response.url);
                         },
                         error: function (response) {
+                            Swal.close();
                             switch (response.status) {
                                 case 401:
                                     incorrectPass();

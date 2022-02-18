@@ -239,6 +239,17 @@ let FundsRequest = (function () {
             confirmButtonText: 'Yes',
         }).then((result) => {
             if (result.isConfirmed) {
+
+                Swal.fire({
+                    title: 'Loading...',
+                    html: `Please wait don't close or reload the page...`,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                      Swal.showLoading()
+                    }
+                });
+
                 window.user_cashin.response = 'approve';
                 $.ajaxSetup({
                     headers:
@@ -251,9 +262,11 @@ let FundsRequest = (function () {
                     data: window.user_cashin,
                     success: function (response, status) {
                         cashInTable.ajax.reload();
+                        Swal.close()
                         alertify.success("Cash-in Successfully Approved");
                     },
                     error: function (response) {
+                        Swal.close()
                         alertify.error("Something went wrong");
                     },
                 });
@@ -272,6 +285,17 @@ let FundsRequest = (function () {
             confirmButtonText: 'Yes',
         }).then((result) => {
             if (result.isConfirmed) {
+
+                Swal.fire({
+                    title: 'Loading...',
+                    html: `Please wait don't close or reload the page...`,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                      Swal.showLoading()
+                    }
+                });
+
                 window.user_cashout.response = 'approve';
                 $.ajaxSetup({
                     headers:
@@ -284,9 +308,11 @@ let FundsRequest = (function () {
                     data: window.user_cashout,
                     success: function (response, status) {
                         cashOutTable.ajax.reload();
+                        Swal.close();
                         alertify.success("Cash-out Successfully Approved");
                     },
                     error: function (response, status) {
+                        Swal.close();
                         if(response.status == 403){
                             alertify.error("User has not enough balance.");
                         }else{
@@ -314,6 +340,17 @@ let FundsRequest = (function () {
             }
         }).then((result) => {
             if (result.isConfirmed) {
+
+                Swal.fire({
+                    title: 'Loading...',
+                    html: `Please wait don't close or reload the page...`,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                      Swal.showLoading()
+                    }
+                });
+
                 window.user_cashin.response = 'decline';
                 window.user_cashin.reason   = result.value;
                 $.ajaxSetup({
@@ -327,9 +364,11 @@ let FundsRequest = (function () {
                     data: window.user_cashin,
                     success: function (response, status) {
                         cashInTable.ajax.reload();
+                        Swal.close();
                         alertify.success("Cash-in Successfully declined");
                     },
                     error: function (response) {
+                        Swal.close();
                         alertify.error("Something went wrong");
                     },
                 });
@@ -353,6 +392,17 @@ let FundsRequest = (function () {
             }
         }).then((result) => {
             if (result.isConfirmed) {
+
+                Swal.fire({
+                    title: 'Loading...',
+                    html: `Please wait don't close or reload the page...`,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                      Swal.showLoading()
+                    }
+                });
+
                 window.user_cashout.response = 'decline';
                 window.user_cashout.reason   = result.value;
                 $.ajaxSetup({
@@ -366,9 +416,11 @@ let FundsRequest = (function () {
                     data: window.user_cashout,
                     success: function (response, status) {
                         cashOutTable.ajax.reload();
+                        Swal.close();
                         alertify.success("Cash-out Successfully declined");
                     },
                     error: function (response) {
+                        Swal.close();
                         alertify.error("Something went wrong");
                     },
                 });
