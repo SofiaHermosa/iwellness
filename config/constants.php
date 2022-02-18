@@ -31,7 +31,7 @@ return [
             'desc'  => '- Earn 85% total profit <br> - 40 days lock-in period',
             'sub'   => '(Minimum of 2000 pesos)',
             'class' => 'badge-warning',
-            'min'   => 2000
+            'min'   => 2000,
         ],
     ],
     'payment_transaction_type' => [
