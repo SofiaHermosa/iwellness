@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group form-material" data-plugin="formMaterial">
-                        <input type="text" class="form-control" name="username" value="{{auth()->user()->username ?? ''}}">
+                        <input type="text" class="form-control" name="username" value="{{auth()->user()->username ?? ''}}" readonly>
                         <label class="floating-label">Username</label>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                     </div>
                 </div>
             </div>
-            <input type="file" name="prof_img" style="opacity:0;" id="imgInp" onchange="previewFile(this);">
+            <input type="file" name="prof_img" style="opacity:0;" id="imgInp"  accept="image/png, image/jpeg"  onchange="previewFile(this);">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
