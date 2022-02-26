@@ -25,7 +25,7 @@ class ActivateAccountRequest extends FormRequest
     {
         return [
             'amount'   => 'required|numeric',
-            'complan'  => 'required',
+            'complan'  => 'required|in:1,2',
         ];
     }
 }
