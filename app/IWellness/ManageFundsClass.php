@@ -121,21 +121,24 @@ class ManageFundsClass
         if ($cashinRequest->status != 1) {
             $cashinRequest->status = 1;
             $cashinRequest->save();
+            
+            if ($cashinRequest) {
+                $data = [
+                    'user_id' => $user_id,
+                    'balance' => $amount
+                ];
     
-            $data = [
-                'user_id' => $user_id,
-                'balance' => $amount
-            ];
-
-            session()->put('activity_type', $cashinRequest->amount);
-                        
-            $this->activityClass->logActivity('wallet_cashin', $cashinRequest->user_id, $cashinRequest->id);
+                session()->put('activity_type', $cashinRequest->amount);
+                            
+                $this->activityClass->logActivity('wallet_cashin', $cashinRequest->user_id, $cashinRequest->id);
+        
+                $this->wallet->update($data); 
     
-            $this->wallet->update($data); 
+                session()->forget('activity_type');
 
-            session()->forget('activity_type');
+                Mail::to($cashinRequest->user->email)->send(new FundRequest($cashinRequest, 'cash-in'));
+            }
 
-            Mail::to($cashinRequest->user->email)->send(new FundRequest($cashinRequest, 'cash-in'));
         }
     }
 
@@ -145,7 +148,6 @@ class ManageFundsClass
         $userDetails    = User::FindOrFail($user_id);
 
         if ($userDetails->real_wallet_balance >= $amount) {
-            $this->wallet->deductTobalance($cashoutRequest->amount, $cashoutRequest->user); 
             if ($cashoutRequest->status == 0) {
                 $new_balance = $earnings->sum('amount') - $amount;
                 foreach($earnings as $earning){
@@ -164,6 +166,10 @@ class ManageFundsClass
                 if ($cashoutRequest->status != 1) {
                     $cashoutRequest->status = 1;
                     $cashoutRequest->save();
+
+                    if($cashoutRequest){
+                        $this->wallet->deductTobalance($cashoutRequest->amount, $cashoutRequest->user); 
+                    }
                 }
 
                 Mail::to($cashoutRequest->user->email)->send(new FundRequest($cashoutRequest, 'cash-out'));
