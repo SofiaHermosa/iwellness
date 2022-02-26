@@ -184,6 +184,7 @@
       <script src="{{asset('assets/js/config.js')}}"></script>
       <script src="{{asset('assets/js/share.js')}}"></script>
       <script src="{{asset('assets/js/edit-profile.js')}}"></script>
+      <script src="{{asset('assets/js/util.js')}}"></script>
       <script src="{{asset('assets/js/play-ads.js')}}"></script>
     @endif
   

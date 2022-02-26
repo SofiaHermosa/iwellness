@@ -90,16 +90,24 @@ page-profile
                     </div>
 
                     <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="">Password</label>
+                        <label for="">Password</label>
+                        <div class="input-group">
                             <input type="password" name="password" id="password" class="form-control">
+                           
+                            <span class="input-group-btn input-group-append">
+                                <button class="btn btn-outline btn-icon py-2 showPass" type="button"><i class="pass-icon icon fa-eye"></i></button>
+                            </span>
                         </div>
                     </div>
 
                     <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="">Confirm Password</label>
+                        <label for="">Confirm Password</label>
+                        <div class="input-group">
                             <input type="password" name="password_confirmation" class="form-control">
+
+                            <span class="input-group-btn input-group-append">
+                                <button class="btn btn-outline btn-icon py-2 showPass" type="button"><i class="pass-icon icon fa-eye"></i></button>
+                            </span>
                         </div>
                     </div>
 

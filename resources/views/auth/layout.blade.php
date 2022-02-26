@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="{{asset('app/material/global/fonts/material-design/material-design.min.css')}}">
     <link rel="stylesheet" href="{{asset('app/material/global/fonts/brand-icons/brand-icons.min.css')}}">
     <link rel="stylesheet" href="{{asset('app/classic/global/fonts/web-icons/web-icons.min.css')}}">
+    <link rel="stylesheet" href="{{asset('app/classic/global/fonts/font-awesome/font-awesome.css')}}">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
     
     <!--[if lt IE 9]>
@@ -147,6 +148,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
     <script src="{{asset('assets/js/register.js')}}"></script>
     <script src="{{asset('assets/js/validate-pass.js')}}"></script>
+    <script src="{{asset('assets/js/util.js')}}"></script>
     
     <script>
       (function(document, window, $){
