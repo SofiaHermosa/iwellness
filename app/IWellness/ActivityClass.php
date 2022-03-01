@@ -23,7 +23,8 @@ class ActivityClass
             'survey'            => 'Answered scheduled survey',
             'ads'               => 'Watched Ads',
             'capital_released'  => 'Capital has been released',
-            'wallet_cashin'     => 'Added cashin amount of 0 to user wallet'
+            'wallet_cashin'     => 'Added cashin amount of 0 to user wallet',
+            'login_bonus'       => 'Earned Daily login bonus'
         ];
     }
 
@@ -32,6 +33,11 @@ class ActivityClass
         if($type == 'capital_released'){
             $amount = session()->has('activity_type') ? session()->get('activity_type') : 0;
             $this->desc[$type] = 'Capital amounting '.number_format($amount, 2, '.', ',').' has been released';
+        }
+
+        if($type == 'login_bonus'){
+            $amount = session()->has('activity_type') ? session()->get('activity_type') : 0;
+            $this->desc[$type] = 'Earned Daily login bonus amounting '.number_format($amount, 2, '.', ',').' from majestic complan';
         }
 
         if($type == 'wallet_cashin'){

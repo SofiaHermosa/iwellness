@@ -20,31 +20,32 @@ return [
     ],
     'complans' => [
         1 => [
-            'name'      => 'basic',
-            'desc'      => '- Earn 48% total profit <br> - 32 days lock-in period',
-            'sub'       => '(Minimum of 500 pesos)',
-            'class'     => 'badge-info',
-            'min'       => 500,
-            'profit'    => 0.12,
-            'locked_in' => 32 
+            'name'          => 'basic',
+            'desc'          => '- Earn 48% total profit <br> - 32 days lock-in period',
+            'sub'           => '(Minimum of 500 pesos)',
+            'class'         => 'badge-info',
+            'min'           => 500,
+            'profit'        => 0.12,
+            'locked_in'     => 32 
         ],
         2 => [
-            'name'      => 'luxury',
-            'desc'      => '- Earn 85% total profit <br> - 40 days lock-in period',
-            'sub'       => '(Minimum of 2000 pesos)',
-            'class'     => 'badge-warning',
-            'min'       => 2000,
-            'profit'    => 0.17,
-            'locked_in' => 40 
+            'name'          => 'luxury',
+            'desc'          => '- Earn 85% total profit <br> - 40 days lock-in period',
+            'sub'           => '(Minimum of 2000 pesos)',
+            'class'         => 'badge-warning',
+            'min'           => 2000,
+            'profit'        => 0.17,
+            'locked_in'     => 40 
         ],
         3 => [
-            'name'      => 'majestic',
-            'desc'      => '- Earn 92.5% total profit <br> - 40 days lock-in period',
-            'sub'       => '(Minimum of 5000 pesos)',
-            'class'     => 'badge-majestic',
-            'min'       => 5000,
-            'profit'    => 0.185,
-            'locked_in' => 32 
+            'name'          => 'majestic',
+            'desc'          => '- Earn 92.5% total profit <br> - 40 days lock-in period',
+            'sub'           => '(Minimum of 5000 pesos)',
+            'class'         => 'badge-majestic',
+            'min'           => 5000,
+            'profit'        => 0.185,
+            'locked_in'     => 32,
+            'login_bonus'   => 0.007
         ],
     ],
     'payment_transaction_type' => [
@@ -55,6 +56,7 @@ return [
     'commision_type' => [
         1 => 'direct referral',
         2 => 'indirect referral',
+        5 => 'login bonus'
     ],
     'questions' => [
         1 => 'What is your favorite movie?',
