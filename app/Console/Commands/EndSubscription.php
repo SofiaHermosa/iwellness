@@ -45,7 +45,7 @@ class EndSubscription extends Command
     public function handle()
     {
         $subscriptions = Subscription::whereMonth(
-            'created_at', '=', Carbon::now()->subMonth()->month
+            'created_at', '=', Carbon::now()->subDays(45)->month
         )->with(['capital', 'user'])->get();
 
         foreach($subscriptions as $subscription){
