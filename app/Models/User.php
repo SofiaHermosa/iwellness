@@ -12,6 +12,8 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
+use App\IWellness\ActivityClass;
+use App\IWellness\WalletClass;
 use App\Models\ActivityLogs;
 use App\Models\Subscription;
 use App\Models\Orders;
@@ -265,6 +267,42 @@ class User extends Authenticatable
     public function getProfImgAttribute($value){
         return !empty($value) ? asset('storage/'.$value) : asset('assets/images/default-profile.jpg');
     }
+
+    public function dailyLogin(){
+        $activityClass = new ActivityClass;
+        $walletClass   = new WalletClass;
+
+        $subscriptions = Subscription::where('user_id', $this->id)
+        ->where('complan', 3)
+        ->where('status', 1)
+        ->has('capital')
+        ->orderBy('created_at', 'DESC')
+        ->get();
+
+        foreach($subscriptions as $key => $subscription){
+            $amount     = $subscription->capital->first()->amount;
+            $amount     = $amount * config('constants.complans.'.$subscription->complan.'.login_bonus');
+            $earning    = Earnings::where('downline_id', $subscription->id)->where('from', 5)->withTrashed()->first();
+            
+            if(empty($earning)){
+                $loginBonus = array(
+                    'user_id'       => $subscription->user_id,
+                    'downline_id'   => $subscription->id,
+                    'from'          => 5,
+                    'amount'        => $amount,
+                );
+    
+                Earnings::create($loginBonus);
+
+                $earning_data = [
+                    'balance' => $amount,
+                    'user_id' => $subscription->user_id
+                ];
+
+                $walletClass->update($earning_data);
+            }
+        }
+    }    
 
     public function getEarningDatesAttribute(){
         $releaseSched = [];
