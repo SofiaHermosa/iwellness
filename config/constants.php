@@ -39,13 +39,13 @@ return [
         ],
         3 => [
             'name'          => 'majestic',
-            'desc'          => '- Earn 92.5% total profit <br> - 40 days lock-in period',
+            'desc'          => '- Earn 90% total profit <br> - 40 days lock-in period <br> - 0.3% daily login bonus',
             'sub'           => '(Minimum of 5000 pesos)',
             'class'         => 'badge-majestic',
             'min'           => 5000,
-            'profit'        => 0.185,
+            'profit'        => 0.18,
             'locked_in'     => 32,
-            'login_bonus'   => 0.007
+            'login_bonus'   => 0.003
         ],
     ],
     'payment_transaction_type' => [
