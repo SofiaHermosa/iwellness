@@ -19,10 +19,13 @@ Forgot Password
         <h4 class="profile-user text-center">{{retriveAccountData(request()->email)->name}}</h4>
     </div>
 
-    <div class="form-group form-material floating" data-plugin="formMaterial">
+    <div class="input-group form-material floating" data-plugin="formMaterial">
         <input type="password" class="form-control form-control-lg" name="answer" value="{{ old('answer') }}" required>
         <label class="floating-label" for="inputEmail">{{config('constants.questions.'.json_decode(retriveAccountData(request()->email)->secret_question)->question)}}</label>
 
+        <span class="input-group-btn input-group-append pl-1">
+            <button class="btn btn-link btn-icon py-2 showPass" type="button"><i class="pass-icon icon fa-eye"></i></button>
+        </span>
         @error('answer')
             <small class="invalid-feedback" data-fv-validator="notEmpty" data-fv-for="answer" data-fv-result="VALID" style="display: block;">{{ $message }}</small>
         @enderror

@@ -30,7 +30,7 @@
                     <div class="col-md-12 px-0">
                         <div class="form-group form-material" data-plugin="formMaterial">
                             <label class="form-control-label">Proof of Receipt</label>
-                            <input type="file" data-plugin="dropify" class="form-control" name="attachments[]">
+                            <input type="file" data-plugin="dropify" class="form-control" name="attachments[]"  accept="image/png, image/jpeg" >
                         </div>
                     </div>
                 </div>

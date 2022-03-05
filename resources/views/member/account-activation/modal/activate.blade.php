@@ -20,7 +20,11 @@
                             <option value="" selected disabled>Select Subscription</option>
 
                             @foreach(config('constants.complans') as $key => $complan)
+                                @if(isset($complan["soon"]) && $complan["soon"])
+                                <option disabled readonly value="">{{ucwords($complan['name'])}} (Soon)</option>
+                                @else
                                 <option value="{{$key}}" data-desc="{{$complan['desc']}}" data-sub="{{$complan['sub']}}" data-min="{{$complan['min']}}">{{ucwords($complan['name'])}}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>

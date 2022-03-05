@@ -55,18 +55,24 @@ Sign Up
         @enderror
     </div>
 
-    <div class="form-group form-material floating" data-plugin="formMaterial">
+    <div class="input-group form-material floating" data-plugin="formMaterial">
       <input type="password" class="form-control" id="password" name="password" required>
       <label class="floating-label" for="inputPassword">Password</label>
 
+      <span class="input-group-btn input-group-append pl-1">
+        <button class="btn btn-link btn-icon py-2 showPass" type="button"><i class="pass-icon icon fa-eye"></i></button>
+      </span>
         @error('password')
           <small class="invalid-feedback" data-fv-validator="notEmpty" data-fv-for="password" data-fv-result="VALID" style="display: block;">{{ $message }}</small>
         @enderror
     </div>
-    <div class="form-group form-material floating" data-plugin="formMaterial">
+    <div class="input-group form-material floating" data-plugin="formMaterial">
       <input type="password" class="form-control" id="inputPasswordCheck" name="password_confirmation" required>
       <label class="floating-label" for="inputPasswordCheck">Retype Password</label>
 
+      <span class="input-group-btn input-group-append pl-1">
+        <button class="btn btn-link btn-icon py-2 showPass" type="button"><i class="pass-icon icon fa-eye"></i></button>
+      </span>
         @error('password_confirmation')
           <small class="invalid-feedback" data-fv-validator="notEmpty" data-fv-for="confirm_password" data-fv-result="VALID" style="display: block;">{{ $message }}</small>
         @enderror

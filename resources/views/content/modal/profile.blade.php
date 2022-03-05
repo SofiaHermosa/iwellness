@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group form-material" data-plugin="formMaterial">
-                        <input type="text" class="form-control" name="username" value="{{auth()->user()->username ?? ''}}">
+                        <input type="text" class="form-control" name="username" value="{{auth()->user()->username ?? ''}}" readonly>
                         <label class="floating-label">Username</label>
                     </div>
                 </div>
@@ -63,20 +63,28 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="form-group form-material" data-plugin="formMaterial">
+                    <div class="input-group form-material" data-plugin="formMaterial">
                         <input type="password" class="form-control" name="password" id="password">
                         <label class="floating-label">Password</label>
+
+                        <span class="input-group-btn input-group-append pl-1">
+                            <button class="btn btn-link btn-icon py-2 showPass" type="button"><i class="pass-icon icon fa-eye"></i></button>
+                        </span>
                     </div>
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="form-group form-material" data-plugin="formMaterial">
+                    <div class="input-group form-material" data-plugin="formMaterial">
                         <input type="password" class="form-control" name="password_confirmation">
                         <label class="floating-label">Retype Password</label>
+
+                        <span class="input-group-btn input-group-append pl-1">
+                            <button class="btn btn-link btn-icon py-2 showPass" type="button"><i class="pass-icon icon fa-eye"></i></button>
+                        </span>
                     </div>
                 </div>
             </div>
-            <input type="file" name="prof_img" style="opacity:0;" id="imgInp" onchange="previewFile(this);">
+            <input type="file" name="prof_img" style="opacity:0;" id="imgInp"  accept="image/png, image/jpeg"  onchange="previewFile(this);">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

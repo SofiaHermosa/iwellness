@@ -44,7 +44,7 @@ return [
             'class'         => 'badge-majestic',
             'min'           => 5000,
             'profit'        => 0.18,
-            'locked_in'     => 32,
+            'locked_in'     => 40,
             'login_bonus'   => 0.003
         ],
     ],

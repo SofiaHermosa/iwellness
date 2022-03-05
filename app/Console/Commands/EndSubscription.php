@@ -45,8 +45,12 @@ class EndSubscription extends Command
     public function handle()
     {
         $subscriptions = Subscription::whereMonth(
-            'created_at', '=', Carbon::now()->subMonth()->month
-        )->with(['capital', 'user'])->get();
+            'created_at', '=', Carbon::now()->subDays(40)->month
+        )
+        ->orWhereMonth(
+            'created_at', '=', Carbon::now()->subDays(30)->month
+        )
+        ->with(['capital', 'user'])->get();
 
         foreach($subscriptions as $subscription){
             //Deactivate user accunt

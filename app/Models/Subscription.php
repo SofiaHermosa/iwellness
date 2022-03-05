@@ -56,8 +56,12 @@ class Subscription extends Model
             $this->created_at->addDays(8)->format('M d'),
             $this->created_at->addDays(16)->format('M d'),
             $this->created_at->addDays(24)->format('M d'),
-            $this->created_at->addDays(31)->format('M d')
+            $this->created_at->addDays(32)->format('M d')
         );
+        
+        if(in_array($this->complan, [2, 3])){
+            $releaseSched[] = $this->created_at->addDays(40)->format('M d');
+        }
 
         return $releaseSched ?? [];
     }
@@ -67,6 +71,6 @@ class Subscription extends Model
     }
 
     public function getValidUntilAttribute(){
-        return Carbon::parse($this->created_at)->addDays(32)->format('M d, Y g:ia');
+        return Carbon::parse($this->created_at)->addDays(in_array($this->complan, [2, 3]) ? 40 : 32)->format('M d, Y g:ia');
     }
 }

@@ -24,7 +24,8 @@ class ActivateAccountRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount'   => 'required|numeric|min:700',
+            'amount'   => 'required|numeric',
+            'complan'  => 'required|in:1,2,3',
         ];
     }
 }
