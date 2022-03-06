@@ -86,9 +86,9 @@ let Sales = (function () {
                 teams += `<tr>
                     <td class="text-left">${team.username}</td>
                     <td class="text-center">${team.level}</td>
-                    <td class="text-right">${team.individual_sales.capital}</td>
-                    <td class="text-right">${team.individual_sales.orders}</td>
-                    <td class="text-right">${parseFloat(team.individual_sales.capital) + parseFloat(team.individual_sales.orders)}</td>
+                    <td class="text-right">${numberFormat(team.individual_sales.capital)}</td>
+                    <td class="text-right">${numberFormat(team.individual_sales.orders)}</td>
+                    <td class="text-right">${numberFormat(parseFloat(team.individual_sales.capital) + parseFloat(team.individual_sales.orders))}</td>
                 </tr>`;
             })
 

@@ -16,7 +16,7 @@ use DB;
 
 class SalesClass
 {
-    public $orders, $request, $networkClass;
+    public $orders, $request, $networkClass, $leadsLists;
 
     public function __construct()
     {
@@ -55,11 +55,12 @@ class SalesClass
             $q->where("name", "team leader");
         })->get();
 
+        $this->leadsLists = $supervisiors->pluck('id')->toArray();
         $sups_sales = [];
         $checker = [];
 
         foreach ($supervisiors as $key => $supervisior) {
-            $networks  = $this->getNetwork($supervisior->id);
+            $networks  = $this->getNetwork($supervisior->id, $supervisior);
             $capital  = [];
             $orders   = [];
             $earnings = [];
@@ -92,18 +93,29 @@ class SalesClass
         return $sups_sales;
     }
 
-    public function getDownlines($id=null){
+    public function getDownlines($id=null, $supervisiors=null){
+
+        if(!empty($supervisiors)){
+            $supervisiors = implode(',', $supervisiors);
+            return DB::select("SELECT id, name, username, referer, prof_img FROM users WHERE referer = ".$id." AND id NOT IN (".$supervisiors.")");
+        }
+
         return DB::select("SELECT id, name, username, referer, prof_img FROM users WHERE referer = ".$id);
     }
 
-    public function getNetwork($user_id=null)
+    public function getNetwork($user_id=null, $supervisior=null)
     {
         $user_id = !empty($user_id) ? $user_id : auth()->user()->id;
         $network = [];
         $childs = [];
-        $downline = $this->getDownlines($user_id);
+        $downline = $this->getDownlines($user_id, $this->leadsLists ?? null);
         $level = 2;
-       
+
+        if(!empty($supervisior)){
+            $supervisior->level = 'Team Leader';
+            $network[] = $supervisior;
+        }
+
         while(!empty($downline)){
             $nextDownline = [];
             foreach($downline as $user){
