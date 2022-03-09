@@ -327,6 +327,7 @@ class User extends Authenticatable
                 $amount     = $amount * config('constants.complans.'.$subscription->complan.'.login_bonus');
                 $earning    = Earnings::where('downline_id', $subscription->id)->where('from', 5)->whereBetween('created_at', [$pastDate->startOfDay()->format('Y-m-d H:s:i'), $pastDate->endOfDay()->format('Y-m-d H:s:i')])->withTrashed()->first();
                 $logged_in  = ActivityLogs::where('log_name', 'login')->whereBetween('created_at', [$pastDate->startOfDay()->format('Y-m-d H:s:i'), $pastDate->endOfDay()->format('Y-m-d H:s:i')])->first();
+               
                 if(empty($earning) && !empty($logged_in)){
                     $loginBonus = array(
                         'user_id'       => $subscription->user_id,
