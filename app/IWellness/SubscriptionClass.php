@@ -54,6 +54,10 @@ class SubscriptionClass
             auth()->user()->assignRole('member');
         }
 
+        if($this->request['complan'] == 3 && !auth()->user()->hasanyrole('system administrator')){
+            auth()->user()->dailyLogin();
+        }
+
         return $this;
     }
 

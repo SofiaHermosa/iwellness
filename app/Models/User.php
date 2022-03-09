@@ -19,6 +19,8 @@ use App\Models\Subscription;
 use App\Models\Orders;
 use App\Models\Earnings;
 use App\Models\CashIn;
+use Carbon\CarbonPeriod;
+use Carbon\Carbon;
 use Session;
 use DB;
 
@@ -282,7 +284,7 @@ class User extends Authenticatable
         foreach($subscriptions as $key => $subscription){
             $amount     = $subscription->capital->first()->amount;
             $amount     = $amount * config('constants.complans.'.$subscription->complan.'.login_bonus');
-            $earning    = Earnings::where('downline_id', $subscription->id)->where('from', 5)->withTrashed()->first();
+            $earning    = Earnings::where('downline_id', $subscription->id)->where('from', 5)->whereBetween('created_at', [Carbon::now()->startOfDay()->format('Y-m-d H:s:i'), Carbon::now()->endOfDay()->format('Y-m-d H:s:i')])->withTrashed()->first();
             
             if(empty($earning)){
                 $loginBonus = array(
@@ -302,7 +304,57 @@ class User extends Authenticatable
                 $walletClass->update($earning_data);
             }
         }
-    }    
+    }
+    
+    public function checkDailyLogin(){
+        $activityClass = new ActivityClass;
+        $walletClass   = new WalletClass;
+
+        $subscriptions = Subscription::where('user_id', $this->id)
+        ->where('complan', 3)
+        ->where('status', 1)
+        ->has('capital')
+        ->orderBy('created_at', 'DESC')
+        ->get();
+
+        foreach($subscriptions as $key => $subscription){
+            $startDate = $subscription->created_at->format('Y-m-d');
+            $endDate = Carbon::now()->subDays(1)->format('Y-m-d');
+            $dateRange = CarbonPeriod::create($startDate, $endDate);
+           
+            foreach($dateRange->toArray() as $pastDate){
+                $amount     = $subscription->capital->first()->amount;
+                $amount     = $amount * config('constants.complans.'.$subscription->complan.'.login_bonus');
+                $earning    = Earnings::where('downline_id', $subscription->id)->where('from', 5)->whereBetween('created_at', [$pastDate->startOfDay()->format('Y-m-d H:s:i'), $pastDate->endOfDay()->format('Y-m-d H:s:i')])->withTrashed()->first();
+                $logged_in  = ActivityLogs::where('log_name', 'login')->whereBetween('created_at', [$pastDate->startOfDay()->format('Y-m-d H:s:i'), $pastDate->endOfDay()->format('Y-m-d H:s:i')])->first();
+                if(empty($earning) && !empty($logged_in)){
+                    $loginBonus = array(
+                        'user_id'       => $subscription->user_id,
+                        'downline_id'   => $subscription->id,
+                        'from'          => 5,
+                        'amount'        => $amount,
+                    );
+        
+                    $createEarning = Earnings::create($loginBonus);
+
+                    $createEarning->created_at = $pastDate;
+                    $createEarning->updated_at = $pastDate;
+                    $createEarning->save();
+    
+                    $earning_data = [
+                        'balance' => $amount,
+                        'user_id' => $subscription->user_id
+                    ];
+                    
+                    $logs=ActivityLogs::where('log_name', 'login_bonus')->where('subject_id', $createEarning->id)->first();
+                    $logs->created_at = $pastDate;
+                    $logs->save();
+                    
+                    $walletClass->update($earning_data);
+                }
+            }
+        }
+    }
 
     public function getEarningDatesAttribute(){
         $releaseSched = [];

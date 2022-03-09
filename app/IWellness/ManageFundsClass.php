@@ -164,10 +164,11 @@ class ManageFundsClass
                 }
 
                 if ($cashoutRequest->status != 1) {
+                    $currentStats = $cashoutRequest->status; 
                     $cashoutRequest->status = 1;
                     $cashoutRequest->save();
-
-                    if($cashoutRequest){
+                   
+                    if($cashoutRequest->status == 1 && $currentStats == 0){
                         $this->wallet->deductTobalance($cashoutRequest->amount, $cashoutRequest->user); 
                     }
                 }

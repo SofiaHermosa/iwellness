@@ -38,6 +38,7 @@ class Earnings extends Model
 
             if($data->from == 5 ){
                 $description = ucfirst($event)." daily login bonus amounting ".number_format($data->amount, 2, '.', ',').' from majestic complan';
+                $activity->log_name = 'login_bonus';
             }
         }
         $activity->causer_id = $data->user_id;

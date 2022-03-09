@@ -55,11 +55,11 @@ class LoginController extends Controller
     }
 
     protected function redirectTo(){
-
         if(auth()->user()->hasanyrole('system administrator')){
             return '/res/dashboard/';
         }else{
             auth()->user()->dailyLogin();
+            auth()->user()->checkDailyLogin();
             $this->activityClass->logActivity('login', auth()->user()->id);
             Session::flash('has_logged_in', 'Recently logged in');
             return '/res/profile/';
