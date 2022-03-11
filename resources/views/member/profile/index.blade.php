@@ -167,9 +167,22 @@ page-profile
           </div>
         </div>
     </div>
+
+    <!-- <div class="col-lg-12 mt-4 pt-4">
+      <h1 class="page-title py-4 my-2">Daily Login Bonus</h1>
+      <div class="card card-shadow">
+        <div class="card-block bg-white p-20">
+          @include('content.daily-login-bonus')
+        </div>
+      </div>
+    </div> -->
 @endsection
 
 @push('scripts')
 <script src="{{asset('app/classic/global/vendor/chartist/chartist.min.js')}}"></script>
 <script src="{{asset('assets/js/profile.js')}}"></script>
+<script>
+    window.loginBonusURL = '{!! url("res/login-bonus") !!}';
+</script>
+<script src="{{asset('assets/js/login-bonus.js')}}"></script>
 @endpush        

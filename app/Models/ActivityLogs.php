@@ -29,6 +29,10 @@ class ActivityLogs extends Model
         return $this->created_at->format('M d, Y g:ia');
     }
 
+    public function getPropertiesAttribute($value){
+        return json_decode($value);
+    }
+
     public function user() {
         return $this->belongsTo('App\Models\User', 'causer_id');
     }

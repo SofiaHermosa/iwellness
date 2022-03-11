@@ -54,6 +54,7 @@ Route::middleware(['auth', 'watched_ads'])
         Route::resource('network', 'NetworkController');
         Route::post('activate/account', 'SubscriptionController@activateAccount');
         Route::resource('diamond/conversion', 'DiamondConversionController');
+        Route::get('login-bonus', 'DashboardController@loginBonus');
     });
 
     Route::namespace('Web')

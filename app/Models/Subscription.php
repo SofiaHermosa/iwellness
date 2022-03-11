@@ -30,7 +30,8 @@ class Subscription extends Model
     protected $appends = [
         'release_dates',
         'date_sent',
-        'valid_until'
+        'valid_until',
+        'complan_badge'
     ];
 
     protected static $logFillable = true;
@@ -72,5 +73,9 @@ class Subscription extends Model
 
     public function getValidUntilAttribute(){
         return Carbon::parse($this->created_at)->addDays(in_array($this->complan, [2, 3]) ? 40 : 32)->format('M d, Y g:ia');
+    }
+
+    public function getComplanBadgeAttribute(){
+        return '<badge class="badge badge-lg '.config('constants.complans.'.$this->complan.'.class').'">'.strtoupper(config('constants.complans.'.$this->complan.'.name')).'</badge>';
     }
 }

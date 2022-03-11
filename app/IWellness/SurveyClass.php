@@ -153,7 +153,8 @@ class SurveyClass
 
     public function delayedProfit($subs_id, $key){
         $subscription = Subscription::with('capital')->findOrFail($subs_id);
-        $earning      = $subscription->capital->first()->amount * 0.12;
+        $profit_percent = config('constants.complans.'.$subscription->complan.'.profit');
+        $earning      = $subscription->capital->first()->amount * $profit_percent;
         $data = [
             'user_id'           => auth()->user()->id,
             'downline_id'       => auth()->user()->id,

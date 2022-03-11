@@ -82,4 +82,16 @@ class DashboardController extends Controller
     {
         //
     }
+
+    public function loginBonus(){
+        try {
+            if(request()->ajax()){
+                $loginBonus = auth()->user()->getDailyBonusList();
+
+                return response()->json(['data'=> $loginBonus]);
+            }  
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
 }

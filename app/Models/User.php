@@ -357,6 +357,20 @@ class User extends Authenticatable
         }
     }
 
+    public function getDailyBonusList(){
+        $dailyLoginBonuses = ActivityLogs::where('causer_id', $this->id)
+                             ->where('log_name', 'login_bonus')
+                             ->where('description', 'LIKE', '%Earned daily login bonus%')
+                             ->orderBy('created_at', 'DESC')
+                             ->get();
+        foreach($dailyLoginBonuses as $key => $loginBonus){
+            $subscription = Subscription::where('id', $loginBonus->properties->attributes->downline_id)->with('capital')->first();
+            $loginBonus['subscription'] = $subscription;
+        }
+        
+        return $dailyLoginBonuses;                            
+    }
+
     public function getEarningDatesAttribute(){
         $releaseSched = [];
         $subscriptions = Subscription::where('user_id', $this->id)
