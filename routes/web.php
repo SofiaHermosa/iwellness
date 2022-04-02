@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::middleware(['throttle:50,1'])
+Route::middleware(['throttle:30,1'])
 ->group(function(){
     Route::get('/', function () {
         return view('guest/index');
@@ -129,8 +129,8 @@ Route::middleware(['throttle:50,1'])
 });
 // for cron jobs
 
-Route::namespace('Cron')
-->group(function(){
-    Route::get('end/subscriptions', 'JobsController@endSubscription');
-    Route::get('recurring/earnings', 'JobsController@recurringEarnings');
-});
+// Route::namespace('Cron')
+// ->group(function(){
+//     Route::get('end/subscriptions', 'JobsController@endSubscription');
+//     Route::get('recurring/earnings', 'JobsController@recurringEarnings');
+// });
