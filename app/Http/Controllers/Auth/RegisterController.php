@@ -63,6 +63,7 @@ class RegisterController extends Controller
             'referer' => ['nullable', 'min:6'],
             'contact' => ['required', 'numeric'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'g-recaptcha-response' => ['required', 'captcha']
         ]);
     }
 

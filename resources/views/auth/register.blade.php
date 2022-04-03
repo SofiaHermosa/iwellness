@@ -116,6 +116,11 @@ Sign Up
       </div>
       <p class="ml-35">By clicking Sign Up, you agree to our Terms and Condition.</p>
     </div>
+
+    <div class="form-froup">
+      {!! NoCaptcha::renderJs() !!}
+      {!! NoCaptcha::display() !!}
+    </div>
     <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
   </form>
 

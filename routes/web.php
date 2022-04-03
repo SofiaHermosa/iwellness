@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::middleware(['throttle:30,1'])
+Route::middleware(['throttle:60,1'])
 ->group(function(){
     Route::get('/', function () {
         return view('guest/index');
