@@ -1,4 +1,4 @@
-<div class="block bg-gray-100">
+<div class="block bg-gray-50">
     <div class="grid grid-cols-1">
        <div>
            <h2 class="text-center text-gray-800 font-bold pt-20 pb-2 text-2xl">Pequeña casa de Nazareth</h2>
